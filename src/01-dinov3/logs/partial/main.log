@@ -1,0 +1,10 @@
+==========================================
+PARTIAL FINETUNE SWEEP
+Model: vitl16 @ 714 | Region: care_label
+Batch size: 32 | Strategies: 20
+==========================================
+
+[1/20] Strategy: norm -> ./logs/partial/norm.log
+  [OK] norm
+
+[2/20] Strategy: layer_scale -> ./logs/partial/layer_scale.log

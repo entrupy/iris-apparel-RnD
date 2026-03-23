@@ -1,0 +1,10 @@
+Device: cuda
+
+============================================================
+[front_exterior_logo | convnext_base @ 518 | catboost]
+============================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/front_exterior_logo_split.json  (train=4004, val=1001)
+  Train: 4004 (118 pos) | Val: 1001 (29 pos)
+Default metric period is 5 because AUC is/are not implemented for GPU

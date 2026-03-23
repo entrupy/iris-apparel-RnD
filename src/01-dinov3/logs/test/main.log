@@ -1,0 +1,11 @@
+[GPU 0] care_label -> PID 3271915
+[GPU 1] front -> PID 3271916
+[GPU 2] front_exterior_logo -> PID 3271917
+[GPU 3] brand_tag -> PID 3271918
+Waiting...
+[OK] care_label
+[OK] front
+[OK] front_exterior_logo
+[OK] brand_tag
+
+ALL TEST EVALS DONE. Sun Mar 22 17:54:04 UTC 2026

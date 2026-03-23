@@ -1,0 +1,1460 @@
+============================================================
+BRANCH A: care_label  |  GPU 0  |  Sat Mar 21 18:31:22 UTC 2026
+============================================================
+
+>>> A1: Precompute embeddings (fp32)
+============================================================
+Device: cuda
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition
+GPU memory: 102.0 GB
+
+============================================================
+REGION: care_label
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Will cache 14 variant(s)
+
+  [vits16 @ 518]
+  Loading model facebook/dinov3-vits16-pretrain-lvd1689m (fp32) ...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 22233.34it/s]
+  Embed dim: 384
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 384]) in 24.8s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/vits16_518_*.pt
+
+  [vits16 @ 714]
+  Loading model facebook/dinov3-vits16-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 17251.43it/s]
+  Embed dim: 384
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 384]) in 47.6s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/vits16_714_*.pt
+
+  [vitb16 @ 518]
+  Loading model facebook/dinov3-vitb16-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 12473.02it/s]
+  Embed dim: 768
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 768]) in 73.2s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/vitb16_518_*.pt
+
+  [vitb16 @ 714]
+  Loading model facebook/dinov3-vitb16-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 10076.49it/s]
+  Embed dim: 768
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 768]) in 145.8s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/vitb16_714_*.pt
+
+  [vitl16 @ 518]
+  Loading model facebook/dinov3-vitl16-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 14962.92it/s]
+  Embed dim: 1024
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 1024]) in 218.3s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/vitl16_518_*.pt
+
+  [vitl16 @ 714]
+  Loading model facebook/dinov3-vitl16-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 19887.76it/s]
+  Embed dim: 1024
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 1024]) in 483.2s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/vitl16_714_*.pt
+
+  [convnext_tiny @ 518]
+  Loading model facebook/dinov3-convnext-tiny-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/180 [00:00<?, ?it/s]Loading weights: 100%|██████████| 180/180 [00:00<00:00, 15203.18it/s]
+  Embed dim: 768
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 768]) in 22.7s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_tiny_518_*.pt
+
+  [convnext_tiny @ 714]
+  Loading model facebook/dinov3-convnext-tiny-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/180 [00:00<?, ?it/s]Loading weights: 100%|██████████| 180/180 [00:00<00:00, 15141.28it/s]
+  Embed dim: 768
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 768]) in 25.2s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_tiny_714_*.pt
+
+  [convnext_small @ 518]
+  Loading model facebook/dinov3-convnext-small-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/342 [00:00<?, ?it/s]Loading weights: 100%|██████████| 342/342 [00:00<00:00, 15926.32it/s]
+  Embed dim: 768
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 768]) in 35.2s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_small_518_*.pt
+
+  [convnext_small @ 714]
+  Loading model facebook/dinov3-convnext-small-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/342 [00:00<?, ?it/s]Loading weights: 100%|██████████| 342/342 [00:00<00:00, 15602.55it/s]
+  Embed dim: 768
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 768]) in 70.5s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_small_714_*.pt
+
+  [convnext_base @ 518]
+  Loading model facebook/dinov3-convnext-base-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/342 [00:00<?, ?it/s]Loading weights: 100%|██████████| 342/342 [00:00<00:00, 13908.62it/s]
+  Embed dim: 1024
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 1024]) in 60.0s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_base_518_*.pt
+
+  [convnext_base @ 714]
+  Loading model facebook/dinov3-convnext-base-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/342 [00:00<?, ?it/s]Loading weights: 100%|██████████| 342/342 [00:00<00:00, 11973.52it/s]
+  Embed dim: 1024
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 1024]) in 104.7s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_base_714_*.pt
+
+  [convnext_large @ 518]
+  Loading model facebook/dinov3-convnext-large-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/342 [00:00<?, ?it/s]Loading weights: 100%|██████████| 342/342 [00:00<00:00, 11146.74it/s]
+  Embed dim: 1536
+  Extracting features at 518x518 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 1536]) in 138.7s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_large_518_*.pt
+
+  [convnext_large @ 714]
+  Loading model facebook/dinov3-convnext-large-pretrain-lvd1689m (fp32) ...
+Loading weights:   0%|          | 0/342 [00:00<?, ?it/s]Loading weights: 100%|██████████| 342/342 [00:00<00:00, 9128.73it/s]
+  Embed dim: 1536
+  Extracting features at 714x714 ...
+    Batch 1/456
+    Batch 20/456
+    Batch 40/456
+    Batch 60/456
+    Batch 80/456
+    Batch 100/456
+    Batch 120/456
+    Batch 140/456
+    Batch 160/456
+    Batch 180/456
+    Batch 200/456
+    Batch 220/456
+    Batch 240/456
+    Batch 260/456
+    Batch 280/456
+    Batch 300/456
+    Batch 320/456
+    Batch 340/456
+    Batch 360/456
+    Batch 380/456
+    Batch 400/456
+    Batch 420/456
+    Batch 440/456
+  Done: torch.Size([7294, 1536]) in 241.3s
+  Saved to /root/iris/src/01-dinov3/cached_features/care_label/convnext_large_714_*.pt
+
+All done.
+
+>>> A2: Train linear probes (sweep)
+============================================================
+
+============================================================
+[care_label | convnext_base @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=5.0533/6.4707 | AUC=0.5517 PR=0.0402 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.083 | 10%=0.104 *
+  Epoch   2/50 | loss=3.0956/4.4025 | AUC=0.5993 PR=0.0507 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.125 | 10%=0.229 *
+  Epoch   3/50 | loss=2.2371/2.7907 | AUC=0.6482 PR=0.0675 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.250 *
+  Epoch   4/50 | loss=2.1227/3.1782 | AUC=0.6674 PR=0.0692 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.229 *
+  Epoch   5/50 | loss=2.0384/2.9893 | AUC=0.6897 PR=0.0748 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.271 *
+  Epoch   6/50 | loss=2.0003/2.9765 | AUC=0.7024 PR=0.0756 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.271 *
+  Epoch   7/50 | loss=1.9767/2.8023 | AUC=0.7145 PR=0.0775 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.292 *
+  Epoch   8/50 | loss=1.9474/2.8686 | AUC=0.7177 PR=0.0782 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.125 | 10%=0.271 *
+  Epoch   9/50 | loss=1.8985/2.8790 | AUC=0.7225 PR=0.0790 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.125 | 10%=0.271 *
+  Epoch  10/50 | loss=1.8929/2.7230 | AUC=0.7270 PR=0.0786 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.271 *
+  Epoch  11/50 | loss=1.8563/2.7283 | AUC=0.7274 PR=0.0817 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.229 *
+  Epoch  12/50 | loss=1.8457/2.7406 | AUC=0.7291 PR=0.0833 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.229 *
+  Epoch  13/50 | loss=1.8236/2.7518 | AUC=0.7296 PR=0.0849 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.208 *
+  Epoch  14/50 | loss=1.7721/2.6650 | AUC=0.7327 PR=0.0853 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.250 *
+  Epoch  15/50 | loss=1.7710/2.6709 | AUC=0.7327 PR=0.0858 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.250
+  Epoch  16/50 | loss=1.7743/2.5569 | AUC=0.7333 PR=0.0883 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.250 *
+  Epoch  17/50 | loss=1.7438/2.5164 | AUC=0.7343 PR=0.0928 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.188 | 10%=0.250 *
+  Epoch  18/50 | loss=1.7600/2.5096 | AUC=0.7356 PR=0.0913 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.188 | 10%=0.250 *
+  Epoch  19/50 | loss=1.7176/2.5107 | AUC=0.7352 PR=0.0895 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.292
+  Epoch  20/50 | loss=1.7068/2.4691 | AUC=0.7344 PR=0.0896 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.292
+  Epoch  21/50 | loss=1.7097/2.5098 | AUC=0.7336 PR=0.0899 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.125 | 10%=0.271
+  Epoch  22/50 | loss=1.6957/2.5898 | AUC=0.7347 PR=0.0896 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.125 | 10%=0.292
+  Epoch  23/50 | loss=1.6612/2.3913 | AUC=0.7381 PR=0.0926 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.125 | 10%=0.292 *
+  Epoch  24/50 | loss=1.6706/2.4886 | AUC=0.7362 PR=0.0893 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.104 | 5%=0.146 | 10%=0.271
+  Epoch  25/50 | loss=1.6362/2.4462 | AUC=0.7379 PR=0.0914 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.292
+  Epoch  26/50 | loss=1.6909/2.3606 | AUC=0.7388 PR=0.0908 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.292 *
+  Epoch  27/50 | loss=1.6354/2.4514 | AUC=0.7384 PR=0.0910 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.292
+  Epoch  28/50 | loss=1.6245/2.4009 | AUC=0.7415 PR=0.0911 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.104 | 5%=0.146 | 10%=0.292 *
+  Epoch  29/50 | loss=1.6502/2.4276 | AUC=0.7422 PR=0.0916 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.104 | 5%=0.146 | 10%=0.292 *
+  Epoch  30/50 | loss=1.6521/2.3839 | AUC=0.7435 PR=0.0937 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.312 *
+  Epoch  31/50 | loss=1.6179/2.3681 | AUC=0.7428 PR=0.0916 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.292
+  Epoch  32/50 | loss=1.6082/2.4074 | AUC=0.7423 PR=0.0920 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.104 | 5%=0.146 | 10%=0.292
+  Epoch  33/50 | loss=1.6100/2.3600 | AUC=0.7422 PR=0.0932 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.292
+  Epoch  34/50 | loss=1.5880/2.3535 | AUC=0.7430 PR=0.0923 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.292
+  Epoch  35/50 | loss=1.5769/2.3737 | AUC=0.7429 PR=0.0913 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.312
+  Epoch  36/50 | loss=1.5936/2.3563 | AUC=0.7424 PR=0.0922 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.312
+  Epoch  37/50 | loss=1.5670/2.3839 | AUC=0.7419 PR=0.0926 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.312
+  Early stopping at epoch 37 (patience=7)
+  Best AUC-ROC: 0.7435 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_base_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7435181904086936
+  AUC-PR:  0.09374286111438725
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0035       0.0625     0.9961    
+  1%           0.0106       0.0833     0.9938    
+  2%           0.0227       0.1042     0.9920    
+  5%           0.0574       0.1667     0.9878    
+  10%          0.1063       0.3125     0.9832    
+  Youden best: threshold=0.9347  TPR=0.8333  FPR=0.4309
+
+
+============================================================
+[care_label | convnext_base @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.3965/5.2516 | AUC=0.5152 PR=0.0332 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.021 | 10%=0.083 *
+  Epoch   2/50 | loss=2.3322/2.7549 | AUC=0.6488 PR=0.0489 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.062 | 10%=0.125 *
+  Epoch   3/50 | loss=2.1073/3.0435 | AUC=0.6788 PR=0.0541 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.042 | 10%=0.125 *
+  Epoch   4/50 | loss=1.9780/2.9219 | AUC=0.6991 PR=0.0597 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.062 | 10%=0.229 *
+  Epoch   5/50 | loss=1.9123/2.8859 | AUC=0.7094 PR=0.0624 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.062 | 10%=0.250 *
+  Epoch   6/50 | loss=1.9249/2.9022 | AUC=0.7166 PR=0.0641 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.208 *
+  Epoch   7/50 | loss=1.8730/2.8125 | AUC=0.7176 PR=0.0654 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.229 *
+  Epoch   8/50 | loss=1.8447/2.7175 | AUC=0.7201 PR=0.0668 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.229 *
+  Epoch   9/50 | loss=1.8139/2.6331 | AUC=0.7187 PR=0.0694 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.208
+  Epoch  10/50 | loss=1.8008/2.6040 | AUC=0.7161 PR=0.0716 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.146 | 10%=0.229
+  Epoch  11/50 | loss=1.7414/2.6144 | AUC=0.7174 PR=0.0704 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.125 | 10%=0.229
+  Epoch  12/50 | loss=1.7617/2.6596 | AUC=0.7186 PR=0.0723 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.125 | 10%=0.229
+  Epoch  13/50 | loss=1.7203/2.4470 | AUC=0.7188 PR=0.0764 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.083 | 5%=0.146 | 10%=0.250
+  Epoch  14/50 | loss=1.7011/2.5226 | AUC=0.7244 PR=0.0768 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.083 | 5%=0.146 | 10%=0.271 *
+  Epoch  15/50 | loss=1.6923/2.4701 | AUC=0.7222 PR=0.0788 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.125 | 10%=0.250
+  Epoch  16/50 | loss=1.6847/2.4393 | AUC=0.7222 PR=0.0814 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.125 | 10%=0.250
+  Epoch  17/50 | loss=1.6814/2.3921 | AUC=0.7198 PR=0.0834 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.250
+  Epoch  18/50 | loss=1.6450/2.3609 | AUC=0.7228 PR=0.0799 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.250
+  Epoch  19/50 | loss=1.5941/2.4676 | AUC=0.7224 PR=0.0797 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.146 | 10%=0.250
+  Epoch  20/50 | loss=1.6237/2.3680 | AUC=0.7217 PR=0.0818 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.250
+  Epoch  21/50 | loss=1.5962/2.3142 | AUC=0.7209 PR=0.0863 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.167 | 10%=0.250
+  Early stopping at epoch 21 (patience=7)
+  Best AUC-ROC: 0.7244 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_base_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7243532955350815
+  AUC-PR:  0.07675028218320165
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0078       0.0417     0.9956    
+  1%           0.0078       0.0417     0.9956    
+  2%           0.0149       0.0833     0.9942    
+  5%           0.0524       0.1458     0.9900    
+  10%          0.0978       0.2708     0.9859    
+  Youden best: threshold=0.9340  TPR=0.8333  FPR=0.4649
+
+
+============================================================
+[care_label | convnext_large @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.4745/5.0965 | AUC=0.5872 PR=0.0459 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.146 *
+  Epoch   2/50 | loss=2.2324/3.2872 | AUC=0.6519 PR=0.0692 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.271 *
+  Epoch   3/50 | loss=2.0363/2.9843 | AUC=0.6797 PR=0.0789 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.083 | 5%=0.208 | 10%=0.292 *
+  Epoch   4/50 | loss=1.9676/2.8427 | AUC=0.6975 PR=0.0825 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch   5/50 | loss=1.8881/2.6785 | AUC=0.7045 PR=0.0818 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.188 | 10%=0.312 *
+  Epoch   6/50 | loss=1.8452/2.6721 | AUC=0.7105 PR=0.0821 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.104 | 5%=0.208 | 10%=0.354 *
+  Epoch   7/50 | loss=1.7981/2.6414 | AUC=0.7161 PR=0.0841 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.208 | 10%=0.354 *
+  Epoch   8/50 | loss=1.7715/2.5997 | AUC=0.7210 PR=0.0851 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.208 | 10%=0.333 *
+  Epoch   9/50 | loss=1.7113/2.6046 | AUC=0.7273 PR=0.0879 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.229 | 10%=0.354 *
+  Epoch  10/50 | loss=1.7052/2.6059 | AUC=0.7275 PR=0.0867 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.208 | 10%=0.333 *
+  Epoch  11/50 | loss=1.6705/2.5687 | AUC=0.7274 PR=0.0887 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.208 | 10%=0.354
+  Epoch  12/50 | loss=1.6711/2.4702 | AUC=0.7278 PR=0.0851 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.208 | 10%=0.354 *
+  Epoch  13/50 | loss=1.6147/2.4017 | AUC=0.7308 PR=0.0878 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.208 | 10%=0.333 *
+  Epoch  14/50 | loss=1.6256/2.4358 | AUC=0.7322 PR=0.0882 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.188 | 10%=0.375 *
+  Epoch  15/50 | loss=1.5497/2.4473 | AUC=0.7284 PR=0.0867 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.188 | 10%=0.333
+  Epoch  16/50 | loss=1.5507/2.4185 | AUC=0.7304 PR=0.0877 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.333
+  Epoch  17/50 | loss=1.5602/2.2678 | AUC=0.7349 PR=0.0945 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.229 | 10%=0.333 *
+  Epoch  18/50 | loss=1.5616/2.3111 | AUC=0.7333 PR=0.0928 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.333
+  Epoch  19/50 | loss=1.5252/2.2401 | AUC=0.7366 PR=0.0977 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.271 | 10%=0.333 *
+  Epoch  20/50 | loss=1.4683/2.2176 | AUC=0.7362 PR=0.0988 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  21/50 | loss=1.5062/2.2951 | AUC=0.7351 PR=0.0949 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.229 | 10%=0.333
+  Epoch  22/50 | loss=1.4991/2.2542 | AUC=0.7333 PR=0.0922 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.229 | 10%=0.354
+  Epoch  23/50 | loss=1.4404/2.1503 | AUC=0.7359 PR=0.0952 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.333
+  Epoch  24/50 | loss=1.4360/2.1739 | AUC=0.7363 PR=0.0932 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  25/50 | loss=1.4197/2.1548 | AUC=0.7363 PR=0.0967 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.146 | 5%=0.250 | 10%=0.354
+  Epoch  26/50 | loss=1.4576/2.1344 | AUC=0.7372 PR=0.0964 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.375 *
+  Epoch  27/50 | loss=1.4270/2.2235 | AUC=0.7379 PR=0.0977 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.104 | 5%=0.271 | 10%=0.354 *
+  Epoch  28/50 | loss=1.4202/2.1379 | AUC=0.7381 PR=0.0971 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.146 | 5%=0.271 | 10%=0.354 *
+  Epoch  29/50 | loss=1.4183/2.0869 | AUC=0.7400 PR=0.0986 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354 *
+  Epoch  30/50 | loss=1.4522/2.0907 | AUC=0.7396 PR=0.0967 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  31/50 | loss=1.4036/2.1129 | AUC=0.7372 PR=0.0953 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  32/50 | loss=1.4004/2.1849 | AUC=0.7391 PR=0.0962 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.271 | 10%=0.354
+  Epoch  33/50 | loss=1.3902/2.1257 | AUC=0.7382 PR=0.0964 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  34/50 | loss=1.3398/2.1204 | AUC=0.7397 PR=0.0976 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.292 | 10%=0.354
+  Epoch  35/50 | loss=1.3701/2.0883 | AUC=0.7408 PR=0.0988 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.375 *
+  Epoch  36/50 | loss=1.3671/2.1177 | AUC=0.7409 PR=0.0988 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.292 | 10%=0.354 *
+  Epoch  37/50 | loss=1.3530/2.0765 | AUC=0.7407 PR=0.0977 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.167 | 5%=0.271 | 10%=0.375
+  Epoch  38/50 | loss=1.3630/2.0789 | AUC=0.7402 PR=0.0969 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.271 | 10%=0.375
+  Epoch  39/50 | loss=1.3693/2.0883 | AUC=0.7395 PR=0.0966 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.271 | 10%=0.375
+  Epoch  40/50 | loss=1.3726/2.1042 | AUC=0.7400 PR=0.0973 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.250 | 10%=0.375
+  Epoch  41/50 | loss=1.3643/2.0744 | AUC=0.7398 PR=0.0968 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.125 | 5%=0.250 | 10%=0.375
+  Epoch  42/50 | loss=1.3600/2.1353 | AUC=0.7398 PR=0.0967 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.250 | 10%=0.375
+  Epoch  43/50 | loss=1.3573/2.0575 | AUC=0.7403 PR=0.0980 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.375
+  Early stopping at epoch 43 (patience=7)
+  Best AUC-ROC: 0.7409 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_large_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7409490904795654
+  AUC-PR:  0.09879852147481685
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0071       0.0208     0.9971    
+  1%           0.0120       0.0625     0.9964    
+  2%           0.0206       0.1250     0.9944    
+  5%           0.0524       0.2917     0.9903    
+  10%          0.1042       0.3542     0.9843    
+  Youden best: threshold=0.8893  TPR=0.8333  FPR=0.4458
+
+
+============================================================
+[care_label | convnext_large @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.3476/4.9728 | AUC=0.6019 PR=0.0532 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.146 | 10%=0.208 *
+  Epoch   2/50 | loss=2.2870/3.6737 | AUC=0.6736 PR=0.0650 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.042 | 5%=0.104 | 10%=0.208 *
+  Epoch   3/50 | loss=2.0552/2.9873 | AUC=0.7072 PR=0.0954 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.333 *
+  Epoch   4/50 | loss=1.9471/2.9030 | AUC=0.7176 PR=0.1082 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.188 | 10%=0.333 *
+  Epoch   5/50 | loss=1.9442/2.8703 | AUC=0.7190 PR=0.1010 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.125 | 5%=0.188 | 10%=0.375 *
+  Epoch   6/50 | loss=1.8420/2.8749 | AUC=0.7232 PR=0.0973 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.375 *
+  Epoch   7/50 | loss=1.7906/2.7857 | AUC=0.7248 PR=0.0982 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.396 *
+  Epoch   8/50 | loss=1.7965/2.6825 | AUC=0.7231 PR=0.1003 | TPR@FPR: 0.5%=0.042 | 1%=0.104 | 2%=0.125 | 5%=0.250 | 10%=0.375
+  Epoch   9/50 | loss=1.7433/2.4535 | AUC=0.7244 PR=0.1067 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.375
+  Epoch  10/50 | loss=1.6876/2.2823 | AUC=0.7271 PR=0.1217 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.292 | 10%=0.375 *
+  Epoch  11/50 | loss=1.6730/2.5820 | AUC=0.7244 PR=0.1069 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.167 | 5%=0.292 | 10%=0.375
+  Epoch  12/50 | loss=1.6475/2.4736 | AUC=0.7229 PR=0.1059 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.375
+  Epoch  13/50 | loss=1.6337/2.4342 | AUC=0.7227 PR=0.1177 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.167 | 5%=0.250 | 10%=0.396
+  Epoch  14/50 | loss=1.5907/2.4321 | AUC=0.7183 PR=0.1086 | TPR@FPR: 0.5%=0.042 | 1%=0.104 | 2%=0.146 | 5%=0.271 | 10%=0.375
+  Epoch  15/50 | loss=1.5602/2.3904 | AUC=0.7237 PR=0.1142 | TPR@FPR: 0.5%=0.062 | 1%=0.125 | 2%=0.167 | 5%=0.271 | 10%=0.396
+  Epoch  16/50 | loss=1.5773/2.2162 | AUC=0.7230 PR=0.1178 | TPR@FPR: 0.5%=0.062 | 1%=0.146 | 2%=0.167 | 5%=0.250 | 10%=0.354
+  Epoch  17/50 | loss=1.5736/2.2724 | AUC=0.7211 PR=0.1114 | TPR@FPR: 0.5%=0.042 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.396
+  Early stopping at epoch 17 (patience=7)
+  Best AUC-ROC: 0.7271 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_large_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7271438695960313
+  AUC-PR:  0.12166926464654218
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0071       0.0833     0.9917    
+  1%           0.0113       0.1250     0.9905    
+  2%           0.0269       0.1667     0.9872    
+  5%           0.0510       0.2917     0.9821    
+  10%          0.1056       0.3750     0.9751    
+  Youden best: threshold=0.9388  TPR=0.7500  FPR=0.3459
+
+
+============================================================
+[care_label | convnext_small @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.6238/5.7901 | AUC=0.4981 PR=0.0318 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.042 | 10%=0.083 *
+  Epoch   2/50 | loss=2.4887/2.7519 | AUC=0.6211 PR=0.0479 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.062 | 10%=0.229 *
+  Epoch   3/50 | loss=2.1242/3.2962 | AUC=0.6510 PR=0.0518 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.104 | 10%=0.208 *
+  Epoch   4/50 | loss=2.0587/3.0787 | AUC=0.6744 PR=0.0567 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.104 | 10%=0.250 *
+  Epoch   5/50 | loss=1.9985/2.8393 | AUC=0.6921 PR=0.0614 | TPR@FPR: 0.5%=0.000 | 1%=0.042 | 2%=0.042 | 5%=0.167 | 10%=0.250 *
+  Epoch   6/50 | loss=1.9395/2.8842 | AUC=0.6978 PR=0.0645 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.188 | 10%=0.250 *
+  Epoch   7/50 | loss=1.9126/2.9066 | AUC=0.7082 PR=0.0675 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.062 | 5%=0.188 | 10%=0.250 *
+  Epoch   8/50 | loss=1.8966/2.8022 | AUC=0.7145 PR=0.0703 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.083 | 5%=0.188 | 10%=0.250 *
+  Epoch   9/50 | loss=1.8536/2.7394 | AUC=0.7210 PR=0.0748 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.208 | 10%=0.250 *
+  Epoch  10/50 | loss=1.8249/2.7850 | AUC=0.7251 PR=0.0771 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.208 | 10%=0.250 *
+  Epoch  11/50 | loss=1.8085/2.6627 | AUC=0.7307 PR=0.0801 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.208 | 10%=0.250 *
+  Epoch  12/50 | loss=1.7932/2.6859 | AUC=0.7337 PR=0.0851 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.250 *
+  Epoch  13/50 | loss=1.7487/2.6498 | AUC=0.7376 PR=0.0883 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.271 *
+  Epoch  14/50 | loss=1.7138/2.6675 | AUC=0.7371 PR=0.0952 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.271
+  Epoch  15/50 | loss=1.7246/2.4985 | AUC=0.7424 PR=0.0970 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.271 *
+  Epoch  16/50 | loss=1.6783/2.5390 | AUC=0.7467 PR=0.0954 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.229 | 10%=0.271 *
+  Epoch  17/50 | loss=1.6898/2.4317 | AUC=0.7471 PR=0.0983 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.292 *
+  Epoch  18/50 | loss=1.6480/2.5583 | AUC=0.7482 PR=0.0987 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.333 *
+  Epoch  19/50 | loss=1.6599/2.4408 | AUC=0.7502 PR=0.1065 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  20/50 | loss=1.6471/2.4099 | AUC=0.7523 PR=0.1072 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.354 *
+  Epoch  21/50 | loss=1.6592/2.3994 | AUC=0.7525 PR=0.1117 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.188 | 10%=0.375 *
+  Epoch  22/50 | loss=1.6072/2.3204 | AUC=0.7537 PR=0.1194 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.396 *
+  Epoch  23/50 | loss=1.6321/2.3083 | AUC=0.7551 PR=0.1185 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.396 *
+  Epoch  24/50 | loss=1.6088/2.3718 | AUC=0.7556 PR=0.1158 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.375 *
+  Epoch  25/50 | loss=1.5951/2.4663 | AUC=0.7560 PR=0.1144 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.354 *
+  Epoch  26/50 | loss=1.5684/2.4312 | AUC=0.7566 PR=0.1178 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.396 *
+  Epoch  27/50 | loss=1.5429/2.2909 | AUC=0.7561 PR=0.1205 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.417
+  Epoch  28/50 | loss=1.5829/2.3219 | AUC=0.7558 PR=0.1228 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.396
+  Epoch  29/50 | loss=1.5655/2.3564 | AUC=0.7554 PR=0.1367 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.396
+  Epoch  30/50 | loss=1.5564/2.3082 | AUC=0.7553 PR=0.1408 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.417
+  Epoch  31/50 | loss=1.5497/2.3360 | AUC=0.7552 PR=0.1413 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.417
+  Epoch  32/50 | loss=1.5186/2.3106 | AUC=0.7553 PR=0.1413 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.396
+  Epoch  33/50 | loss=1.5463/2.2748 | AUC=0.7570 PR=0.1421 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.417 *
+  Epoch  34/50 | loss=1.5097/2.3278 | AUC=0.7574 PR=0.1426 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.417 *
+  Epoch  35/50 | loss=1.5279/2.2506 | AUC=0.7575 PR=0.1449 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.438 *
+  Epoch  36/50 | loss=1.5198/2.2937 | AUC=0.7578 PR=0.1453 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.438 *
+  Epoch  37/50 | loss=1.5201/2.2794 | AUC=0.7575 PR=0.1458 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.208 | 10%=0.417
+  Epoch  38/50 | loss=1.4845/2.2740 | AUC=0.7583 PR=0.1460 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.417 *
+  Epoch  39/50 | loss=1.4492/2.2859 | AUC=0.7586 PR=0.1464 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.438 *
+  Epoch  40/50 | loss=1.5139/2.2309 | AUC=0.7583 PR=0.1467 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.458
+  Epoch  41/50 | loss=1.4975/2.2506 | AUC=0.7583 PR=0.1469 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.438
+  Epoch  42/50 | loss=1.4872/2.2847 | AUC=0.7585 PR=0.1468 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.438
+  Epoch  43/50 | loss=1.5192/2.2332 | AUC=0.7586 PR=0.1471 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458 *
+  Epoch  44/50 | loss=1.4526/2.2578 | AUC=0.7585 PR=0.1471 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.229 | 10%=0.438
+  Epoch  45/50 | loss=1.5163/2.2430 | AUC=0.7585 PR=0.1472 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458
+  Epoch  46/50 | loss=1.4992/2.2502 | AUC=0.7585 PR=0.1473 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458
+  Epoch  47/50 | loss=1.5038/2.2531 | AUC=0.7585 PR=0.1474 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458
+  Epoch  48/50 | loss=1.4685/2.2571 | AUC=0.7585 PR=0.1473 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458
+  Epoch  49/50 | loss=1.4898/2.2569 | AUC=0.7585 PR=0.1473 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458
+  Epoch  50/50 | loss=1.4930/2.2563 | AUC=0.7585 PR=0.1473 | TPR@FPR: 0.5%=0.083 | 1%=0.083 | 2%=0.104 | 5%=0.250 | 10%=0.458
+  Early stopping at epoch 50 (patience=7)
+  Best AUC-ROC: 0.7586 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_small_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7586374911410347
+  AUC-PR:  0.1471444221279892
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0021       0.0833     0.9984    
+  1%           0.0021       0.0833     0.9984    
+  2%           0.0248       0.1042     0.9949    
+  5%           0.0503       0.2500     0.9909    
+  10%          0.1021       0.4583     0.9838    
+  Youden best: threshold=0.9824  TPR=0.5000  FPR=0.1127
+
+
+============================================================
+[care_label | convnext_small @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.6534/5.8232 | AUC=0.4757 PR=0.0306 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.042 | 10%=0.062 *
+  Epoch   2/50 | loss=2.5310/2.7681 | AUC=0.5833 PR=0.0414 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.042 | 10%=0.083 *
+  Epoch   3/50 | loss=2.1587/3.3952 | AUC=0.6123 PR=0.0461 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.062 | 10%=0.167 *
+  Epoch   4/50 | loss=2.0466/3.0579 | AUC=0.6523 PR=0.0523 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.062 | 10%=0.167 *
+  Epoch   5/50 | loss=2.0295/2.9941 | AUC=0.6694 PR=0.0566 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.062 | 10%=0.250 *
+  Epoch   6/50 | loss=1.9945/2.8982 | AUC=0.6851 PR=0.0603 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.188 *
+  Epoch   7/50 | loss=1.9398/2.8847 | AUC=0.6978 PR=0.0636 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.104 | 10%=0.229 *
+  Epoch   8/50 | loss=1.9016/2.8215 | AUC=0.7072 PR=0.0664 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.229 *
+  Epoch   9/50 | loss=1.8894/2.7742 | AUC=0.7126 PR=0.0688 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.229 *
+  Epoch  10/50 | loss=1.9000/2.7935 | AUC=0.7181 PR=0.0718 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.271 *
+  Epoch  11/50 | loss=1.8346/2.7789 | AUC=0.7208 PR=0.0744 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.312 *
+  Epoch  12/50 | loss=1.8422/2.7056 | AUC=0.7271 PR=0.0780 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.333 *
+  Epoch  13/50 | loss=1.8356/2.6358 | AUC=0.7322 PR=0.0811 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.188 | 10%=0.333 *
+  Epoch  14/50 | loss=1.7947/2.7367 | AUC=0.7365 PR=0.0832 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.062 | 5%=0.188 | 10%=0.333 *
+  Epoch  15/50 | loss=1.7865/2.6245 | AUC=0.7371 PR=0.0864 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.250 | 10%=0.333 *
+  Epoch  16/50 | loss=1.7687/2.6199 | AUC=0.7371 PR=0.0895 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.250 | 10%=0.354 *
+  Epoch  17/50 | loss=1.7858/2.5144 | AUC=0.7381 PR=0.0931 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.250 | 10%=0.354 *
+  Epoch  18/50 | loss=1.7271/2.5340 | AUC=0.7419 PR=0.0927 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.271 | 10%=0.354 *
+  Epoch  19/50 | loss=1.7406/2.4699 | AUC=0.7432 PR=0.0945 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.292 | 10%=0.354 *
+  Epoch  20/50 | loss=1.6542/2.5265 | AUC=0.7446 PR=0.0971 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.271 | 10%=0.375 *
+  Epoch  21/50 | loss=1.6444/2.5813 | AUC=0.7419 PR=0.0980 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  22/50 | loss=1.6875/2.4690 | AUC=0.7427 PR=0.1008 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.271 | 10%=0.354
+  Epoch  23/50 | loss=1.6823/2.4482 | AUC=0.7456 PR=0.1021 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.271 | 10%=0.354 *
+  Epoch  24/50 | loss=1.6585/2.5545 | AUC=0.7469 PR=0.1038 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354 *
+  Epoch  25/50 | loss=1.6725/2.4523 | AUC=0.7451 PR=0.1086 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  26/50 | loss=1.6655/2.4143 | AUC=0.7452 PR=0.1103 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.146 | 5%=0.292 | 10%=0.354
+  Epoch  27/50 | loss=1.6552/2.5829 | AUC=0.7443 PR=0.1072 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.292 | 10%=0.354
+  Epoch  28/50 | loss=1.6300/2.3963 | AUC=0.7467 PR=0.1074 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  29/50 | loss=1.6172/2.4269 | AUC=0.7466 PR=0.1066 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  30/50 | loss=1.5942/2.3896 | AUC=0.7469 PR=0.1075 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354 *
+  Epoch  31/50 | loss=1.6093/2.4337 | AUC=0.7468 PR=0.1093 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.125 | 5%=0.292 | 10%=0.354
+  Epoch  32/50 | loss=1.6184/2.3277 | AUC=0.7466 PR=0.1113 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.125 | 5%=0.271 | 10%=0.375
+  Epoch  33/50 | loss=1.5852/2.3899 | AUC=0.7461 PR=0.1146 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.167 | 5%=0.292 | 10%=0.354
+  Epoch  34/50 | loss=1.5900/2.3722 | AUC=0.7458 PR=0.1134 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.167 | 5%=0.292 | 10%=0.354
+  Epoch  35/50 | loss=1.5771/2.4228 | AUC=0.7463 PR=0.1143 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.167 | 5%=0.292 | 10%=0.354
+  Epoch  36/50 | loss=1.5919/2.3067 | AUC=0.7464 PR=0.1153 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.167 | 5%=0.292 | 10%=0.354
+  Epoch  37/50 | loss=1.5816/2.3678 | AUC=0.7459 PR=0.1161 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.167 | 5%=0.292 | 10%=0.354
+  Early stopping at epoch 37 (patience=7)
+  Best AUC-ROC: 0.7469 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_small_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7469288920387432
+  AUC-PR:  0.10750587201979293
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0043       0.0417     0.9974    
+  1%           0.0085       0.0625     0.9965    
+  2%           0.0198       0.1250     0.9946    
+  5%           0.0461       0.2708     0.9910    
+  10%          0.0893       0.3542     0.9858    
+  Youden best: threshold=0.9715  TPR=0.6042  FPR=0.2084
+
+
+============================================================
+[care_label | convnext_tiny @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=4.1632/5.9291 | AUC=0.4544 PR=0.0283 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.000 | 10%=0.021 *
+  Epoch   2/50 | loss=2.6668/3.5207 | AUC=0.5531 PR=0.0356 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.042 | 10%=0.083 *
+  Epoch   3/50 | loss=2.1821/3.2680 | AUC=0.6000 PR=0.0411 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.042 | 10%=0.083 *
+  Epoch   4/50 | loss=2.1220/2.9926 | AUC=0.6385 PR=0.0476 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.062 | 10%=0.167 *
+  Epoch   5/50 | loss=2.0495/3.0446 | AUC=0.6592 PR=0.0517 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.062 | 10%=0.208 *
+  Epoch   6/50 | loss=1.9707/2.9317 | AUC=0.6765 PR=0.0562 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.083 | 10%=0.229 *
+  Epoch   7/50 | loss=1.9528/2.8534 | AUC=0.6880 PR=0.0589 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.021 | 5%=0.062 | 10%=0.229 *
+  Epoch   8/50 | loss=1.9309/2.7966 | AUC=0.6966 PR=0.0616 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.021 | 5%=0.083 | 10%=0.271 *
+  Epoch   9/50 | loss=1.9049/2.7588 | AUC=0.7032 PR=0.0627 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.271 *
+  Epoch  10/50 | loss=1.8462/2.7656 | AUC=0.7110 PR=0.0641 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.250 *
+  Epoch  11/50 | loss=1.8512/2.6566 | AUC=0.7124 PR=0.0658 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.229 *
+  Epoch  12/50 | loss=1.8090/2.6258 | AUC=0.7134 PR=0.0663 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.125 | 10%=0.208 *
+  Epoch  13/50 | loss=1.7973/2.5772 | AUC=0.7142 PR=0.0698 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.125 | 10%=0.208 *
+  Epoch  14/50 | loss=1.7538/2.5647 | AUC=0.7175 PR=0.0706 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.125 | 10%=0.229 *
+  Epoch  15/50 | loss=1.7549/2.4580 | AUC=0.7197 PR=0.0720 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.042 | 5%=0.125 | 10%=0.229 *
+  Epoch  16/50 | loss=1.7339/2.5469 | AUC=0.7217 PR=0.0747 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.125 | 10%=0.271 *
+  Epoch  17/50 | loss=1.7068/2.4247 | AUC=0.7252 PR=0.0762 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.125 | 10%=0.271 *
+  Epoch  18/50 | loss=1.6975/2.5324 | AUC=0.7235 PR=0.0771 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.167 | 10%=0.271
+  Epoch  19/50 | loss=1.7021/2.4935 | AUC=0.7240 PR=0.0779 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.271
+  Epoch  20/50 | loss=1.6712/2.4172 | AUC=0.7275 PR=0.0785 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.167 | 10%=0.292 *
+  Epoch  21/50 | loss=1.6357/2.3985 | AUC=0.7249 PR=0.0797 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.167 | 10%=0.271
+  Epoch  22/50 | loss=1.6327/2.3234 | AUC=0.7262 PR=0.0803 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.104 | 5%=0.188 | 10%=0.271
+  Epoch  23/50 | loss=1.6304/2.3458 | AUC=0.7272 PR=0.0798 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.167 | 10%=0.271
+  Epoch  24/50 | loss=1.6128/2.3084 | AUC=0.7261 PR=0.0805 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.271
+  Epoch  25/50 | loss=1.6085/2.3287 | AUC=0.7245 PR=0.0807 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.271
+  Epoch  26/50 | loss=1.5763/2.3155 | AUC=0.7287 PR=0.0816 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.271 *
+  Epoch  27/50 | loss=1.5431/2.3998 | AUC=0.7290 PR=0.0816 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.292 *
+  Epoch  28/50 | loss=1.5545/2.3095 | AUC=0.7289 PR=0.0834 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.208 | 10%=0.292
+  Epoch  29/50 | loss=1.5823/2.2887 | AUC=0.7313 PR=0.0844 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312 *
+  Epoch  30/50 | loss=1.5535/2.2974 | AUC=0.7308 PR=0.0842 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  31/50 | loss=1.5357/2.2528 | AUC=0.7313 PR=0.0847 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  32/50 | loss=1.5592/2.2726 | AUC=0.7312 PR=0.0850 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  33/50 | loss=1.5073/2.1945 | AUC=0.7336 PR=0.0869 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.104 | 5%=0.188 | 10%=0.312 *
+  Epoch  34/50 | loss=1.5284/2.3080 | AUC=0.7318 PR=0.0866 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  35/50 | loss=1.5359/2.1981 | AUC=0.7317 PR=0.0882 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.208 | 10%=0.312
+  Epoch  36/50 | loss=1.5087/2.2837 | AUC=0.7299 PR=0.0874 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.208 | 10%=0.312
+  Epoch  37/50 | loss=1.5318/2.1636 | AUC=0.7327 PR=0.0881 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  38/50 | loss=1.5312/2.2243 | AUC=0.7326 PR=0.0868 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  39/50 | loss=1.5267/2.2457 | AUC=0.7319 PR=0.0867 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Epoch  40/50 | loss=1.4880/2.2062 | AUC=0.7318 PR=0.0873 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.312
+  Early stopping at epoch 40 (patience=7)
+  Best AUC-ROC: 0.7336 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_tiny_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7336256791873375
+  AUC-PR:  0.0869146921816841
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0085       0.0625     0.9963    
+  1%           0.0085       0.0625     0.9963    
+  2%           0.0241       0.1042     0.9931    
+  5%           0.0510       0.1875     0.9892    
+  10%          0.0985       0.3125     0.9823    
+  Youden best: threshold=0.8923  TPR=0.8958  FPR=0.4791
+
+
+============================================================
+[care_label | convnext_tiny @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=7.7719/6.4169 | AUC=0.4545 PR=0.0280 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.000 | 10%=0.021 *
+  Epoch   2/50 | loss=3.2769/5.5603 | AUC=0.5013 PR=0.0311 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.021 | 10%=0.042 *
+  Epoch   3/50 | loss=2.5254/3.4629 | AUC=0.5915 PR=0.0406 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.062 | 10%=0.104 *
+  Epoch   4/50 | loss=2.1338/3.0755 | AUC=0.6340 PR=0.0489 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.167 *
+  Epoch   5/50 | loss=2.0978/3.1634 | AUC=0.6562 PR=0.0530 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.208 *
+  Epoch   6/50 | loss=2.0903/3.0415 | AUC=0.6729 PR=0.0596 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.104 | 10%=0.229 *
+  Epoch   7/50 | loss=2.0567/2.9658 | AUC=0.6860 PR=0.0656 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.167 | 10%=0.229 *
+  Epoch   8/50 | loss=1.9968/3.0101 | AUC=0.6956 PR=0.0700 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.167 | 10%=0.250 *
+  Epoch   9/50 | loss=1.9919/2.8922 | AUC=0.7021 PR=0.0755 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.250 *
+  Epoch  10/50 | loss=1.9503/2.8754 | AUC=0.7063 PR=0.0765 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.167 | 10%=0.271 *
+  Epoch  11/50 | loss=1.9481/2.8689 | AUC=0.7101 PR=0.0883 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.146 | 10%=0.271 *
+  Epoch  12/50 | loss=1.9169/2.7626 | AUC=0.7138 PR=0.0906 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.146 | 10%=0.292 *
+  Epoch  13/50 | loss=1.8826/2.8455 | AUC=0.7146 PR=0.0920 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.083 | 5%=0.167 | 10%=0.292 *
+  Epoch  14/50 | loss=1.8837/2.7976 | AUC=0.7139 PR=0.0931 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.104 | 5%=0.167 | 10%=0.292
+  Epoch  15/50 | loss=1.8601/2.7571 | AUC=0.7144 PR=0.0936 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.104 | 5%=0.146 | 10%=0.292
+  Epoch  16/50 | loss=1.8200/2.7620 | AUC=0.7147 PR=0.0940 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.104 | 5%=0.146 | 10%=0.271 *
+  Epoch  17/50 | loss=1.8453/2.6528 | AUC=0.7152 PR=0.0968 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.292 *
+  Epoch  18/50 | loss=1.8438/2.7741 | AUC=0.7156 PR=0.0987 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.271 *
+  Epoch  19/50 | loss=1.8217/2.6373 | AUC=0.7165 PR=0.0987 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.312 *
+  Epoch  20/50 | loss=1.7996/2.7109 | AUC=0.7167 PR=0.0974 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.146 | 10%=0.292 *
+  Epoch  21/50 | loss=1.8188/2.5765 | AUC=0.7162 PR=0.1038 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.271
+  Epoch  22/50 | loss=1.7860/2.6481 | AUC=0.7185 PR=0.1047 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.292 *
+  Epoch  23/50 | loss=1.7582/2.5855 | AUC=0.7208 PR=0.1047 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.312 *
+  Epoch  24/50 | loss=1.7802/2.5801 | AUC=0.7217 PR=0.1077 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.312 *
+  Epoch  25/50 | loss=1.7537/2.6043 | AUC=0.7213 PR=0.1075 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.146 | 10%=0.292
+  Epoch  26/50 | loss=1.7405/2.5951 | AUC=0.7202 PR=0.1114 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.292
+  Epoch  27/50 | loss=1.7358/2.5539 | AUC=0.7215 PR=0.1083 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.167 | 10%=0.292
+  Epoch  28/50 | loss=1.7306/2.6293 | AUC=0.7195 PR=0.1107 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.188 | 10%=0.312
+  Epoch  29/50 | loss=1.7346/2.5489 | AUC=0.7181 PR=0.1115 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.125 | 5%=0.188 | 10%=0.312
+  Epoch  30/50 | loss=1.7199/2.5875 | AUC=0.7179 PR=0.1124 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.125 | 5%=0.188 | 10%=0.312
+  Epoch  31/50 | loss=1.7213/2.5259 | AUC=0.7185 PR=0.1133 | TPR@FPR: 0.5%=0.062 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.333
+  Early stopping at epoch 31 (patience=7)
+  Best AUC-ROC: 0.7217 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/convnext_tiny_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7217251358374676
+  AUC-PR:  0.10773507122458971
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0014       0.0417     0.9976    
+  1%           0.0092       0.0625     0.9965    
+  2%           0.0198       0.1042     0.9944    
+  5%           0.0517       0.1667     0.9907    
+  10%          0.1021       0.3125     0.9855    
+  Youden best: threshold=0.9539  TPR=0.7083  FPR=0.3501
+
+
+============================================================
+[care_label | vitb16 @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.4144/3.7827 | AUC=0.5319 PR=0.0391 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.021 | 5%=0.083 | 10%=0.146 *
+  Epoch   2/50 | loss=2.2924/3.6486 | AUC=0.5879 PR=0.0516 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.125 | 10%=0.208 *
+  Epoch   3/50 | loss=2.1536/3.1434 | AUC=0.6205 PR=0.0582 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.146 | 10%=0.271 *
+  Epoch   4/50 | loss=2.1040/3.1239 | AUC=0.6327 PR=0.0620 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.167 | 10%=0.271 *
+  Epoch   5/50 | loss=2.0968/3.0399 | AUC=0.6453 PR=0.0741 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.167 | 10%=0.292 *
+  Epoch   6/50 | loss=2.0505/2.9720 | AUC=0.6584 PR=0.0810 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.271 *
+  Epoch   7/50 | loss=2.0203/2.9353 | AUC=0.6725 PR=0.1010 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.188 | 10%=0.292 *
+  Epoch   8/50 | loss=1.9432/2.9369 | AUC=0.6813 PR=0.1045 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.188 | 10%=0.292 *
+  Epoch   9/50 | loss=1.9506/2.8172 | AUC=0.6880 PR=0.1172 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.188 | 10%=0.292 *
+  Epoch  10/50 | loss=1.9022/2.8020 | AUC=0.6936 PR=0.1197 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  11/50 | loss=1.8987/2.7263 | AUC=0.6996 PR=0.1248 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  12/50 | loss=1.8632/2.6984 | AUC=0.7038 PR=0.1274 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  13/50 | loss=1.8304/2.6703 | AUC=0.7074 PR=0.1282 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.312 *
+  Epoch  14/50 | loss=1.8245/2.6119 | AUC=0.7118 PR=0.1299 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.312 *
+  Epoch  15/50 | loss=1.7787/2.6521 | AUC=0.7167 PR=0.1326 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.312 *
+  Epoch  16/50 | loss=1.7552/2.5730 | AUC=0.7207 PR=0.1383 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.312 *
+  Epoch  17/50 | loss=1.7234/2.5924 | AUC=0.7227 PR=0.1341 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.188 | 10%=0.312 *
+  Epoch  18/50 | loss=1.7474/2.4832 | AUC=0.7270 PR=0.1356 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.125 | 5%=0.188 | 10%=0.312 *
+  Epoch  19/50 | loss=1.7197/2.4972 | AUC=0.7299 PR=0.1345 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  20/50 | loss=1.7102/2.4608 | AUC=0.7326 PR=0.1371 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  21/50 | loss=1.6571/2.4616 | AUC=0.7341 PR=0.1377 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  22/50 | loss=1.7019/2.4403 | AUC=0.7368 PR=0.1328 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  23/50 | loss=1.6583/2.4019 | AUC=0.7384 PR=0.1340 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  24/50 | loss=1.6433/2.4409 | AUC=0.7400 PR=0.1324 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  25/50 | loss=1.5972/2.3976 | AUC=0.7420 PR=0.1332 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  26/50 | loss=1.5946/2.3619 | AUC=0.7436 PR=0.1306 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  27/50 | loss=1.6288/2.3442 | AUC=0.7471 PR=0.1254 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  28/50 | loss=1.5899/2.3629 | AUC=0.7480 PR=0.1257 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  29/50 | loss=1.5899/2.3127 | AUC=0.7494 PR=0.1258 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  30/50 | loss=1.5770/2.2842 | AUC=0.7506 PR=0.1227 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  31/50 | loss=1.5461/2.3006 | AUC=0.7508 PR=0.1224 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  32/50 | loss=1.5535/2.3000 | AUC=0.7522 PR=0.1227 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  33/50 | loss=1.5658/2.2818 | AUC=0.7531 PR=0.1228 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.271 *
+  Epoch  34/50 | loss=1.5107/2.3030 | AUC=0.7529 PR=0.1224 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.292
+  Epoch  35/50 | loss=1.5195/2.3075 | AUC=0.7531 PR=0.1216 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  36/50 | loss=1.5457/2.2760 | AUC=0.7536 PR=0.1207 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  37/50 | loss=1.5421/2.2577 | AUC=0.7540 PR=0.1208 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  38/50 | loss=1.5520/2.2803 | AUC=0.7542 PR=0.1207 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  39/50 | loss=1.5024/2.2668 | AUC=0.7545 PR=0.1213 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  40/50 | loss=1.5562/2.2703 | AUC=0.7545 PR=0.1213 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  41/50 | loss=1.5298/2.2536 | AUC=0.7552 PR=0.1215 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  42/50 | loss=1.5282/2.2467 | AUC=0.7552 PR=0.1215 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  43/50 | loss=1.5276/2.2486 | AUC=0.7555 PR=0.1217 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  44/50 | loss=1.5500/2.2477 | AUC=0.7556 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  45/50 | loss=1.4961/2.2516 | AUC=0.7557 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  46/50 | loss=1.5037/2.2520 | AUC=0.7556 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271
+  Epoch  47/50 | loss=1.5120/2.2537 | AUC=0.7556 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271
+  Epoch  48/50 | loss=1.5007/2.2537 | AUC=0.7556 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271
+  Epoch  49/50 | loss=1.5220/2.2543 | AUC=0.7556 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271
+  Epoch  50/50 | loss=1.5198/2.2546 | AUC=0.7557 PR=0.1252 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271
+  Best AUC-ROC: 0.7557 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/vitb16_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7557140326009921
+  AUC-PR:  0.12524849420442427
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0057       0.0833     0.9956    
+  1%           0.0071       0.1042     0.9953    
+  2%           0.0149       0.1250     0.9932    
+  5%           0.0468       0.1875     0.9888    
+  10%          0.1056       0.2708     0.9801    
+  Youden best: threshold=0.9258  TPR=0.8333  FPR=0.3877
+
+
+============================================================
+[care_label | vitb16 @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.4239/3.7444 | AUC=0.5486 PR=0.0371 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.000 | 5%=0.021 | 10%=0.125 *
+  Epoch   2/50 | loss=2.2975/3.6338 | AUC=0.5945 PR=0.0438 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.042 | 10%=0.167 *
+  Epoch   3/50 | loss=2.1645/3.0959 | AUC=0.6279 PR=0.0500 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.042 | 10%=0.167 *
+  Epoch   4/50 | loss=2.1120/3.0624 | AUC=0.6461 PR=0.0542 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.021 | 5%=0.083 | 10%=0.188 *
+  Epoch   5/50 | loss=2.0755/3.0277 | AUC=0.6620 PR=0.0613 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.208 *
+  Epoch   6/50 | loss=2.0453/2.9882 | AUC=0.6746 PR=0.0819 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.125 | 10%=0.229 *
+  Epoch   7/50 | loss=2.0021/2.9194 | AUC=0.6864 PR=0.0868 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.146 | 10%=0.229 *
+  Epoch   8/50 | loss=1.9903/2.8557 | AUC=0.6944 PR=0.0901 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.167 | 10%=0.229 *
+  Epoch   9/50 | loss=1.9266/2.8726 | AUC=0.7016 PR=0.0936 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.167 | 10%=0.208 *
+  Epoch  10/50 | loss=1.9293/2.7536 | AUC=0.7093 PR=0.1017 | TPR@FPR: 0.5%=0.042 | 1%=0.083 | 2%=0.125 | 5%=0.167 | 10%=0.208 *
+  Epoch  11/50 | loss=1.8777/2.7310 | AUC=0.7129 PR=0.1058 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.146 | 5%=0.167 | 10%=0.229 *
+  Epoch  12/50 | loss=1.8762/2.7142 | AUC=0.7166 PR=0.1097 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.146 | 5%=0.167 | 10%=0.229 *
+  Epoch  13/50 | loss=1.8050/2.7198 | AUC=0.7191 PR=0.1010 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.146 | 5%=0.167 | 10%=0.250 *
+  Epoch  14/50 | loss=1.8299/2.6665 | AUC=0.7237 PR=0.1121 | TPR@FPR: 0.5%=0.083 | 1%=0.146 | 2%=0.146 | 5%=0.167 | 10%=0.250 *
+  Epoch  15/50 | loss=1.7916/2.6135 | AUC=0.7281 PR=0.1124 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.146 | 5%=0.167 | 10%=0.250 *
+  Epoch  16/50 | loss=1.7741/2.5582 | AUC=0.7302 PR=0.1147 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  17/50 | loss=1.7600/2.5468 | AUC=0.7337 PR=0.1167 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.229 *
+  Epoch  18/50 | loss=1.7613/2.4961 | AUC=0.7367 PR=0.1184 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.229 *
+  Epoch  19/50 | loss=1.7109/2.5214 | AUC=0.7384 PR=0.1223 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  20/50 | loss=1.6934/2.4651 | AUC=0.7392 PR=0.1171 | TPR@FPR: 0.5%=0.083 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  21/50 | loss=1.6959/2.4404 | AUC=0.7420 PR=0.1210 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  22/50 | loss=1.6756/2.3776 | AUC=0.7424 PR=0.1222 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  23/50 | loss=1.6419/2.4187 | AUC=0.7435 PR=0.1188 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  24/50 | loss=1.6389/2.3721 | AUC=0.7440 PR=0.1183 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  25/50 | loss=1.6411/2.3064 | AUC=0.7465 PR=0.1202 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  26/50 | loss=1.6330/2.3539 | AUC=0.7490 PR=0.1195 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  27/50 | loss=1.5610/2.3972 | AUC=0.7493 PR=0.1198 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  28/50 | loss=1.5952/2.2947 | AUC=0.7504 PR=0.1207 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.250 *
+  Epoch  29/50 | loss=1.5984/2.3465 | AUC=0.7508 PR=0.1210 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.188 | 10%=0.271 *
+  Epoch  30/50 | loss=1.5994/2.3317 | AUC=0.7516 PR=0.1207 | TPR@FPR: 0.5%=0.083 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  31/50 | loss=1.5734/2.2838 | AUC=0.7519 PR=0.1228 | TPR@FPR: 0.5%=0.146 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  32/50 | loss=1.5699/2.3076 | AUC=0.7519 PR=0.1225 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  33/50 | loss=1.5671/2.2314 | AUC=0.7520 PR=0.1247 | TPR@FPR: 0.5%=0.146 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  34/50 | loss=1.5338/2.2697 | AUC=0.7525 PR=0.1228 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  35/50 | loss=1.5275/2.2788 | AUC=0.7525 PR=0.1223 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250
+  Epoch  36/50 | loss=1.5556/2.2602 | AUC=0.7530 PR=0.1225 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  37/50 | loss=1.5472/2.2439 | AUC=0.7537 PR=0.1230 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  38/50 | loss=1.5712/2.2446 | AUC=0.7540 PR=0.1232 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  39/50 | loss=1.5329/2.2278 | AUC=0.7545 PR=0.1236 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  40/50 | loss=1.5289/2.2602 | AUC=0.7548 PR=0.1225 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  41/50 | loss=1.5358/2.2418 | AUC=0.7550 PR=0.1227 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  42/50 | loss=1.5267/2.2394 | AUC=0.7552 PR=0.1229 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  43/50 | loss=1.5569/2.2313 | AUC=0.7553 PR=0.1231 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  44/50 | loss=1.5336/2.2282 | AUC=0.7554 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  45/50 | loss=1.5565/2.2353 | AUC=0.7555 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  46/50 | loss=1.5356/2.2346 | AUC=0.7555 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  47/50 | loss=1.5400/2.2315 | AUC=0.7555 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250 *
+  Epoch  48/50 | loss=1.5465/2.2295 | AUC=0.7555 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250
+  Epoch  49/50 | loss=1.5299/2.2294 | AUC=0.7555 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250
+  Epoch  50/50 | loss=1.5246/2.2294 | AUC=0.7555 PR=0.1237 | TPR@FPR: 0.5%=0.125 | 1%=0.146 | 2%=0.167 | 5%=0.208 | 10%=0.250
+  Best AUC-ROC: 0.7555 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/vitb16_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7555368532955351
+  AUC-PR:  0.12372590648748559
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0050       0.1250     0.9947    
+  1%           0.0064       0.1458     0.9943    
+  2%           0.0184       0.1667     0.9919    
+  5%           0.0439       0.2083     0.9881    
+  10%          0.1035       0.2500     0.9796    
+  Youden best: threshold=0.9021  TPR=0.8958  FPR=0.4635
+
+
+============================================================
+[care_label | vitl16 @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=4.1264/3.7302 | AUC=0.5013 PR=0.0365 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.062 | 10%=0.104 *
+  Epoch   2/50 | loss=2.2907/3.7961 | AUC=0.5925 PR=0.0576 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.062 | 5%=0.125 | 10%=0.208 *
+  Epoch   3/50 | loss=2.2170/3.2690 | AUC=0.6500 PR=0.0867 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.104 | 5%=0.188 | 10%=0.229 *
+  Epoch   4/50 | loss=2.1475/3.1060 | AUC=0.6609 PR=0.0927 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch   5/50 | loss=2.1362/3.1398 | AUC=0.6648 PR=0.0883 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.125 | 5%=0.146 | 10%=0.250 *
+  Epoch   6/50 | loss=2.0895/3.1332 | AUC=0.6694 PR=0.0954 | TPR@FPR: 0.5%=0.104 | 1%=0.104 | 2%=0.125 | 5%=0.146 | 10%=0.271 *
+  Epoch   7/50 | loss=2.0927/3.0515 | AUC=0.6777 PR=0.1022 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.146 | 10%=0.271 *
+  Epoch   8/50 | loss=2.0745/3.0365 | AUC=0.6852 PR=0.1034 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.125 | 5%=0.146 | 10%=0.271 *
+  Epoch   9/50 | loss=2.0225/3.0386 | AUC=0.6905 PR=0.1075 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.167 | 10%=0.250 *
+  Epoch  10/50 | loss=2.0129/2.9611 | AUC=0.6983 PR=0.1160 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  11/50 | loss=1.9939/2.9670 | AUC=0.7031 PR=0.1159 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.250 *
+  Epoch  12/50 | loss=1.9870/2.9294 | AUC=0.7067 PR=0.1161 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.250 *
+  Epoch  13/50 | loss=1.9536/2.9100 | AUC=0.7088 PR=0.1158 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.146 | 5%=0.188 | 10%=0.250 *
+  Epoch  14/50 | loss=1.9555/2.8827 | AUC=0.7120 PR=0.1156 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  15/50 | loss=1.9203/2.8489 | AUC=0.7160 PR=0.1209 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.146 | 5%=0.208 | 10%=0.292 *
+  Epoch  16/50 | loss=1.9160/2.8880 | AUC=0.7155 PR=0.1142 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.292
+  Epoch  17/50 | loss=1.8861/2.8005 | AUC=0.7207 PR=0.1089 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.188 | 10%=0.312 *
+  Epoch  18/50 | loss=1.8797/2.8434 | AUC=0.7208 PR=0.1092 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.146 | 5%=0.188 | 10%=0.292 *
+  Epoch  19/50 | loss=1.8901/2.7669 | AUC=0.7244 PR=0.1096 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.208 | 10%=0.312 *
+  Epoch  20/50 | loss=1.8509/2.7534 | AUC=0.7253 PR=0.1092 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.208 | 10%=0.292 *
+  Epoch  21/50 | loss=1.8122/2.8014 | AUC=0.7258 PR=0.1097 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.208 | 10%=0.292 *
+  Epoch  22/50 | loss=1.8737/2.6680 | AUC=0.7276 PR=0.1115 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.208 | 10%=0.292 *
+  Epoch  23/50 | loss=1.8254/2.7042 | AUC=0.7257 PR=0.1109 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.229 | 10%=0.292
+  Epoch  24/50 | loss=1.8142/2.6894 | AUC=0.7260 PR=0.1113 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.229 | 10%=0.292
+  Epoch  25/50 | loss=1.7984/2.6595 | AUC=0.7285 PR=0.1135 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.229 | 10%=0.312 *
+  Epoch  26/50 | loss=1.7872/2.6615 | AUC=0.7280 PR=0.1118 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.229 | 10%=0.312
+  Epoch  27/50 | loss=1.7795/2.6883 | AUC=0.7280 PR=0.1131 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.229 | 10%=0.312
+  Epoch  28/50 | loss=1.7901/2.6722 | AUC=0.7283 PR=0.1103 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.146 | 5%=0.229 | 10%=0.292
+  Epoch  29/50 | loss=1.7630/2.6464 | AUC=0.7300 PR=0.1131 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.167 | 5%=0.229 | 10%=0.312 *
+  Epoch  30/50 | loss=1.7884/2.5845 | AUC=0.7298 PR=0.1127 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.229 | 10%=0.292
+  Epoch  31/50 | loss=1.7727/2.6196 | AUC=0.7290 PR=0.1080 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.229 | 10%=0.292
+  Epoch  32/50 | loss=1.7677/2.6212 | AUC=0.7294 PR=0.1094 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.229 | 10%=0.292
+  Epoch  33/50 | loss=1.7222/2.6228 | AUC=0.7298 PR=0.1100 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.229 | 10%=0.292
+  Epoch  34/50 | loss=1.7363/2.5963 | AUC=0.7308 PR=0.1130 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.292 *
+  Epoch  35/50 | loss=1.7333/2.5785 | AUC=0.7315 PR=0.1128 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312 *
+  Epoch  36/50 | loss=1.7314/2.5496 | AUC=0.7326 PR=0.1159 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312 *
+  Epoch  37/50 | loss=1.7332/2.5640 | AUC=0.7326 PR=0.1165 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312 *
+  Epoch  38/50 | loss=1.7479/2.5532 | AUC=0.7324 PR=0.1162 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Epoch  39/50 | loss=1.7505/2.5494 | AUC=0.7322 PR=0.1149 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Epoch  40/50 | loss=1.7386/2.5809 | AUC=0.7315 PR=0.1135 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Epoch  41/50 | loss=1.7049/2.5655 | AUC=0.7318 PR=0.1129 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Epoch  42/50 | loss=1.7228/2.5503 | AUC=0.7320 PR=0.1138 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Epoch  43/50 | loss=1.7277/2.5576 | AUC=0.7320 PR=0.1136 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Epoch  44/50 | loss=1.7099/2.5503 | AUC=0.7320 PR=0.1136 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.167 | 5%=0.250 | 10%=0.312
+  Early stopping at epoch 44 (patience=7)
+  Best AUC-ROC: 0.7326 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/vitl16_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7325921332388378
+  AUC-PR:  0.11651168058211277
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0043       0.0833     0.9940    
+  1%           0.0106       0.1250     0.9911    
+  2%           0.0170       0.1667     0.9897    
+  5%           0.0454       0.2500     0.9860    
+  10%          0.1035       0.3125     0.9790    
+  Youden best: threshold=0.9422  TPR=0.7917  FPR=0.4047
+
+
+============================================================
+[care_label | vitl16 @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=3.9333/3.8464 | AUC=0.4480 PR=0.0305 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.021 | 5%=0.021 | 10%=0.042 *
+  Epoch   2/50 | loss=2.3229/3.7332 | AUC=0.5677 PR=0.0494 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.229 *
+  Epoch   3/50 | loss=2.2168/3.1856 | AUC=0.6195 PR=0.0692 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.083 | 5%=0.208 | 10%=0.271 *
+  Epoch   4/50 | loss=2.1368/3.2278 | AUC=0.6313 PR=0.0716 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.208 | 10%=0.271 *
+  Epoch   5/50 | loss=2.1284/3.1776 | AUC=0.6445 PR=0.0759 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.104 | 5%=0.208 | 10%=0.271 *
+  Epoch   6/50 | loss=2.1052/3.1401 | AUC=0.6578 PR=0.0788 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch   7/50 | loss=2.0840/3.0668 | AUC=0.6744 PR=0.0808 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch   8/50 | loss=2.0879/3.0074 | AUC=0.6884 PR=0.0837 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch   9/50 | loss=2.0477/3.0043 | AUC=0.6983 PR=0.0835 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  10/50 | loss=2.0044/2.9451 | AUC=0.7058 PR=0.0880 | TPR@FPR: 0.5%=0.021 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.292 *
+  Epoch  11/50 | loss=2.0143/2.9134 | AUC=0.7112 PR=0.0879 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  12/50 | loss=1.9827/2.9484 | AUC=0.7127 PR=0.0891 | TPR@FPR: 0.5%=0.021 | 1%=0.104 | 2%=0.125 | 5%=0.208 | 10%=0.312 *
+  Epoch  13/50 | loss=1.9618/2.8818 | AUC=0.7175 PR=0.0905 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.146 | 5%=0.208 | 10%=0.312 *
+  Epoch  14/50 | loss=1.9707/2.8341 | AUC=0.7213 PR=0.0911 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.146 | 5%=0.208 | 10%=0.312 *
+  Epoch  15/50 | loss=1.9209/2.8564 | AUC=0.7236 PR=0.0911 | TPR@FPR: 0.5%=0.021 | 1%=0.104 | 2%=0.146 | 5%=0.208 | 10%=0.333 *
+  Epoch  16/50 | loss=1.9040/2.7271 | AUC=0.7308 PR=0.0938 | TPR@FPR: 0.5%=0.021 | 1%=0.104 | 2%=0.125 | 5%=0.250 | 10%=0.312 *
+  Epoch  17/50 | loss=1.8824/2.8344 | AUC=0.7302 PR=0.0950 | TPR@FPR: 0.5%=0.021 | 1%=0.104 | 2%=0.125 | 5%=0.250 | 10%=0.312
+  Epoch  18/50 | loss=1.8501/2.7699 | AUC=0.7328 PR=0.0957 | TPR@FPR: 0.5%=0.042 | 1%=0.104 | 2%=0.125 | 5%=0.229 | 10%=0.312 *
+  Epoch  19/50 | loss=1.8745/2.7015 | AUC=0.7349 PR=0.0943 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.229 | 10%=0.312 *
+  Epoch  20/50 | loss=1.8814/2.7067 | AUC=0.7344 PR=0.0949 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.229 | 10%=0.333
+  Epoch  21/50 | loss=1.8513/2.6848 | AUC=0.7354 PR=0.0964 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.333 *
+  Epoch  22/50 | loss=1.8194/2.6764 | AUC=0.7370 PR=0.0964 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.333 *
+  Epoch  23/50 | loss=1.8200/2.6189 | AUC=0.7399 PR=0.0975 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  24/50 | loss=1.8200/2.6592 | AUC=0.7398 PR=0.0974 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  25/50 | loss=1.7762/2.6473 | AUC=0.7404 PR=0.0974 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  26/50 | loss=1.7798/2.5665 | AUC=0.7419 PR=0.0981 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  27/50 | loss=1.7854/2.6027 | AUC=0.7426 PR=0.0967 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.229 | 10%=0.354 *
+  Epoch  28/50 | loss=1.7603/2.5865 | AUC=0.7420 PR=0.0955 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.146 | 5%=0.229 | 10%=0.354
+  Epoch  29/50 | loss=1.7660/2.5361 | AUC=0.7430 PR=0.0974 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.125 | 5%=0.229 | 10%=0.354 *
+  Epoch  30/50 | loss=1.7571/2.5555 | AUC=0.7433 PR=0.0979 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.229 | 10%=0.354 *
+  Epoch  31/50 | loss=1.7296/2.5893 | AUC=0.7430 PR=0.0991 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.125 | 5%=0.229 | 10%=0.354
+  Epoch  32/50 | loss=1.7712/2.5405 | AUC=0.7439 PR=0.1005 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.167 | 5%=0.229 | 10%=0.354 *
+  Epoch  33/50 | loss=1.7266/2.5554 | AUC=0.7444 PR=0.1006 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.167 | 5%=0.250 | 10%=0.354 *
+  Epoch  34/50 | loss=1.7251/2.5450 | AUC=0.7445 PR=0.1010 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  35/50 | loss=1.7125/2.5174 | AUC=0.7453 PR=0.1010 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  36/50 | loss=1.7295/2.5370 | AUC=0.7454 PR=0.1009 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  37/50 | loss=1.7129/2.5196 | AUC=0.7453 PR=0.1004 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  38/50 | loss=1.7209/2.5177 | AUC=0.7451 PR=0.1002 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  39/50 | loss=1.7082/2.4968 | AUC=0.7456 PR=0.1006 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  40/50 | loss=1.7387/2.4908 | AUC=0.7460 PR=0.1011 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.229 | 10%=0.354 *
+  Epoch  41/50 | loss=1.7059/2.4901 | AUC=0.7460 PR=0.1013 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354 *
+  Epoch  42/50 | loss=1.7009/2.4882 | AUC=0.7462 PR=0.1008 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354 *
+  Epoch  43/50 | loss=1.7193/2.4864 | AUC=0.7461 PR=0.1006 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354
+  Epoch  44/50 | loss=1.7108/2.4840 | AUC=0.7462 PR=0.1005 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.271 | 10%=0.354 *
+  Epoch  45/50 | loss=1.6984/2.4889 | AUC=0.7461 PR=0.1004 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  46/50 | loss=1.6870/2.4855 | AUC=0.7462 PR=0.1004 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  47/50 | loss=1.7181/2.4848 | AUC=0.7461 PR=0.1004 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  48/50 | loss=1.6878/2.4850 | AUC=0.7462 PR=0.1005 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  49/50 | loss=1.6870/2.4858 | AUC=0.7462 PR=0.1005 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Epoch  50/50 | loss=1.7038/2.4859 | AUC=0.7462 PR=0.1005 | TPR@FPR: 0.5%=0.042 | 1%=0.062 | 2%=0.125 | 5%=0.250 | 10%=0.354
+  Best AUC-ROC: 0.7462 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/vitl16_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7462201748169147
+  AUC-PR:  0.10049356566056018
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0085       0.0417     0.9923    
+  1%           0.0099       0.0625     0.9918    
+  2%           0.0206       0.1250     0.9892    
+  5%           0.0567       0.2708     0.9838    
+  10%          0.0928       0.3542     0.9791    
+  Youden best: threshold=0.9298  TPR=0.8542  FPR=0.4699
+
+
+============================================================
+[care_label | vits16 @ 518 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=6.0336/2.1825 | AUC=0.5287 PR=0.0368 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.062 | 10%=0.083 *
+  Epoch   2/50 | loss=2.5440/2.9198 | AUC=0.5321 PR=0.0366 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.062 | 10%=0.104 *
+  Epoch   3/50 | loss=2.2821/3.1603 | AUC=0.5533 PR=0.0441 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.146 *
+  Epoch   4/50 | loss=2.2277/3.2335 | AUC=0.5786 PR=0.0498 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.125 | 10%=0.167 *
+  Epoch   5/50 | loss=2.1720/3.2644 | AUC=0.6023 PR=0.0585 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.125 | 10%=0.167 *
+  Epoch   6/50 | loss=2.1954/3.2567 | AUC=0.6255 PR=0.0668 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.104 | 5%=0.125 | 10%=0.188 *
+  Epoch   7/50 | loss=2.1578/3.2252 | AUC=0.6431 PR=0.0734 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.125 | 5%=0.146 | 10%=0.229 *
+  Epoch   8/50 | loss=2.1573/3.2049 | AUC=0.6559 PR=0.0802 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.125 | 5%=0.167 | 10%=0.250 *
+  Epoch   9/50 | loss=2.1289/3.1847 | AUC=0.6660 PR=0.0855 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.125 | 5%=0.188 | 10%=0.271 *
+  Epoch  10/50 | loss=2.1305/3.1719 | AUC=0.6736 PR=0.0899 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.146 | 5%=0.208 | 10%=0.271 *
+  Epoch  11/50 | loss=2.1086/3.1405 | AUC=0.6803 PR=0.0971 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.146 | 5%=0.229 | 10%=0.271 *
+  Epoch  12/50 | loss=2.1143/3.1078 | AUC=0.6859 PR=0.1112 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.167 | 5%=0.250 | 10%=0.271 *
+  Epoch  13/50 | loss=2.0970/3.0812 | AUC=0.6902 PR=0.1150 | TPR@FPR: 0.5%=0.062 | 1%=0.083 | 2%=0.167 | 5%=0.250 | 10%=0.271 *
+  Epoch  14/50 | loss=2.0766/3.0647 | AUC=0.6954 PR=0.1158 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.167 | 5%=0.271 | 10%=0.292 *
+  Epoch  15/50 | loss=2.0830/3.0662 | AUC=0.6987 PR=0.1239 | TPR@FPR: 0.5%=0.062 | 1%=0.104 | 2%=0.208 | 5%=0.271 | 10%=0.312 *
+  Epoch  16/50 | loss=2.0830/3.0361 | AUC=0.7026 PR=0.1255 | TPR@FPR: 0.5%=0.104 | 1%=0.104 | 2%=0.208 | 5%=0.271 | 10%=0.312 *
+  Epoch  17/50 | loss=2.0225/3.0346 | AUC=0.7051 PR=0.1406 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.229 | 5%=0.271 | 10%=0.333 *
+  Epoch  18/50 | loss=2.0560/3.0170 | AUC=0.7079 PR=0.1419 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.188 | 5%=0.292 | 10%=0.333 *
+  Epoch  19/50 | loss=2.0584/3.0113 | AUC=0.7108 PR=0.1434 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.208 | 5%=0.292 | 10%=0.333 *
+  Epoch  20/50 | loss=2.0482/2.9965 | AUC=0.7135 PR=0.1460 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.188 | 5%=0.292 | 10%=0.333 *
+  Epoch  21/50 | loss=2.0180/2.9726 | AUC=0.7161 PR=0.1477 | TPR@FPR: 0.5%=0.083 | 1%=0.125 | 2%=0.208 | 5%=0.292 | 10%=0.333 *
+  Epoch  22/50 | loss=2.0077/2.9879 | AUC=0.7180 PR=0.1488 | TPR@FPR: 0.5%=0.083 | 1%=0.104 | 2%=0.188 | 5%=0.312 | 10%=0.333 *
+  Epoch  23/50 | loss=2.0214/2.9765 | AUC=0.7203 PR=0.1541 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.188 | 5%=0.312 | 10%=0.333 *
+  Epoch  24/50 | loss=2.0139/2.9459 | AUC=0.7225 PR=0.1558 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.188 | 5%=0.312 | 10%=0.354 *
+  Epoch  25/50 | loss=2.0012/2.9470 | AUC=0.7247 PR=0.1585 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.250 | 5%=0.312 | 10%=0.354 *
+  Epoch  26/50 | loss=2.0178/2.9232 | AUC=0.7267 PR=0.1626 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.208 | 5%=0.312 | 10%=0.354 *
+  Epoch  27/50 | loss=1.9938/2.9016 | AUC=0.7280 PR=0.1651 | TPR@FPR: 0.5%=0.104 | 1%=0.188 | 2%=0.208 | 5%=0.312 | 10%=0.354 *
+  Epoch  28/50 | loss=1.9553/2.9258 | AUC=0.7289 PR=0.1663 | TPR@FPR: 0.5%=0.104 | 1%=0.188 | 2%=0.208 | 5%=0.312 | 10%=0.354 *
+  Epoch  29/50 | loss=1.9942/2.9240 | AUC=0.7302 PR=0.1666 | TPR@FPR: 0.5%=0.104 | 1%=0.188 | 2%=0.208 | 5%=0.312 | 10%=0.354 *
+  Epoch  30/50 | loss=1.9532/2.9125 | AUC=0.7312 PR=0.1682 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  31/50 | loss=1.9577/2.9099 | AUC=0.7321 PR=0.1653 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  32/50 | loss=1.9304/2.9149 | AUC=0.7331 PR=0.1659 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  33/50 | loss=1.9708/2.9005 | AUC=0.7339 PR=0.1662 | TPR@FPR: 0.5%=0.104 | 1%=0.125 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  34/50 | loss=1.9582/2.9030 | AUC=0.7347 PR=0.1682 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.208 | 5%=0.333 | 10%=0.333 *
+  Epoch  35/50 | loss=1.9578/2.8900 | AUC=0.7359 PR=0.1699 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  36/50 | loss=1.9576/2.8899 | AUC=0.7368 PR=0.1707 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  37/50 | loss=1.9356/2.8800 | AUC=0.7375 PR=0.1690 | TPR@FPR: 0.5%=0.104 | 1%=0.146 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  38/50 | loss=1.9232/2.8798 | AUC=0.7376 PR=0.1694 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  39/50 | loss=1.9451/2.8740 | AUC=0.7379 PR=0.1704 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  40/50 | loss=1.9364/2.8727 | AUC=0.7380 PR=0.1707 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  41/50 | loss=1.9376/2.8728 | AUC=0.7381 PR=0.1707 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  42/50 | loss=1.9278/2.8687 | AUC=0.7384 PR=0.1707 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  43/50 | loss=1.9700/2.8624 | AUC=0.7385 PR=0.1712 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  44/50 | loss=1.9392/2.8597 | AUC=0.7387 PR=0.1712 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  45/50 | loss=1.9282/2.8583 | AUC=0.7388 PR=0.1713 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  46/50 | loss=1.9321/2.8577 | AUC=0.7388 PR=0.1704 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.354 *
+  Epoch  47/50 | loss=1.9451/2.8567 | AUC=0.7390 PR=0.1703 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.375 *
+  Epoch  48/50 | loss=1.9438/2.8566 | AUC=0.7390 PR=0.1704 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.375
+  Epoch  49/50 | loss=1.9197/2.8569 | AUC=0.7390 PR=0.1704 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.375
+  Epoch  50/50 | loss=1.9455/2.8569 | AUC=0.7390 PR=0.1704 | TPR@FPR: 0.5%=0.104 | 1%=0.167 | 2%=0.208 | 5%=0.333 | 10%=0.375 *
+  Best AUC-ROC: 0.7390 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/vits16_518_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7390001181195369
+  AUC-PR:  0.17042058846624047
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0050       0.1042     0.9909    
+  1%           0.0099       0.1667     0.9899    
+  2%           0.0163       0.2083     0.9891    
+  5%           0.0546       0.3333     0.9849    
+  10%          0.1084       0.3750     0.9804    
+  Youden best: threshold=0.9582  TPR=0.7292  FPR=0.3643
+
+
+============================================================
+[care_label | vits16 @ 714 | linear_probe]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  pos_weight: 29.4
+  Epoch   1/50 | loss=5.0593/2.3787 | AUC=0.5066 PR=0.0363 | TPR@FPR: 0.5%=0.000 | 1%=0.000 | 2%=0.021 | 5%=0.062 | 10%=0.146 *
+  Epoch   2/50 | loss=2.4133/3.0582 | AUC=0.5199 PR=0.0371 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.021 | 5%=0.062 | 10%=0.146 *
+  Epoch   3/50 | loss=2.2380/3.2412 | AUC=0.5492 PR=0.0400 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.104 *
+  Epoch   4/50 | loss=2.2052/3.2668 | AUC=0.5814 PR=0.0434 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.125 *
+  Epoch   5/50 | loss=2.2190/3.2397 | AUC=0.6139 PR=0.0472 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.125 *
+  Epoch   6/50 | loss=2.1569/3.2282 | AUC=0.6390 PR=0.0516 | TPR@FPR: 0.5%=0.021 | 1%=0.021 | 2%=0.062 | 5%=0.083 | 10%=0.146 *
+  Epoch   7/50 | loss=2.1530/3.2074 | AUC=0.6548 PR=0.0542 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.167 *
+  Epoch   8/50 | loss=2.1579/3.1718 | AUC=0.6707 PR=0.0569 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.083 | 10%=0.208 *
+  Epoch   9/50 | loss=2.1306/3.1505 | AUC=0.6812 PR=0.0593 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.104 | 10%=0.229 *
+  Epoch  10/50 | loss=2.1176/3.1339 | AUC=0.6901 PR=0.0614 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.104 | 10%=0.229 *
+  Epoch  11/50 | loss=2.1225/3.1096 | AUC=0.6971 PR=0.0634 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.125 | 10%=0.250 *
+  Epoch  12/50 | loss=2.0782/3.0864 | AUC=0.7038 PR=0.0655 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.021 | 5%=0.125 | 10%=0.250 *
+  Epoch  13/50 | loss=2.0739/3.0815 | AUC=0.7082 PR=0.0672 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.250 *
+  Epoch  14/50 | loss=2.0502/3.0730 | AUC=0.7132 PR=0.0687 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.042 | 5%=0.146 | 10%=0.250 *
+  Epoch  15/50 | loss=2.0739/3.0254 | AUC=0.7170 PR=0.0703 | TPR@FPR: 0.5%=0.000 | 1%=0.021 | 2%=0.062 | 5%=0.146 | 10%=0.271 *
+  Epoch  16/50 | loss=2.0528/3.0162 | AUC=0.7211 PR=0.0723 | TPR@FPR: 0.5%=0.000 | 1%=0.062 | 2%=0.062 | 5%=0.146 | 10%=0.271 *
+  Epoch  17/50 | loss=2.0530/3.0016 | AUC=0.7254 PR=0.0746 | TPR@FPR: 0.5%=0.000 | 1%=0.042 | 2%=0.083 | 5%=0.146 | 10%=0.292 *
+  Epoch  18/50 | loss=2.0542/2.9498 | AUC=0.7296 PR=0.0767 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.146 | 10%=0.292 *
+  Epoch  19/50 | loss=1.9859/2.9875 | AUC=0.7321 PR=0.0776 | TPR@FPR: 0.5%=0.042 | 1%=0.042 | 2%=0.083 | 5%=0.125 | 10%=0.292 *
+  Epoch  20/50 | loss=2.0130/2.9823 | AUC=0.7341 PR=0.0790 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.146 | 10%=0.292 *
+  Epoch  21/50 | loss=2.0278/2.9249 | AUC=0.7368 PR=0.0804 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.104 | 5%=0.146 | 10%=0.292 *
+  Epoch  22/50 | loss=2.0012/2.9083 | AUC=0.7382 PR=0.0811 | TPR@FPR: 0.5%=0.021 | 1%=0.042 | 2%=0.083 | 5%=0.146 | 10%=0.312 *
+  Epoch  23/50 | loss=1.9697/2.9100 | AUC=0.7390 PR=0.0820 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.146 | 10%=0.312 *
+  Epoch  24/50 | loss=2.0079/2.9112 | AUC=0.7394 PR=0.0833 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.104 | 5%=0.167 | 10%=0.312 *
+  Epoch  25/50 | loss=1.9595/2.8946 | AUC=0.7409 PR=0.0836 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.312 *
+  Epoch  26/50 | loss=1.9731/2.8726 | AUC=0.7427 PR=0.0849 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.312 *
+  Epoch  27/50 | loss=1.9632/2.8651 | AUC=0.7440 PR=0.0851 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.312 *
+  Epoch  28/50 | loss=1.9736/2.8557 | AUC=0.7447 PR=0.0858 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.333 *
+  Epoch  29/50 | loss=1.9489/2.8373 | AUC=0.7458 PR=0.0859 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.333 *
+  Epoch  30/50 | loss=1.9674/2.8284 | AUC=0.7471 PR=0.0870 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.333 *
+  Epoch  31/50 | loss=1.9639/2.8321 | AUC=0.7483 PR=0.0875 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.333 *
+  Epoch  32/50 | loss=1.9045/2.8357 | AUC=0.7486 PR=0.0876 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.333 *
+  Epoch  33/50 | loss=1.9244/2.8318 | AUC=0.7488 PR=0.0880 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.167 | 10%=0.333 *
+  Epoch  34/50 | loss=1.9406/2.8153 | AUC=0.7490 PR=0.0883 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  35/50 | loss=1.9244/2.8175 | AUC=0.7497 PR=0.0892 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  36/50 | loss=1.9245/2.8184 | AUC=0.7501 PR=0.0895 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  37/50 | loss=1.9391/2.8028 | AUC=0.7507 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.083 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  38/50 | loss=1.9280/2.8013 | AUC=0.7509 PR=0.0902 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  39/50 | loss=1.9240/2.7951 | AUC=0.7511 PR=0.0903 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  40/50 | loss=1.8997/2.7976 | AUC=0.7512 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  41/50 | loss=1.9449/2.7935 | AUC=0.7513 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  42/50 | loss=1.8864/2.7952 | AUC=0.7513 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  43/50 | loss=1.8934/2.7976 | AUC=0.7513 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333 *
+  Epoch  44/50 | loss=1.9174/2.7963 | AUC=0.7512 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Epoch  45/50 | loss=1.8908/2.7964 | AUC=0.7513 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Epoch  46/50 | loss=1.8925/2.7970 | AUC=0.7513 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Epoch  47/50 | loss=1.9174/2.7962 | AUC=0.7512 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Epoch  48/50 | loss=1.9186/2.7963 | AUC=0.7512 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Epoch  49/50 | loss=1.9078/2.7964 | AUC=0.7512 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Epoch  50/50 | loss=1.9039/2.7963 | AUC=0.7512 PR=0.0904 | TPR@FPR: 0.5%=0.021 | 1%=0.062 | 2%=0.083 | 5%=0.188 | 10%=0.333
+  Early stopping at epoch 50 (patience=7)
+  Best AUC-ROC: 0.7513 | Checkpoint: /root/iris/src/01-dinov3/checkpoints/care_label/vits16_714_linear_probe_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.7513436097330498
+  AUC-PR:  0.09041921814492947
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0050       0.0208     0.9913    
+  1%           0.0085       0.0625     0.9902    
+  2%           0.0120       0.0833     0.9892    
+  5%           0.0475       0.1875     0.9851    
+  10%          0.0907       0.3333     0.9811    
+  Youden best: threshold=0.9603  TPR=0.6875  FPR=0.2948
+
+
+============================================================
+SWEEP SUMMARY — care_label
+============================================================
+  convnext_small_518              AUC-ROC = 0.7586
+  vitb16_518                      AUC-ROC = 0.7557
+  vitb16_714                      AUC-ROC = 0.7555
+  vits16_714                      AUC-ROC = 0.7513
+  convnext_small_714              AUC-ROC = 0.7469
+  vitl16_714                      AUC-ROC = 0.7462
+  convnext_base_518               AUC-ROC = 0.7435
+  convnext_large_518              AUC-ROC = 0.7409
+  vits16_518                      AUC-ROC = 0.7390
+  convnext_tiny_518               AUC-ROC = 0.7336
+  vitl16_518                      AUC-ROC = 0.7326
+  convnext_large_714              AUC-ROC = 0.7271
+  convnext_base_714               AUC-ROC = 0.7244
+  convnext_tiny_714               AUC-ROC = 0.7217
+
+>>> A3: Train ML classifiers (sweep)
+============================================================
+Device: cuda
+
+============================================================
+[care_label | convnext_base @ 518 | xgb, svm, catboost, lgbm]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [19:12:01] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  [XGB     ] fit=4.4s | AUC-ROC=0.6822 AUC-PR=0.1504 TPR@2%FPR=0.1458
+  [SVM     ] fit=16.2s | AUC-ROC=0.7028 AUC-PR=0.1696 TPR@2%FPR=0.1458
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=12.3s | AUC-ROC=0.6580 AUC-PR=0.1506 TPR@2%FPR=0.1667
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  [LGBM    ] fit=1130.4s | AUC-ROC=0.6933 AUC-PR=0.1535 TPR@2%FPR=0.1250
+
+============================================================
+[care_label | convnext_base @ 714 | xgb, svm, catboost, lgbm]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  [XGB     ] fit=5.3s | AUC-ROC=0.7074 AUC-PR=0.1756 TPR@2%FPR=0.1875
+  [SVM     ] fit=31.7s | AUC-ROC=0.7255 AUC-PR=0.1831 TPR@2%FPR=0.1875
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=18.4s | AUC-ROC=0.7221 AUC-PR=0.1539 TPR@2%FPR=0.1458
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  [LGBM    ] fit=1747.4s | AUC-ROC=0.7262 AUC-PR=0.1386 TPR@2%FPR=0.1250
+
+============================================================
+[care_label | convnext_large @ 518 | xgb, svm, catboost, lgbm]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  [XGB     ] fit=5.6s | AUC-ROC=0.7547 AUC-PR=0.1721 TPR@2%FPR=0.1667
+  [SVM     ] fit=69.2s | AUC-ROC=0.7366 AUC-PR=0.1285 TPR@2%FPR=0.1667
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=27.0s | AUC-ROC=0.7576 AUC-PR=0.1294 TPR@2%FPR=0.1042
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  [LGBM    ] fit=1796.9s | AUC-ROC=0.7676 AUC-PR=0.1584 TPR@2%FPR=0.1667
+
+============================================================
+[care_label | convnext_large @ 714 | xgb, svm, catboost, lgbm]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  [XGB     ] fit=11.3s | AUC-ROC=0.7268 AUC-PR=0.1636 TPR@2%FPR=0.1667
+  [SVM     ] fit=71.4s | AUC-ROC=0.7387 AUC-PR=0.1630 TPR@2%FPR=0.1667
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=52.6s | AUC-ROC=0.7336 AUC-PR=0.1824 TPR@2%FPR=0.1875
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  [LGBM    ] fit=1741.9s | AUC-ROC=0.7238 AUC-PR=0.1844 TPR@2%FPR=0.1667
+
+============================================================
+[care_label | convnext_small @ 518 | xgb, svm, catboost, lgbm]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+  [XGB     ] fit=6.7s | AUC-ROC=0.7114 AUC-PR=0.1903 TPR@2%FPR=0.2083
+  [SVM     ] fit=26.2s | AUC-ROC=0.7004 AUC-PR=0.1684 TPR@2%FPR=0.1875
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=46.6s | AUC-ROC=0.7125 AUC-PR=0.1628 TPR@2%FPR=0.1458

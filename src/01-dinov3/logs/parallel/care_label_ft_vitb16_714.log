@@ -1,0 +1,28 @@
+>>> Finetune: vitb16 @ 714 -- already done
+>>> Finetuned ML: vitb16 @ 714
+Device: cuda
+
+============================================================
+[care_label | vitb16 @ 714 | finetuned -> ML]
+============================================================
+  Loading finetuned checkpoint from /root/iris/src/01-dinov3/checkpoints/care_label/vitb16_714_finetune_best.pt ...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 7737.69it/s]
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Extracting finetuned features at 714x714 ...
+Traceback (most recent call last):
+  File "/root/iris/src/01-dinov3/train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py", line 283, in <module>
+    main()
+  File "/root/iris/src/01-dinov3/train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py", line 278, in main
+    run(args.region, args.model, args.resolution, args.classifiers,
+  File "/root/iris/src/01-dinov3/train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py", line 179, in run
+    features, labels_t, uuids = extract_finetuned_features(model, dataloader, device)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/iris/src/01-dinov3/train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py", line 56, in extract_finetuned_features
+    pixel_values = pixel_values.to(device, dtype=torch.float32)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 94.00 MiB. GPU 0 has a total capacity of 94.97 GiB of which 13.56 MiB is free. Process 648998 has 2.00 GiB memory in use. Process 649001 has 3.96 GiB memory in use. Process 649000 has 2.16 GiB memory in use. Process 648996 has 85.30 GiB memory in use. Including non-PyTorch memory, this process has 932.00 MiB memory in use. Process 648992 has 14.00 MiB memory in use. Process 648997 has 576.00 MiB memory in use. Of the allocated memory 326.77 MiB is allocated by PyTorch, and 55.23 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

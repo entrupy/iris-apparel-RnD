@@ -1,0 +1,10 @@
+>>> Finetune: vitb16 @ 518 -- already done
+>>> Finetuned ML: vitb16 @ 518
+Device: cuda
+
+============================================================
+[front | vitb16 @ 518 | finetuned -> ML]
+============================================================
+  Loading finetuned checkpoint from /root/iris/src/01-dinov3/checkpoints/front/vitb16_518_finetune_best.pt ...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 10270.49it/s]

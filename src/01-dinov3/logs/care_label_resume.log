@@ -1,0 +1,26 @@
+============================================================
+RESUME: care_label  |  GPU 0  |  Sat Mar 21 22:43:03 UTC 2026
+============================================================
+
+>>> ML classifier sweep
+Device: cuda
+
+============================================================
+[care_label | convnext_base @ 518 | xgb, svm, catboost, lgbm]
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
+  Train: 5835 (192 pos) | Val: 1459 (48 pos)
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [22:43:35] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  [XGB     ] fit=1.5s | AUC-ROC=0.6822 AUC-PR=0.1504 TPR@2%FPR=0.1458
+  [SVM     ] fit=14.8s | AUC-ROC=0.7028 AUC-PR=0.1696 TPR@2%FPR=0.1458
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=10.1s | AUC-ROC=0.6580 AUC-PR=0.1506 TPR@2%FPR=0.1667

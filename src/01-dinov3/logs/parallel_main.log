@@ -1,0 +1,32 @@
+=== Launching parallel jobs ===
+
+--- care_label (GPU 0) ---
+  [662021] care_label/gpu
+  [662023] care_label/svm
+
+--- front (GPU 1) ---
+  [662026] front/gpu
+  [662028] front/svm
+
+--- front_exterior_logo (GPU 2) ---
+  [662029] front_exterior_logo/gpu
+  [662032] front_exterior_logo/svm
+
+--- brand_tag (GPU 3) ---
+  [662034] brand_tag/gpu
+  [662037] brand_tag/svm
+
+
+Total jobs: 8 (4 GPU + 4 SVM)
+Waiting for all...
+
+[OK]     care_label/gpu
+[OK]     care_label/svm
+[OK]     front/gpu
+[OK]     front/svm
+[OK]     front_exterior_logo/gpu
+[OK]     front_exterior_logo/svm
+[OK]     brand_tag/gpu
+[OK]     brand_tag/svm
+
+ALL DONE. Sun Mar 22 08:44:31 UTC 2026

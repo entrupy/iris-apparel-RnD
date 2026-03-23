@@ -1,0 +1,14 @@
+Device: cuda
+
+============================================================
+[front_exterior_logo | convnext_base @ 518 | svm]
+============================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Loaded val split from /root/iris/src/01-dinov3/val_splits/front_exterior_logo_split.json  (train=4004, val=1001)
+  Train: 4004 (118 pos) | Val: 1001 (29 pos)
+  [SVM     ] fit=5.8s | AUC-ROC=0.7392 AUC-PR=0.2313 TPR@2%FPR=0.3448
+
+============================================================
+[front_exterior_logo | convnext_base @ 714 | svm]
+============================================================
