@@ -1,22 +1,0 @@
->>> Finetune: vitb16 @ 518 -- already done
->>> Finetuned ML: vitb16 @ 518
-Device: cuda
-
-============================================================
-[care_label | vitb16 @ 518 | finetuned -> ML]
-============================================================
-  Loading finetuned checkpoint from /root/iris/src/01-dinov3/checkpoints/care_label/vitb16_518_finetune_best.pt ...
-`torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 12404.49it/s]
-[care_label/train] 9759 labeled rows, 7294 with images
-  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
-  Extracting finetuned features at 518x518 ...
-    Batch 1/456
-    Batch 20/456
-    Batch 40/456
-    Batch 60/456
-    Batch 80/456
-    Batch 100/456
-    Batch 120/456
-    Batch 140/456
-    Batch 160/456

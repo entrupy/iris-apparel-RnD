@@ -463,13 +463,33 @@ def compute_metrics_auth_positive(y_true_orig, y_score_orig):
         tied = np.where(distances == min_dist)[0]
         idx = tied[np.argmax(tpr_arr[tied])]
         thresh_idx = min(idx, len(thresholds) - 1)
+        auth_thresh = float(thresholds[thresh_idx])
         tpr_at_fpr[name] = {
             "tpr": float(tpr_arr[idx]),
             "actual_fpr": float(fpr_arr[idx]),
-            "threshold": float(thresholds[thresh_idx]),
+            "threshold": auth_thresh,
+            "threshold_orig": float(1.0 - auth_thresh),
         }
 
     return {"auc_roc": auc_roc, "auc_pr": auc_pr, "tpr_at_fpr": tpr_at_fpr}
+
+
+def apply_threshold_auth_positive(y_true, y_score, threshold_orig):
+    """Apply original-space threshold and return auth-positive TPR/FPR.
+
+    threshold_orig is in the original score space (higher = more likely fake).
+    Items with score >= threshold_orig are flagged as fake.
+    """
+    preds = (np.asarray(y_score) >= threshold_orig).astype(int)
+    y_true = np.asarray(y_true)
+    n_auth = int((y_true == 0).sum())
+    n_fake = int((y_true == 1).sum())
+    auth_passed = int(((preds == 0) & (y_true == 0)).sum())
+    fakes_missed = int(((preds == 0) & (y_true == 1)).sum())
+    return {
+        "tpr": float(auth_passed / max(n_auth, 1)),
+        "fpr": float(fakes_missed / max(n_fake, 1)),
+    }
 
 
 # ---------------------------------------------------------------------------

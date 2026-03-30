@@ -29,10 +29,11 @@ from config import (
     SEED,
     DINOv3Classifier,
     ImageDatasetWithUUID,
+    apply_threshold_auth_positive,
     build_transform,
     cache_dir,
     ckpt_dir,
-    compute_all_metrics,
+    compute_metrics_auth_positive,
     get_or_create_val_split,
     load_metadata,
     results_dir,
@@ -200,9 +201,28 @@ def run(region, model_key, resolution, selected_classifiers, device, batch_size,
     X_val = features[feat_val_idx].numpy()
     y_val = labels_t[feat_val_idx].numpy()
 
+    # 4b. Load or extract test features
+    test_ft_path = ft_cache / f"test_{ft_prefix}_features.pt"
+    X_test, y_test = None, None
+    if test_ft_path.exists():
+        X_test = torch.load(test_ft_path, weights_only=True).numpy()
+        y_test = torch.load(ft_cache / f"test_{ft_prefix}_labels.pt", weights_only=True).numpy()
+    else:
+        test_feat_path_frozen = ft_cache / f"test_{model_key}_{resolution}_features.pt"
+        if test_feat_path_frozen.exists():
+            X_test = torch.load(test_feat_path_frozen, weights_only=True).numpy()
+            y_test = torch.load(ft_cache / f"test_{model_key}_{resolution}_labels.pt", weights_only=True).numpy()
+
     n_pos_train = int(y_train.sum())
     scale_pos_weight = (len(y_train) - n_pos_train) / max(n_pos_train, 1)
-    print(f"  Train: {len(y_train)} ({n_pos_train} pos) | Val: {len(y_val)} ({int(y_val.sum())} pos)")
+    print(f"  Train: {len(y_train)} ({n_pos_train} pos) | Val: {len(y_val)} ({int(y_val.sum())} pos)"
+          + (f" | Test: {len(y_test)} ({int(y_test.sum())} pos)" if y_test is not None else ""))
+
+    def _score_clf(clf_obj, X, clf_name):
+        if clf_name == "svm":
+            m, sc = clf_obj
+            return m.predict_proba(sc.transform(X))[:, 1]
+        return clf_obj.predict_proba(X)[:, 1]
 
     # 5. Train classifiers
     rdir = results_dir(region)
@@ -221,17 +241,38 @@ def run(region, model_key, resolution, selected_classifiers, device, batch_size,
         else:
             continue
 
-        metrics = compute_all_metrics(y_val, y_score)
-        auc_roc = metrics.get("auc_roc", 0)
-        auc_pr = metrics.get("auc_pr", 0)
-        tpr_2 = metrics.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+        clf_for_score = (clf, scaler) if name == "svm" else clf
+        train_score = _score_clf(clf_for_score, X_train, name)
+        train_m = compute_metrics_auth_positive(y_train, train_score)
+        val_m = compute_metrics_auth_positive(y_val, y_score)
 
-        print(f"  [{name.upper():8s}] fit={fit_time:.1f}s | AUC-ROC={auc_roc:.4f} AUC-PR={auc_pr:.4f} TPR@2%FPR={tpr_2:.4f}")
+        train_auc = train_m.get("auc_roc", 0)
+        train_tpr2 = train_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+        val_auc = val_m.get("auc_roc", 0)
+        val_tpr2 = val_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+
+        line = (f"  [{name.upper():8s}] {fit_time:.1f}s | "
+                f"train AUC={train_auc:.4f} TPR@2%={train_tpr2:.4f} | "
+                f"val AUC={val_auc:.4f} TPR@2%={val_tpr2:.4f}")
+
+        test_info = {}
+        if X_test is not None:
+            test_score = _score_clf(clf_for_score, X_test, name)
+            test_m = compute_metrics_auth_positive(y_test, test_score)
+            thresh_orig = val_m.get("tpr_at_fpr", {}).get("2%", {}).get("threshold_orig", 0.5)
+            fixed = apply_threshold_auth_positive(y_test, test_score, thresh_orig)
+            line += (f" | test AUC={test_m.get('auc_roc', 0):.4f} "
+                     f"@2%: TPR={fixed['tpr']:.4f} FPR={fixed['fpr']:.4f}")
+            test_info = {"test_auc": test_m.get("auc_roc", 0), "test_fixed_2pct": fixed}
+
+        print(line)
 
         results_summary[name] = {
-            "auc_roc": auc_roc, "auc_pr": auc_pr,
-            "tpr_at_fpr": metrics.get("tpr_at_fpr", {}),
+            "auc_roc": val_auc, "auc_pr": val_m.get("auc_pr", 0),
+            "tpr_at_fpr": val_m.get("tpr_at_fpr", {}),
+            "train_auc": train_auc, "train_tpr_at_fpr": train_m.get("tpr_at_fpr", {}),
             "fit_time_s": fit_time,
+            **test_info,
         }
 
         save_prefix = f"{ckpt_tag}_{model_key}_{resolution}"

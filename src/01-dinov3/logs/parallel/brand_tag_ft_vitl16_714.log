@@ -1,13 +1,0 @@
->>> Finetune: vitl16 @ 714
-
-============================================================
-[brand_tag | vitl16 @ 714 | finetune]
-============================================================
-[brand_tag/train] 9759 labeled rows, 9169 with images
-  Authentic (0): 8881  |  Not-authentic (1): 288  |  Ratio: 30.8:1
-  Loaded val split from /root/iris/src/01-dinov3/val_splits/brand_tag_split.json  (train=7335, val=1834)
-  Train: 7335 (230 pos) | Val: 1834 (58 pos)
-  pos_weight: 30.9
-`torch_dtype` is deprecated! Use `dtype` instead!
-Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 7133.52it/s]
-run_parallel.sh: line 71: 649031 Killed                  $PYTHON train_with_unfreeze_dino.py --region "$region" --model "$model" --resolution "$res" --epochs 30 --batch-size 4 --patience 7

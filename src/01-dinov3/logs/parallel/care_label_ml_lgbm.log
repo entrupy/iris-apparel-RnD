@@ -1,9 +1,0 @@
-Device: cuda
-
-============================================================
-[care_label | convnext_base @ 518 | lgbm]
-============================================================
-[care_label/train] 9759 labeled rows, 7294 with images
-  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
-  Loaded val split from /root/iris/src/01-dinov3/val_splits/care_label_split.json  (train=5835, val=1459)
-  Train: 5835 (192 pos) | Val: 1459 (48 pos)

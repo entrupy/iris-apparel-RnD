@@ -1,9 +1,0 @@
-Device: cuda
-
-============================================================
-[brand_tag | convnext_base @ 518 | svm]
-============================================================
-[brand_tag/train] 9759 labeled rows, 9169 with images
-  Authentic (0): 8881  |  Not-authentic (1): 288  |  Ratio: 30.8:1
-  Loaded val split from /root/iris/src/01-dinov3/val_splits/brand_tag_split.json  (train=7335, val=1834)
-  Train: 7335 (230 pos) | Val: 1834 (58 pos)

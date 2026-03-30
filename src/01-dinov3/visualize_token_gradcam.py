@@ -2,18 +2,18 @@
 """
 Token Grad-CAM for DINOv3 ViT-L with configurable layer submodule targets.
 
-This is a more flexible alternative to attention rollout / ReciproCAM for
-probing DINOv3 internals. It lets you compare token-level saliency maps from
-specific transformer submodules such as:
-  - `norm2`            : semantic token features before the MLP
-  - `attention.o_proj` : attention write-back into the token stream
-  - `attention.v_proj` : value/content stream (especially useful for qv tuning)
+Generates heatmap overlays for all 4 auth-positive categories:
+  TP = authentic correctly passed
+  FP = fake wrongly passed (missed)
+  FN = authentic wrongly flagged
+  TN = fake correctly caught
+
+Auto-discovers partial finetune checkpoints for the given region.
 
 Usage:
   python visualize_token_gradcam.py
+  python visualize_token_gradcam.py --region front
   python visualize_token_gradcam.py --targets "-2:norm2,-2:attn.o,-2:attn.v"
-  python visualize_token_gradcam.py --targets "-4:norm2,-2:norm2,-4:attn.v"
-  python visualize_token_gradcam.py --n-near 1 --n-confident 0
 """
 
 import argparse
@@ -26,28 +26,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from PIL import Image
-from sklearn.metrics import roc_curve
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config import (
     MODEL_VARIANTS,
+    REGIONS,
     DINOv3Classifier,
     build_transform,
     load_metadata,
 )
 
-REGION = "care_label"
+SCRIPT_DIR = Path(__file__).resolve().parent
 MODEL_KEY = "vitl16"
 RESOLUTION = 714
 MODEL_ID = MODEL_VARIANTS[MODEL_KEY]
-
-CKPT_DIR = Path(__file__).resolve().parent / "checkpoints" / REGION
-OUT_DIR = Path(__file__).resolve().parent / "token_gradcam_maps"
-
-MODELS_TO_EVAL = {
-    "vitl16_714_finetune": CKPT_DIR / f"{MODEL_KEY}_{RESOLUTION}_finetune_best.pt",
-    "vitl16_714_partial_qv_last4": CKPT_DIR / f"{MODEL_KEY}_{RESOLUTION}_partial_qv_last4_best.pt",
-}
 
 MODULE_ALIASES = {
     "norm2": "norm2",
@@ -76,8 +68,6 @@ DEFAULT_TARGETS = "-2:norm2,-2:attn.o,-2:attn.v"
 # Activation hook
 # ---------------------------------------------------------------------------
 class ActivationHook:
-    """Capture the output tensor of a target module for Grad-CAM."""
-
     def __init__(self, module):
         self.activation = None
         self._hook = module.register_forward_hook(self._fn)
@@ -93,17 +83,13 @@ class ActivationHook:
 # Target parsing / module lookup
 # ---------------------------------------------------------------------------
 def parse_target_specs(spec_string):
-    """Parse comma-separated `layer_idx:module_name` target specs."""
     targets = []
     for raw_spec in spec_string.split(","):
         spec = raw_spec.strip()
         if not spec:
             continue
         if ":" not in spec:
-            raise ValueError(
-                f"Invalid target spec `{spec}`. Use `layer_idx:module_name`, "
-                "e.g. `-2:norm2` or `-2:attn.o`."
-            )
+            raise ValueError(f"Invalid target spec `{spec}`. Use `layer_idx:module_name`.")
         layer_str, module_key = spec.split(":", 1)
         layer_idx = int(layer_str)
         module_path = MODULE_ALIASES.get(module_key.strip(), module_key.strip())
@@ -121,7 +107,6 @@ def parse_target_specs(spec_string):
 
 
 def resolve_target_layer_index(n_layers, target_layer_idx):
-    """Convert negative indices and keep them in range."""
     idx = target_layer_idx if target_layer_idx >= 0 else n_layers + target_layer_idx
     if idx < 0 or idx >= n_layers:
         raise ValueError(f"Invalid target layer {target_layer_idx} for {n_layers} layers")
@@ -129,7 +114,6 @@ def resolve_target_layer_index(n_layers, target_layer_idx):
 
 
 def get_submodule(root_module, dotted_path):
-    """Resolve a dotted attribute path like `attention.o_proj`."""
     module = root_module
     for part in dotted_path.split("."):
         module = getattr(module, part)
@@ -144,62 +128,46 @@ def infer_spatial_grid(num_spatial_tokens):
 
 
 # ---------------------------------------------------------------------------
-# Model loading
+# Model loading + val threshold
 # ---------------------------------------------------------------------------
-def load_model(ckpt_path, device):
+def load_model_and_threshold(ckpt_path, device):
     model = DINOv3Classifier(MODEL_ID, freeze_backbone=False)
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     model.load_state_dict(ckpt["model_state_dict"])
     model = model.to(device).eval()
-    return model
+
+    metrics = ckpt.get("metrics", {})
+    thresh_info = metrics.get("tpr_at_fpr", {}).get("2%", {})
+    threshold = thresh_info.get("threshold_orig", 0.5)
+    print(f"  Val threshold @2%: {threshold:.6f}")
+    return model, threshold
 
 
-# ---------------------------------------------------------------------------
-# Threshold computation (test-set 2% FPR)
-# ---------------------------------------------------------------------------
-def compute_threshold_at_2pct_fpr(model, records, transform, device):
-    """Run inference on full test set and find the threshold at 2% FPR."""
+def score_test_set(model, records, transform, device):
     all_scores, all_labels = [], []
     for rec in records:
         img = Image.open(rec["image_path"]).convert("RGB")
-        pixel_values = transform(img).unsqueeze(0).to(device)
+        pv = transform(img).unsqueeze(0).to(device)
         with torch.no_grad():
-            logit = model(pixel_values)
-            score = torch.sigmoid(logit).item()
+            score = torch.sigmoid(model(pv)).item()
         all_scores.append(score)
         all_labels.append(rec["label"])
+    return np.array(all_scores), np.array(all_labels)
 
-    y_true = np.array(all_labels)
-    y_score = np.array(all_scores)
 
-    fpr_arr, tpr_arr, thresholds = roc_curve(y_true, y_score)
-    target_fpr = 0.02
-    distances = np.abs(fpr_arr - target_fpr)
-    min_dist = distances.min()
-    tied = np.where(distances == min_dist)[0]
-    idx = tied[np.argmax(tpr_arr[tied])]
-    thresh_idx = min(idx, len(thresholds) - 1)
-
-    thresh = float(thresholds[thresh_idx])
-    actual_fpr = float(fpr_arr[idx])
-    actual_tpr = float(tpr_arr[idx])
-    print(
-        f"  Threshold @ ~2% FPR: {thresh:.6f}  "
-        f"(actual FPR={actual_fpr:.4f}, TPR={actual_tpr:.4f})"
-    )
-    return thresh, y_score, y_true
+def discover_checkpoints(region):
+    ckpt_dir = SCRIPT_DIR / "checkpoints" / region
+    found = {}
+    for p in sorted(ckpt_dir.glob(f"{MODEL_KEY}_{RESOLUTION}_partial_*_best.pt")):
+        name = p.stem.replace("_best", "")
+        found[name] = p
+    return found
 
 
 # ---------------------------------------------------------------------------
 # Grad-CAM
 # ---------------------------------------------------------------------------
 def compute_token_gradcam(model, pixel_values, target_layer_idx, module_path, patch_start_idx):
-    """
-    Compute token Grad-CAM for a target submodule.
-
-    The target module must output a `(batch, tokens, channels)` tensor.
-    Prefix tokens (CLS + registers) are excluded from the final heatmap.
-    """
     backbone = model.backbone
     n_layers = len(backbone.layer)
     layer_idx = resolve_target_layer_index(n_layers, target_layer_idx)
@@ -215,17 +183,10 @@ def compute_token_gradcam(model, pixel_values, target_layer_idx, module_path, pa
         if activation is None:
             raise RuntimeError(f"Hook did not capture activation for L{layer_idx}:{module_path}")
         if activation.ndim != 3:
-            raise RuntimeError(
-                f"Expected 3D token activation from L{layer_idx}:{module_path}, "
-                f"got shape {tuple(activation.shape)}"
-            )
+            raise RuntimeError(f"Expected 3D activation, got shape {tuple(activation.shape)}")
 
-        grad = torch.autograd.grad(
-            logit.sum(),
-            activation,
-            retain_graph=False,
-            create_graph=False,
-        )[0]
+        grad = torch.autograd.grad(logit.sum(), activation,
+                                   retain_graph=False, create_graph=False)[0]
     finally:
         hook.remove()
 
@@ -235,20 +196,18 @@ def compute_token_gradcam(model, pixel_values, target_layer_idx, module_path, pa
     num_spatial = act_spatial.shape[0]
     side = infer_spatial_grid(num_spatial)
 
-    # Grad-CAM weights: average gradient over spatial tokens, per channel.
-    channel_weights = grad_spatial.mean(dim=0)  # (C,)
-    cam = torch.relu((act_spatial * channel_weights.unsqueeze(0)).sum(dim=-1))  # (T,)
+    channel_weights = grad_spatial.mean(dim=0)
+    cam = torch.relu((act_spatial * channel_weights.unsqueeze(0)).sum(dim=-1))
 
     heatmap = cam.reshape(side, side).cpu().numpy()
     heatmap -= heatmap.min()
     if heatmap.max() > 0:
         heatmap /= heatmap.max()
-
     return heatmap, score, layer_idx
 
 
 # ---------------------------------------------------------------------------
-# Visualization
+# Image helpers
 # ---------------------------------------------------------------------------
 def make_heatmap_overlay(img_np, heatmap, alpha=0.5):
     cmap = plt.cm.jet
@@ -258,11 +217,6 @@ def make_heatmap_overlay(img_np, heatmap, alpha=0.5):
 
 
 def create_visualization(img_path, uuid, label, results, out_path):
-    """
-    Multi-panel figure:
-      col 0: original image
-      col 1..N: Grad-CAM heatmap overlays for each model / target
-    """
     img_pil = Image.open(img_path).convert("RGB")
     img_np = np.array(img_pil.resize((RESOLUTION, RESOLUTION), Image.BICUBIC)) / 255.0
 
@@ -273,30 +227,27 @@ def create_visualization(img_path, uuid, label, results, out_path):
 
     axes[0].imshow(img_np)
     gt_str = "FAKE" if label == 1 else "AUTHENTIC"
-    axes[0].set_title(f"Original\nGT: {gt_str}\n{uuid[:12]}…", fontsize=9)
+    axes[0].set_title(f"Original\nGT: {gt_str}\n{uuid[:12]}...", fontsize=9)
     axes[0].axis("off")
 
     for i, (panel_name, heatmap, model_score, threshold) in enumerate(results, 1):
         heatmap_up = np.array(
             Image.fromarray((heatmap * 255).astype(np.uint8)).resize(
-                (RESOLUTION, RESOLUTION), Image.BICUBIC
-            )
+                (RESOLUTION, RESOLUTION), Image.BICUBIC)
         ) / 255.0
-
         overlay = make_heatmap_overlay(img_np, heatmap_up, alpha=0.55)
         axes[i].imshow(overlay)
 
-        pred_is_fake = model_score >= threshold
-        pred = "FAKE" if pred_is_fake else "AUTHENTIC"
-        correct = (label == 1 and pred_is_fake) or (label == 0 and not pred_is_fake)
-        color = "green" if correct else "red"
-        status = "correct" if correct else "wrong"
+        if label == 0:
+            verdict = "TP (auth passed)" if model_score < threshold else "FN (auth flagged)"
+        else:
+            verdict = "FP (fake missed)" if model_score < threshold else "TN (fake caught)"
 
+        correct = ("TP" in verdict or "TN" in verdict)
+        color = "green" if correct else "red"
         axes[i].set_title(
-            f"{panel_name}\nscore={model_score:.4f} (thr={threshold:.4f})\npred={pred} · {status}",
-            fontsize=8,
-            color=color,
-        )
+            f"{panel_name}\nscore={model_score:.4f} (thr={threshold:.4f})\n{verdict}",
+            fontsize=8, color=color)
         axes[i].axis("off")
 
     plt.tight_layout()
@@ -308,20 +259,21 @@ def create_visualization(img_path, uuid, label, results, out_path):
 # ---------------------------------------------------------------------------
 # Selection helpers
 # ---------------------------------------------------------------------------
-def select_near_and_confident_above(indices, scores, threshold, n_near=3, n_confident=3):
-    """Pick threshold-near and very confident examples from predicted-positive indices."""
+def select_near_and_confident(indices, scores, threshold, above, n_near=3, n_confident=3):
     if len(indices) == 0:
         return np.array([], dtype=int), np.array([], dtype=int)
-
     idx = np.asarray(indices, dtype=int)
-    idx_scores = scores[idx]
-
-    margins = idx_scores - threshold
-    near_order = np.argsort(margins)
+    s = scores[idx]
+    if above:
+        margins = s - threshold
+        near_order = np.argsort(margins)
+        conf_order = np.argsort(-s)
+    else:
+        margins = threshold - s
+        near_order = np.argsort(margins)
+        conf_order = np.argsort(s)
     near_count = min(n_near, len(idx))
     near = idx[near_order[:near_count]]
-
-    conf_order = np.argsort(-idx_scores)
     confident = []
     for pos in conf_order:
         cand = idx[pos]
@@ -330,33 +282,6 @@ def select_near_and_confident_above(indices, scores, threshold, n_near=3, n_conf
         confident.append(cand)
         if len(confident) >= n_confident:
             break
-
-    return near.astype(int), np.array(confident, dtype=int)
-
-
-def select_near_and_confident_below(indices, scores, threshold, n_near=3, n_confident=3):
-    """Pick threshold-near and very confident examples from predicted-negative indices."""
-    if len(indices) == 0:
-        return np.array([], dtype=int), np.array([], dtype=int)
-
-    idx = np.asarray(indices, dtype=int)
-    idx_scores = scores[idx]
-
-    margins = threshold - idx_scores
-    near_order = np.argsort(margins)
-    near_count = min(n_near, len(idx))
-    near = idx[near_order[:near_count]]
-
-    conf_order = np.argsort(idx_scores)
-    confident = []
-    for pos in conf_order:
-        cand = idx[pos]
-        if cand in near:
-            continue
-        confident.append(cand)
-        if len(confident) >= n_confident:
-            break
-
     return near.astype(int), np.array(confident, dtype=int)
 
 
@@ -365,141 +290,86 @@ def select_near_and_confident_below(indices, scores, threshold, n_near=3, n_conf
 # ---------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser(description="Token Grad-CAM visualization for DINOv3")
-    parser.add_argument(
-        "--targets",
-        type=str,
-        default=DEFAULT_TARGETS,
-        help=(
-            "Comma-separated `layer_idx:module_name` specs. "
-            "Example: `-2:norm2,-2:attn.o,-2:attn.v`"
-        ),
-    )
-    parser.add_argument(
-        "--n-near",
-        type=int,
-        default=3,
-        help="Number of threshold-near examples to show per category (TP and FN)",
-    )
-    parser.add_argument(
-        "--n-confident",
-        type=int,
-        default=3,
-        help="Number of very confident examples to show per category (TP and FN)",
-    )
-    parser.add_argument(
-        "--device",
-        type=str,
-        default="cuda" if torch.cuda.is_available() else "cpu",
-    )
+    parser.add_argument("--region", type=str, default="care_label", choices=REGIONS)
+    parser.add_argument("--targets", type=str, default=DEFAULT_TARGETS)
+    parser.add_argument("--n-near", type=int, default=3)
+    parser.add_argument("--n-confident", type=int, default=3)
+    parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
 
     targets = parse_target_specs(args.targets)
     device = torch.device(args.device)
     transform = build_transform(RESOLUTION)
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir = SCRIPT_DIR / "token_gradcam_maps" / args.region
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n{'='*60}")
-    print(f"Region: {REGION}  |  Method: Token Grad-CAM")
+    print(f"Region: {args.region}  |  Method: Token Grad-CAM")
     print(f"{'='*60}")
     print("Targets:")
-    for target in targets:
-        print(f"  {target['layer_idx']:+d}:{target['short_name']}")
+    for t in targets:
+        print(f"  {t['layer_idx']:+d}:{t['short_name']}")
 
-    records = load_metadata(REGION, split="test")
+    records = load_metadata(args.region, split="test")
+    ckpts = discover_checkpoints(args.region)
+    if not ckpts:
+        print("No checkpoints found. Exiting.")
+        return
+    print(f"Found {len(ckpts)} checkpoints: {', '.join(ckpts.keys())}")
 
-    # -----------------------------------------------------------------------
-    # Step 1: Load models & compute thresholds
-    # -----------------------------------------------------------------------
     models_info = {}
-
-    for model_name, ckpt_path in MODELS_TO_EVAL.items():
-        print(f"\n--- Loading {model_name} ---")
-        if not ckpt_path.exists():
-            print(f"  [SKIP] Checkpoint not found: {ckpt_path}")
-            continue
-
-        model = load_model(ckpt_path, device)
-
+    for name, path in ckpts.items():
+        print(f"\n--- {name} ---")
+        model, threshold = load_model_and_threshold(path, device)
         num_register = getattr(model.backbone.config, "num_register_tokens", 0)
         patch_start_idx = 1 + num_register
         n_layers = len(model.backbone.layer)
-        print(f"  Prefix tokens: {patch_start_idx} (1 CLS + {num_register} register)")
-        print(f"  Transformer layers: {n_layers}")
 
-        print("  Computing test set scores for threshold...")
-        threshold, scores, labels = compute_threshold_at_2pct_fpr(model, records, transform, device)
-
-        models_info[model_name] = {
-            "model": model,
-            "threshold": threshold,
-            "scores": scores,
-            "labels": labels,
-            "patch_start_idx": patch_start_idx,
-            "n_layers": n_layers,
+        print("  Scoring test set...")
+        scores, labels = score_test_set(model, records, transform, device)
+        models_info[name] = {
+            "model": model, "threshold": threshold,
+            "scores": scores, "labels": labels,
+            "patch_start_idx": patch_start_idx, "n_layers": n_layers,
         }
 
-    if not models_info:
-        print("No models loaded. Exiting.")
-        return
+    first = models_info[next(iter(models_info))]
+    y_true, y_score, threshold = first["labels"], first["scores"], first["threshold"]
 
-    # -----------------------------------------------------------------------
-    # Step 2: Identify TP/FN and pick threshold-near + very confident examples
-    # -----------------------------------------------------------------------
-    first_info = models_info[next(iter(models_info))]
-    y_true = first_info["labels"]
-    y_score = first_info["scores"]
-    threshold = first_info["threshold"]
+    auth_idx = np.where(y_true == 0)[0]
+    fake_idx = np.where(y_true == 1)[0]
+    tp_idx = auth_idx[y_score[auth_idx] < threshold]
+    fn_idx = auth_idx[y_score[auth_idx] >= threshold]
+    fp_idx = fake_idx[y_score[fake_idx] < threshold]
+    tn_idx = fake_idx[y_score[fake_idx] >= threshold]
 
-    fake_indices = np.where(y_true == 1)[0]
+    print(f"\nAuth-positive split:")
+    print(f"  TP (auth passed):   {len(tp_idx)}")
+    print(f"  FN (auth flagged):  {len(fn_idx)}")
+    print(f"  FP (fake missed):   {len(fp_idx)}")
+    print(f"  TN (fake caught):   {len(tn_idx)}")
 
-    tp_indices = fake_indices[y_score[fake_indices] >= threshold]
-    fn_indices = fake_indices[y_score[fake_indices] < threshold]
-
-    print(f"\nFake images: {len(fake_indices)} total")
-    print(f"  TP (detected):        {len(tp_indices)}")
-    print(f"  FN (missed as auth):  {len(fn_indices)}")
-
-    tp_near, tp_conf = select_near_and_confident_above(
-        tp_indices,
-        y_score,
-        threshold,
-        n_near=args.n_near,
-        n_confident=args.n_confident,
-    )
-    fn_near, fn_conf = select_near_and_confident_below(
-        fn_indices,
-        y_score,
-        threshold,
-        n_near=args.n_near,
-        n_confident=args.n_confident,
-    )
-
-    print("\nSelected for visualization:")
-    print(f"  TP near-threshold:   {len(tp_near)}  (barely caught)")
-    print(f"  TP super-confident:  {len(tp_conf)}  (clearly fake)")
-    print(f"  FN near-threshold:   {len(fn_near)}  (almost caught)")
-    print(f"  FN super-confident:  {len(fn_conf)}  (model thinks very authentic)")
-
-    # -----------------------------------------------------------------------
-    # Step 3: Generate Grad-CAM maps
-    # -----------------------------------------------------------------------
+    categories = [
+        ("TP", tp_idx, False), ("FN", fn_idx, True),
+        ("FP", fp_idx, False), ("TN", tn_idx, True),
+    ]
     all_selected = []
-    all_selected.extend([("TP_NEAR", int(i)) for i in tp_near])
-    all_selected.extend([("TP_CONF", int(i)) for i in tp_conf])
-    all_selected.extend([("FN_NEAR", int(i)) for i in fn_near])
-    all_selected.extend([("FN_CONF", int(i)) for i in fn_conf])
+    for cat_name, cat_idx, above in categories:
+        near, conf = select_near_and_confident(
+            cat_idx, y_score, threshold, above=above,
+            n_near=args.n_near, n_confident=args.n_confident)
+        all_selected.extend([(f"{cat_name}_NEAR", int(i)) for i in near])
+        all_selected.extend([(f"{cat_name}_CONF", int(i)) for i in conf])
+
+    print(f"\nVisualizing {len(all_selected)} images...")
 
     for idx_i, (category, rec_idx) in enumerate(all_selected):
         rec = records[rec_idx]
-        uuid = rec["session_uuid"]
-        label = rec["label"]
-        img_path = rec["image_path"]
-
-        print(f"\n[{idx_i+1}/{len(all_selected)}] {category} — {uuid[:16]}…")
+        uuid, label, img_path = rec["session_uuid"], rec["label"], rec["image_path"]
+        print(f"\n[{idx_i+1}/{len(all_selected)}] {category} -- {uuid[:16]}...")
 
         img = Image.open(img_path).convert("RGB")
         pixel_values = transform(img).unsqueeze(0).to(device)
-
         results = []
 
         for model_name, info in models_info.items():
@@ -510,37 +380,22 @@ def main():
 
             for target in targets:
                 target_abs = resolve_target_layer_index(n_layers, target["layer_idx"])
-                print(
-                    f"    {model_name}: L{target_abs} {target['short_name']} …",
-                    end="",
-                    flush=True,
-                )
+                print(f"    {model_name}: L{target_abs} {target['short_name']} ...",
+                      end="", flush=True)
                 heatmap, score, actual_layer = compute_token_gradcam(
-                    model,
-                    pixel_values,
-                    target["layer_idx"],
-                    target["module_path"],
-                    patch_start_idx,
-                )
+                    model, pixel_values, target["layer_idx"],
+                    target["module_path"], patch_start_idx)
                 panel_name = f"{model_name} L{actual_layer} {target['short_name']}"
                 results.append((panel_name, heatmap, score, thresh))
                 print(f" score={score:.4f}")
 
         out_name = f"{category}_{idx_i:02d}_{uuid[:12]}.png"
-        create_visualization(img_path, uuid, label, results, OUT_DIR / out_name)
+        create_visualization(img_path, uuid, label, results, out_dir / out_name)
 
-    # -----------------------------------------------------------------------
-    # Summary
-    # -----------------------------------------------------------------------
     print(f"\n{'='*60}")
     print(f"Done! {len(all_selected)} images visualized.")
-    print(f"Output directory: {OUT_DIR}")
+    print(f"Output: {out_dir}")
     print(f"{'='*60}")
-
-    for model_name, info in models_info.items():
-        tp_count = np.sum((info["labels"] == 1) & (info["scores"] >= info["threshold"]))
-        fn_count = np.sum((info["labels"] == 1) & (info["scores"] < info["threshold"]))
-        print(f"  {model_name}: threshold={info['threshold']:.6f}  TP={tp_count}  FN={fn_count}")
 
 
 if __name__ == "__main__":

@@ -28,9 +28,10 @@ from config import (
     SEED,
     CachedFeatureDataset,
     LinearHead,
+    apply_threshold_auth_positive,
     cache_dir,
     ckpt_dir,
-    compute_all_metrics,
+    compute_metrics_auth_positive,
     format_tpr_at_fpr_inline,
     get_or_create_val_split,
     load_cached_features,
@@ -54,6 +55,17 @@ def train_linear_probe(region, model_key, resolution, args):
 
     train_feats, train_labels = features[feat_train_idx], labels[feat_train_idx]
     val_feats, val_labels = features[feat_val_idx], labels[feat_val_idx]
+
+    cdir_path = cache_dir(region)
+    test_prefix = f"test_{model_key}_{resolution}"
+    test_feat_path = cdir_path / f"{test_prefix}_features.pt"
+    if test_feat_path.exists():
+        test_feats = torch.load(test_feat_path, weights_only=True)
+        test_labels_t = torch.load(cdir_path / f"{test_prefix}_labels.pt", weights_only=True)
+        print(f"  Test features loaded: {len(test_labels_t)} ({int(test_labels_t.sum())} pos)")
+    else:
+        test_feats, test_labels_t = None, None
+        print("  Test features not cached — skipping test eval")
 
     n_pos_train = int(train_labels.sum())
     n_neg_train = len(train_labels) - n_pos_train
@@ -83,6 +95,7 @@ def train_linear_probe(region, model_key, resolution, args):
     writer = SummaryWriter(log_dir=str(rdir / run_name))
     writer.add_text("config", json.dumps(vars(args), indent=2, default=str))
 
+    best_tpr_2 = -1.0
     best_auc = 0.0
     patience_counter = 0
     cdir = ckpt_dir(region)
@@ -106,54 +119,55 @@ def train_linear_probe(region, model_key, resolution, args):
         avg_train_loss = total_loss / max(n_batches, 1)
 
         model.eval()
-        val_logits_all, val_labels_all = [], []
-        val_loss_sum, val_batches = 0.0, 0
         with torch.no_grad():
+            train_logits = model(train_feats.to(device)).cpu().numpy()
+            train_scores_ep = torch.sigmoid(torch.from_numpy(train_logits)).numpy()
+            train_m = compute_metrics_auth_positive(train_labels.numpy(), train_scores_ep)
+
+            val_logits_all, val_labels_all = [], []
             for feats_batch, labels_batch in val_loader:
                 feats_batch = feats_batch.to(device)
                 labels_batch = labels_batch.to(device)
-                logits = model(feats_batch)
-                val_loss_sum += criterion(logits, labels_batch).item()
-                val_batches += 1
-                val_logits_all.append(logits.cpu())
+                val_logits_all.append(model(feats_batch).cpu())
                 val_labels_all.append(labels_batch.cpu())
 
-        avg_val_loss = val_loss_sum / max(val_batches, 1)
         val_logits_cat = torch.cat(val_logits_all).numpy()
         val_labels_cat = torch.cat(val_labels_all).numpy()
         val_scores = torch.sigmoid(torch.from_numpy(val_logits_cat)).numpy()
+        val_m = compute_metrics_auth_positive(val_labels_cat, val_scores)
 
-        metrics = compute_all_metrics(val_labels_cat, val_scores)
+        train_auc = train_m.get("auc_roc", 0)
+        train_tpr2 = train_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+        val_auc = val_m.get("auc_roc", 0)
+        val_tpr2 = val_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
 
         writer.add_scalar("loss/train", avg_train_loss, epoch)
-        writer.add_scalar("loss/val", avg_val_loss, epoch)
-        writer.add_scalar("lr", scheduler.get_last_lr()[0], epoch)
-        writer.add_scalar("metrics/auc_roc", metrics.get("auc_roc", 0), epoch)
-        writer.add_scalar("metrics/auc_pr", metrics.get("auc_pr", 0), epoch)
-        for fpr_name, fpr_data in metrics.get("tpr_at_fpr", {}).items():
-            writer.add_scalar(f"tpr_at_fpr/{fpr_name}", fpr_data["tpr"], epoch)
+        writer.add_scalar("train/auc_roc", train_auc, epoch)
+        writer.add_scalar("train/tpr_at_2pct", train_tpr2, epoch)
+        writer.add_scalar("val/auc_roc", val_auc, epoch)
+        writer.add_scalar("val/tpr_at_2pct", val_tpr2, epoch)
 
-        current_auc = metrics.get("auc_roc", 0)
-        improved = current_auc > best_auc
+        improved = val_tpr2 > best_tpr_2 or (
+            val_tpr2 == best_tpr_2 and val_auc > best_auc
+        )
         if improved:
-            best_auc = current_auc
+            best_tpr_2 = val_tpr2
+            best_auc = val_auc
             patience_counter = 0
             torch.save({
                 "epoch": epoch,
                 "model_state_dict": model.state_dict(),
-                "metrics": metrics,
+                "metrics": val_m,
                 "config": vars(args),
                 "region": region,
             }, best_ckpt_path)
         else:
             patience_counter += 1
 
-        tpr_line = format_tpr_at_fpr_inline(metrics)
         print(
             f"  Epoch {epoch:3d}/{args.epochs} | "
-            f"loss={avg_train_loss:.4f}/{avg_val_loss:.4f} | "
-            f"AUC={current_auc:.4f} PR={metrics.get('auc_pr', 0):.4f} | "
-            f"TPR@FPR: {tpr_line}"
+            f"train AUC={train_auc:.4f} TPR@2%={train_tpr2:.4f} | "
+            f"val AUC={val_auc:.4f} TPR@2%={val_tpr2:.4f}"
             f"{' *' if improved else ''}",
             flush=True,
         )
@@ -162,15 +176,27 @@ def train_linear_probe(region, model_key, resolution, args):
             print(f"  Early stopping at epoch {epoch} (patience={args.patience})")
             break
 
-    writer.add_hparams(
-        {"model": model_key, "resolution": resolution, "region": region,
-         "lr": args.lr, "batch_size": args.batch_size, "pos_weight": pos_weight.item()},
-        {"hparam/best_auc_roc": best_auc},
-    )
     writer.close()
+    print(f"\n  Best val TPR@2%: {best_tpr_2:.4f}  (AUC: {best_auc:.4f}) | Checkpoint: {best_ckpt_path}")
 
-    print(f"  Best AUC-ROC: {best_auc:.4f} | Checkpoint: {best_ckpt_path}")
-    print_final_metrics(best_ckpt_path)
+    if best_ckpt_path.exists() and test_feats is not None:
+        ckpt = torch.load(best_ckpt_path, map_location=device, weights_only=False)
+        best_model = LinearHead(features.shape[1]).to(device)
+        best_model.load_state_dict(ckpt["model_state_dict"])
+        best_model.eval()
+        with torch.no_grad():
+            test_logits = best_model(test_feats.to(device)).cpu().numpy()
+        test_scores = torch.sigmoid(torch.from_numpy(test_logits)).numpy()
+        test_labels_np = test_labels_t.numpy()
+        test_m = compute_metrics_auth_positive(test_labels_np, test_scores)
+
+        val_thresh_info = ckpt["metrics"].get("tpr_at_fpr", {}).get("2%", {})
+        thresh_orig = val_thresh_info.get("threshold_orig", 0.5)
+        fixed = apply_threshold_auth_positive(test_labels_np, test_scores, thresh_orig)
+
+        print(f"  TEST | AUC={test_m.get('auc_roc', 0):.4f} | "
+              f"@2% val-thresh: TPR(auth passed)={fixed['tpr']:.4f}  FPR(fakes missed)={fixed['fpr']:.4f}")
+
     return best_auc
 
 

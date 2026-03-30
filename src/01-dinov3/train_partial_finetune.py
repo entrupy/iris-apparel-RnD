@@ -32,10 +32,11 @@ from config import (
     TARGET_FPR_NAMES,
     DINOv3Classifier,
     ImageDataset,
+    apply_threshold_auth_positive,
     build_train_transform,
     build_transform,
     ckpt_dir,
-    compute_all_metrics,
+    compute_metrics_auth_positive,
     get_or_create_val_split,
     load_metadata,
     make_weighted_sampler,
@@ -184,8 +185,15 @@ def train_partial(strategy, args):
     train_transform = build_train_transform(resolution)
     val_transform = build_transform(resolution)
 
+    test_records = load_metadata(region, split="test")
+    test_paths = [r["image_path"] for r in test_records]
+    test_labels = np.array([r["label"] for r in test_records])
+    print(f"  Test: {len(test_labels)} ({int(test_labels.sum())} pos)")
+
     train_ds = ImageDataset(train_paths, train_labels, train_transform)
+    train_eval_ds = ImageDataset(train_paths, train_labels, val_transform)
     val_ds = ImageDataset(val_paths, val_labels, val_transform)
+    test_ds = ImageDataset(test_paths, test_labels, val_transform)
 
     train_sampler = make_weighted_sampler(train_labels)
     train_loader = DataLoader(
@@ -193,8 +201,18 @@ def train_partial(strategy, args):
         num_workers=args.num_workers, pin_memory=True,
         persistent_workers=args.num_workers > 0,
     )
+    train_eval_loader = DataLoader(
+        train_eval_ds, batch_size=args.batch_size, shuffle=False,
+        num_workers=args.num_workers, pin_memory=True,
+        persistent_workers=args.num_workers > 0,
+    )
     val_loader = DataLoader(
         val_ds, batch_size=args.batch_size, shuffle=False,
+        num_workers=args.num_workers, pin_memory=True,
+        persistent_workers=args.num_workers > 0,
+    )
+    test_loader = DataLoader(
+        test_ds, batch_size=args.batch_size, shuffle=False,
         num_workers=args.num_workers, pin_memory=True,
         persistent_workers=args.num_workers > 0,
     )
@@ -276,48 +294,50 @@ def train_partial(strategy, args):
         avg_train_loss = total_loss / max(n_batches, 1)
 
         model.eval()
-        val_logits_all, val_labels_all = [], []
-        val_loss_sum, val_batches = 0.0, 0
-        with torch.no_grad():
-            for pixel_values, labels_batch in val_loader:
-                pixel_values = pixel_values.to(device)
-                labels_batch = labels_batch.to(device)
-                with torch.amp.autocast(device.type, enabled=use_amp):
-                    logits = model(pixel_values)
-                    val_loss_sum += criterion(logits, labels_batch).item()
-                val_batches += 1
-                val_logits_all.append(logits.float().cpu())
-                val_labels_all.append(labels_batch.cpu())
+        def _score_loader(loader):
+            all_logits, all_labels = [], []
+            with torch.no_grad():
+                for pv, lb in loader:
+                    pv, lb = pv.to(device), lb.to(device)
+                    with torch.amp.autocast(device.type, enabled=use_amp):
+                        logits = model(pv)
+                    all_logits.append(logits.float().cpu())
+                    all_labels.append(lb.cpu())
+            logits_cat = torch.cat(all_logits).numpy()
+            labels_cat = torch.cat(all_labels).numpy()
+            scores = torch.sigmoid(torch.from_numpy(logits_cat)).numpy()
+            return labels_cat, scores
 
-        avg_val_loss = val_loss_sum / max(val_batches, 1)
-        val_logits_cat = torch.cat(val_logits_all).numpy()
-        val_labels_cat = torch.cat(val_labels_all).numpy()
-        val_scores = torch.sigmoid(torch.from_numpy(val_logits_cat)).numpy()
+        train_labels_ep, train_scores_ep = _score_loader(train_eval_loader)
+        val_labels_ep, val_scores_ep = _score_loader(val_loader)
 
-        metrics = compute_all_metrics(val_labels_cat, val_scores)
+        train_m = compute_metrics_auth_positive(train_labels_ep, train_scores_ep)
+        val_m = compute_metrics_auth_positive(val_labels_ep, val_scores_ep)
+
+        train_auc = train_m.get("auc_roc", 0)
+        train_tpr2 = train_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+        val_auc = val_m.get("auc_roc", 0)
+        val_tpr2 = val_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
 
         writer.add_scalar("loss/train", avg_train_loss, epoch)
-        writer.add_scalar("loss/val", avg_val_loss, epoch)
         writer.add_scalar("lr", optimizer.param_groups[0]["lr"], epoch)
         writer.add_scalar("epoch_time_s", epoch_time, epoch)
-        writer.add_scalar("metrics/auc_roc", metrics.get("auc_roc", 0), epoch)
-        writer.add_scalar("metrics/auc_pr", metrics.get("auc_pr", 0), epoch)
-        for fpr_name, fpr_data in metrics.get("tpr_at_fpr", {}).items():
-            writer.add_scalar(f"tpr_at_fpr/{fpr_name}", fpr_data["tpr"], epoch)
+        writer.add_scalar("train/auc_roc", train_auc, epoch)
+        writer.add_scalar("train/tpr_at_2pct", train_tpr2, epoch)
+        writer.add_scalar("val/auc_roc", val_auc, epoch)
+        writer.add_scalar("val/tpr_at_2pct", val_tpr2, epoch)
 
-        current_tpr_2 = metrics.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
-        current_auc = metrics.get("auc_roc", 0)
-        improved = current_tpr_2 > best_tpr_2 or (
-            current_tpr_2 == best_tpr_2 and current_auc > best_auc
+        improved = val_tpr2 > best_tpr_2 or (
+            val_tpr2 == best_tpr_2 and val_auc > best_auc
         )
         if improved:
-            best_tpr_2 = current_tpr_2
-            best_auc = current_auc
+            best_tpr_2 = val_tpr2
+            best_auc = val_auc
             patience_counter = 0
             torch.save({
                 "epoch": epoch,
                 "model_state_dict": model.state_dict(),
-                "metrics": metrics,
+                "metrics": val_m,
                 "config": vars(args),
                 "region": region,
                 "strategy": strategy,
@@ -327,17 +347,37 @@ def train_partial(strategy, args):
             patience_counter += 1
 
         frozen_str = "frozen" if not unfrozen else strategy
-        _print_tpr_fpr_table(metrics, epoch, total_epochs, frozen_str, epoch_time,
-                             avg_train_loss, avg_val_loss, improved)
+        marker = " << BEST" if improved else ""
+        print(
+            f"\n  Epoch {epoch:3d}/{total_epochs} ({frozen_str}, {epoch_time:.1f}s) | "
+            f"train AUC={train_auc:.4f} TPR@2%={train_tpr2:.4f} | "
+            f"val AUC={val_auc:.4f} TPR@2%={val_tpr2:.4f}{marker}",
+            flush=True,
+        )
 
         if patience_counter >= args.patience:
             print(f"\n  Early stopping at epoch {epoch} (patience={args.patience})")
             break
 
     writer.close()
-    print(f"\n  Best TPR@2%FPR: {best_tpr_2:.4f}  (AUC-ROC: {best_auc:.4f})")
+    print(f"\n  Best val TPR@2%: {best_tpr_2:.4f}  (AUC: {best_auc:.4f})")
     print(f"  Checkpoint: {best_ckpt_path}")
-    print_final_metrics(best_ckpt_path)
+
+    # --- Final test evaluation ---
+    if best_ckpt_path.exists():
+        ckpt = torch.load(best_ckpt_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model_state_dict"])
+        model.eval()
+        test_labels_all, test_scores_all = _score_loader(test_loader)
+        test_m = compute_metrics_auth_positive(test_labels_all, test_scores_all)
+
+        val_thresh_info = ckpt["metrics"].get("tpr_at_fpr", {}).get("2%", {})
+        thresh_orig = val_thresh_info.get("threshold_orig", 0.5)
+        fixed = apply_threshold_auth_positive(test_labels_all, test_scores_all, thresh_orig)
+
+        print(f"\n  TEST | AUC={test_m.get('auc_roc', 0):.4f} | "
+              f"@2% val-thresh: TPR(auth passed)={fixed['tpr']:.4f}  FPR(fakes missed)={fixed['fpr']:.4f}")
+
     return best_tpr_2, best_auc, n_unfrozen
 
 

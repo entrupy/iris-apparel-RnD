@@ -26,8 +26,9 @@ from config import (
     REGIONS,
     RESOLUTIONS,
     SEED,
+    apply_threshold_auth_positive,
     cache_dir,
-    compute_all_metrics,
+    compute_metrics_auth_positive,
     get_or_create_val_split,
     load_cached_features,
     load_metadata,
@@ -124,6 +125,16 @@ def train_lgbm(X_train, y_train, X_val, y_val, device, seed=SEED):
 # Run one embedding variant
 # ---------------------------------------------------------------------------
 
+def _score_clf(clf, X, name):
+    if name == "svm":
+        model, scaler = clf
+        return model.predict_proba(scaler.transform(X))[:, 1]
+    elif name == "lgbm":
+        return clf.predict_proba(X)[:, 1]
+    else:
+        return clf.predict_proba(X)[:, 1]
+
+
 def run_one(region, model_key, resolution, selected_classifiers, device):
     features, labels, uuids = load_cached_features(region, model_key, resolution)
 
@@ -139,10 +150,21 @@ def run_one(region, model_key, resolution, selected_classifiers, device):
     X_val = features[feat_val_idx].numpy()
     y_val = labels[feat_val_idx].numpy()
 
+    cdir = cache_dir(region)
+    test_prefix = f"test_{model_key}_{resolution}"
+    test_feat_path = cdir / f"{test_prefix}_features.pt"
+    X_test, y_test = None, None
+    if test_feat_path.exists():
+        test_feats = torch.load(test_feat_path, weights_only=True)
+        test_labels_t = torch.load(cdir / f"{test_prefix}_labels.pt", weights_only=True)
+        X_test = test_feats.numpy()
+        y_test = test_labels_t.numpy()
+
     n_pos_train = int(y_train.sum())
     n_neg_train = len(y_train) - n_pos_train
     scale_pos_weight = n_neg_train / max(n_pos_train, 1)
-    print(f"  Train: {len(y_train)} ({n_pos_train} pos) | Val: {len(y_val)} ({int(y_val.sum())} pos)")
+    print(f"  Train: {len(y_train)} ({n_pos_train} pos) | Val: {len(y_val)} ({int(y_val.sum())} pos)"
+          + (f" | Test: {len(y_test)} ({int(y_test.sum())} pos)" if y_test is not None else ""))
 
     prefix = f"{model_key}_{resolution}"
     rdir = results_dir(region)
@@ -154,6 +176,7 @@ def run_one(region, model_key, resolution, selected_classifiers, device):
             clf, y_score, fit_time = train_xgb(X_train, y_train, X_val, y_val, device)
         elif name == "svm":
             (clf, scaler), y_score, fit_time = train_svm(X_train, y_train, X_val, y_val, scale_pos_weight)
+            clf_obj = (clf, scaler)
         elif name == "catboost":
             clf, y_score, fit_time = train_catboost(X_train, y_train, X_val, y_val, device)
         elif name == "lgbm":
@@ -161,17 +184,38 @@ def run_one(region, model_key, resolution, selected_classifiers, device):
         else:
             continue
 
-        metrics = compute_all_metrics(y_val, y_score)
-        auc_roc = metrics.get("auc_roc", 0)
-        auc_pr = metrics.get("auc_pr", 0)
-        tpr_2 = metrics.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+        clf_for_score = clf_obj if name == "svm" else clf
+        train_score = _score_clf(clf_for_score, X_train, name)
+        train_m = compute_metrics_auth_positive(y_train, train_score)
+        val_m = compute_metrics_auth_positive(y_val, y_score)
 
-        print(f"  [{name.upper():8s}] fit={fit_time:.1f}s | AUC-ROC={auc_roc:.4f} AUC-PR={auc_pr:.4f} TPR@2%FPR={tpr_2:.4f}")
+        train_auc = train_m.get("auc_roc", 0)
+        train_tpr2 = train_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+        val_auc = val_m.get("auc_roc", 0)
+        val_tpr2 = val_m.get("tpr_at_fpr", {}).get("2%", {}).get("tpr", 0)
+
+        line = (f"  [{name.upper():8s}] {fit_time:.1f}s | "
+                f"train AUC={train_auc:.4f} TPR@2%={train_tpr2:.4f} | "
+                f"val AUC={val_auc:.4f} TPR@2%={val_tpr2:.4f}")
+
+        test_info = {}
+        if X_test is not None:
+            test_score = _score_clf(clf_for_score, X_test, name)
+            test_m = compute_metrics_auth_positive(y_test, test_score)
+            thresh_orig = val_m.get("tpr_at_fpr", {}).get("2%", {}).get("threshold_orig", 0.5)
+            fixed = apply_threshold_auth_positive(y_test, test_score, thresh_orig)
+            line += (f" | test AUC={test_m.get('auc_roc', 0):.4f} "
+                     f"@2%: TPR={fixed['tpr']:.4f} FPR={fixed['fpr']:.4f}")
+            test_info = {"test_auc": test_m.get("auc_roc", 0), "test_fixed_2pct": fixed}
+
+        print(line)
 
         results_summary[name] = {
-            "auc_roc": auc_roc, "auc_pr": auc_pr,
-            "tpr_at_fpr": metrics.get("tpr_at_fpr", {}),
+            "auc_roc": val_auc, "auc_pr": val_m.get("auc_pr", 0),
+            "tpr_at_fpr": val_m.get("tpr_at_fpr", {}),
+            "train_auc": train_auc, "train_tpr_at_fpr": train_m.get("tpr_at_fpr", {}),
             "fit_time_s": fit_time,
+            **test_info,
         }
 
         out_path = rdir / f"{prefix}_{name}.json"
