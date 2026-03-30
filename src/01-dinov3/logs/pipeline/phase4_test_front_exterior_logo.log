@@ -1,0 +1,184 @@
+Region: front_exterior_logo  |  Device: cuda
+[front_exterior_logo/test] 1424 labeled rows, 875 with images
+  Authentic (0): 840  |  Not-authentic (1): 35  |  Ratio: 24.0:1
+
+============================================================
+STEP 1: Extract test features (frozen backbones)
+============================================================
+  [SKIP] test_vitl16_518 already cached
+  [SKIP] test_vitl16_714 already cached
+
+============================================================
+STEP 2: Evaluate linear probes
+============================================================
+  vitl16_518_linear                   AUC=0.8155  TPR@2%=0.2857
+  vitl16_714_linear                   AUC=0.8030  TPR@2%=0.3143
+
+============================================================
+STEP 3: Evaluate fine-tuned models
+============================================================
+  [vitb16 @ 518 finetune] Loading ...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 4001.49it/s]
+  vitb16_518_finetune                 AUC=0.7968  TPR@2%=0.4000
+  [vitb16 @ 714 finetune] Loading ...
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]Loading weights: 100%|██████████| 211/211 [00:00<00:00, 5166.27it/s]
+  vitb16_714_finetune                 AUC=0.7636  TPR@2%=0.2286
+  [vitl16 @ 518 finetune] Loading ...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5415.95it/s]
+  vitl16_518_finetune                 AUC=0.8148  TPR@2%=0.3143
+  [vitl16 @ 714 finetune] Loading ...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5103.13it/s]
+  vitl16_714_finetune                 AUC=0.7845  TPR@2%=0.3143
+
+============================================================
+STEP 4: Evaluate ML classifiers (frozen features)
+============================================================
+  [WARN] vitl16_518_xgb: [22:08:43] /__w/xgboost/xgboost/include/xgboost/json.h:88: Invalid cast, from Null to Object
+Stack trace:
+  [bt] (0) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2c1a8c) [0x71eff62c1a8c]
+  [bt] (1) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2cf74b) [0x71eff62cf74b]
+  [bt] (2) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x7219c8) [0x71eff67219c8]
+  [bt] (3) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterLoadModel+0xf3) [0x71eff61d8283]
+  [bt] (4) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x71f392700b16]
+  [bt] (5) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x71f3926fd3ef]
+  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x71f3927000be]
+  [bt] (7) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0xe11c) [0x71f39271d11c]
+  [bt] (8) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0x92af) [0x71f3927182af]
+
+
+  vitl16_518_svm                      AUC=0.8334  TPR@2%=0.3143
+  vitl16_518_catboost                 AUC=0.8171  TPR@2%=0.3714
+  vitl16_518_lgbm                     AUC=0.8081  TPR@2%=0.3429
+  [WARN] vitl16_714_xgb: [22:08:44] /__w/xgboost/xgboost/include/xgboost/json.h:88: Invalid cast, from Null to Object
+Stack trace:
+  [bt] (0) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2c1a8c) [0x71eff62c1a8c]
+  [bt] (1) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2cf74b) [0x71eff62cf74b]
+  [bt] (2) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x7219c8) [0x71eff67219c8]
+  [bt] (3) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterLoadModel+0xf3) [0x71eff61d8283]
+  [bt] (4) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x71f392700b16]
+  [bt] (5) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x71f3926fd3ef]
+  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x71f3927000be]
+  [bt] (7) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0xe11c) [0x71f39271d11c]
+  [bt] (8) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0x92af) [0x71f3927182af]
+
+
+  vitl16_714_svm                      AUC=0.8361  TPR@2%=0.3429
+  vitl16_714_catboost                 AUC=0.8277  TPR@2%=0.3429
+  vitl16_714_lgbm                     AUC=0.8145  TPR@2%=0.3429
+
+============================================================
+STEP 5: Evaluate finetuned-backbone ML classifiers
+============================================================
+  [WARN] finetuned_vitb16_518_xgb: [22:08:45] /__w/xgboost/xgboost/include/xgboost/json.h:88: Invalid cast, from Null to Object
+Stack trace:
+  [bt] (0) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2c1a8c) [0x71eff62c1a8c]
+  [bt] (1) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2cf74b) [0x71eff62cf74b]
+  [bt] (2) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x7219c8) [0x71eff67219c8]
+  [bt] (3) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterLoadModel+0xf3) [0x71eff61d8283]
+  [bt] (4) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x71f392700b16]
+  [bt] (5) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x71f3926fd3ef]
+  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x71f3927000be]
+  [bt] (7) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0xe11c) [0x71f39271d11c]
+  [bt] (8) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0x92af) [0x71f3927182af]
+
+
+  finetuned_vitb16_518_svm                 AUC=0.7606  TPR@2%=0.3714
+  finetuned_vitb16_518_catboost            AUC=0.7908  TPR@2%=0.3143
+  finetuned_vitb16_518_lgbm                AUC=0.8018  TPR@2%=0.3429
+  [WARN] finetuned_vitb16_714_xgb: [22:08:45] /__w/xgboost/xgboost/include/xgboost/json.h:88: Invalid cast, from Null to Object
+Stack trace:
+  [bt] (0) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2c1a8c) [0x71eff62c1a8c]
+  [bt] (1) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2cf74b) [0x71eff62cf74b]
+  [bt] (2) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x7219c8) [0x71eff67219c8]
+  [bt] (3) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterLoadModel+0xf3) [0x71eff61d8283]
+  [bt] (4) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x71f392700b16]
+  [bt] (5) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x71f3926fd3ef]
+  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x71f3927000be]
+  [bt] (7) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0xe11c) [0x71f39271d11c]
+  [bt] (8) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0x92af) [0x71f3927182af]
+
+
+  finetuned_vitb16_714_svm                 AUC=0.7502  TPR@2%=0.3429
+  finetuned_vitb16_714_catboost            AUC=0.6776  TPR@2%=0.1714
+  finetuned_vitb16_714_lgbm                AUC=0.7767  TPR@2%=0.2857
+  [WARN] finetuned_vitl16_518_xgb: [22:08:45] /__w/xgboost/xgboost/include/xgboost/json.h:88: Invalid cast, from Null to Object
+Stack trace:
+  [bt] (0) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2c1a8c) [0x71eff62c1a8c]
+  [bt] (1) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2cf74b) [0x71eff62cf74b]
+  [bt] (2) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x7219c8) [0x71eff67219c8]
+  [bt] (3) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterLoadModel+0xf3) [0x71eff61d8283]
+  [bt] (4) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x71f392700b16]
+  [bt] (5) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x71f3926fd3ef]
+  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x71f3927000be]
+  [bt] (7) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0xe11c) [0x71f39271d11c]
+  [bt] (8) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0x92af) [0x71f3927182af]
+
+
+  finetuned_vitl16_518_svm                 AUC=0.8068  TPR@2%=0.4571
+  finetuned_vitl16_518_catboost            AUC=0.8351  TPR@2%=0.4000
+  finetuned_vitl16_518_lgbm                AUC=0.8138  TPR@2%=0.4286
+  [WARN] finetuned_vitl16_714_xgb: [22:08:46] /__w/xgboost/xgboost/include/xgboost/json.h:88: Invalid cast, from Null to Object
+Stack trace:
+  [bt] (0) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2c1a8c) [0x71eff62c1a8c]
+  [bt] (1) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x2cf74b) [0x71eff62cf74b]
+  [bt] (2) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(+0x7219c8) [0x71eff67219c8]
+  [bt] (3) /root/.venv/lib/python3.12/site-packages/xgboost/lib/libxgboost.so(XGBoosterLoadModel+0xf3) [0x71eff61d8283]
+  [bt] (4) /lib/x86_64-linux-gnu/libffi.so.8(+0x7b16) [0x71f392700b16]
+  [bt] (5) /lib/x86_64-linux-gnu/libffi.so.8(+0x43ef) [0x71f3926fd3ef]
+  [bt] (6) /lib/x86_64-linux-gnu/libffi.so.8(ffi_call+0x12e) [0x71f3927000be]
+  [bt] (7) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0xe11c) [0x71f39271d11c]
+  [bt] (8) /usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so(+0x92af) [0x71f3927182af]
+
+
+  finetuned_vitl16_714_svm                 AUC=0.8005  TPR@2%=0.4286
+  finetuned_vitl16_714_catboost            AUC=0.8009  TPR@2%=0.3143
+  finetuned_vitl16_714_lgbm                AUC=0.8117  TPR@2%=0.3143
+
+============================================================
+Writing results
+============================================================
+  Saved to /root/iris/src/01-dinov3/ml_results/front_exterior_logo/test_results.json
+
+================================================================================
+TEST RESULTS SUMMARY — front_exterior_logo
+================================================================================
+  Test set: 875 images (35 pos, 840 neg)
+
+  Method                                    AUC-ROC  TPR@0.5%   TPR@1%   TPR@2%   TPR@5%  TPR@10%
+  -----------------------------------------------------------------------------------------
+  finetuned_vitl16_518_svm                   0.8068    0.2857   0.3429   0.4571   0.6000   0.6286
+  finetuned_vitl16_518_lgbm                  0.8138    0.3143   0.3429   0.4286   0.4857   0.5143
+  finetuned_vitl16_714_svm                   0.8005    0.2000   0.2571   0.4286   0.5429   0.6286
+  vitb16_518_finetune                        0.7968    0.2000   0.3143   0.4000   0.4857   0.5714
+  finetuned_vitl16_518_catboost              0.8351    0.1143   0.2571   0.4000   0.5143   0.5429
+  vitl16_518_catboost                        0.8171    0.2857   0.3143   0.3714   0.4286   0.6286
+  finetuned_vitb16_518_svm                   0.7606    0.2000   0.2571   0.3714   0.5714   0.6000
+  vitl16_518_lgbm                            0.8081    0.2286   0.3143   0.3429   0.5143   0.5714
+  vitl16_714_svm                             0.8361    0.2286   0.3143   0.3429   0.4286   0.5429
+  vitl16_714_catboost                        0.8277    0.2286   0.3143   0.3429   0.5143   0.6000
+  vitl16_714_lgbm                            0.8145    0.1714   0.2571   0.3429   0.5143   0.5714
+  finetuned_vitb16_518_lgbm                  0.8018    0.1714   0.2571   0.3429   0.5143   0.5714
+  finetuned_vitb16_714_svm                   0.7502    0.1714   0.2000   0.3429   0.4857   0.5429
+  vitl16_714_linear                          0.8030    0.1429   0.2857   0.3143   0.3429   0.4286
+  vitl16_518_finetune                        0.8148    0.0571   0.1714   0.3143   0.4571   0.6000
+  vitl16_714_finetune                        0.7845    0.1429   0.2000   0.3143   0.4571   0.5714
+  vitl16_518_svm                             0.8334    0.2000   0.2857   0.3143   0.4857   0.5143
+  finetuned_vitb16_518_catboost              0.7908    0.2000   0.2571   0.3143   0.4286   0.5143
+  finetuned_vitl16_714_catboost              0.8009    0.2000   0.2857   0.3143   0.4857   0.5429
+  finetuned_vitl16_714_lgbm                  0.8117    0.2000   0.2286   0.3143   0.5143   0.5143
+  vitl16_518_linear                          0.8155    0.0857   0.2571   0.2857   0.3429   0.5143
+  finetuned_vitb16_714_lgbm                  0.7767    0.1143   0.1429   0.2857   0.4286   0.5429
+  vitb16_714_finetune                        0.7636    0.1429   0.1714   0.2286   0.4000   0.5143
+  finetuned_vitb16_714_catboost              0.6776    0.1143   0.1714   0.1714   0.2857   0.2857
+
+  Best fixed-threshold (val thresholds on test):
+  FPR Target   Method                                    Test FPR  Test TPR
+  ----------------------------------------------------------------------
+  0.5%         finetuned_vitl16_518_lgbm                    0.60%    31.43%
+  1%           finetuned_vitl16_518_lgbm                    1.19%    37.14%
+  2%           finetuned_vitb16_714_svm                     4.17%    45.71%
+  5%           finetuned_vitb16_518_svm                     5.36%    57.14%
+  10%          finetuned_vitl16_518_svm                     9.29%    62.86%
+
+Done.

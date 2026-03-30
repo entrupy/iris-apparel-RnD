@@ -250,16 +250,32 @@ def load_per_region_test_scores(region, model_tag):
 
 
 def _compute_voting_stats(y_true, preds):
-    n_pos = y_true.sum()
-    n_neg = len(y_true) - n_pos
-    tp = ((preds == 1) & (y_true == 1)).sum()
-    fp = ((preds == 1) & (y_true == 0)).sum()
-    fn = ((preds == 0) & (y_true == 1)).sum()
-    tn = ((preds == 0) & (y_true == 0)).sum()
+    """Compute voting stats.
+
+    Convention: positive = authentic (label 0), negative = fake (label 1).
+    preds: 1 = flagged as fake, 0 = passed as authentic.
+    y_true: 1 = actually fake, 0 = actually authentic.
+
+    TP = authentic correctly passed, FP = fake wrongly passed (missed),
+    FN = authentic wrongly flagged,  TN = fake correctly caught.
+    """
+    n_fake = y_true.sum()
+    n_auth = len(y_true) - n_fake
+
+    # Detection metrics (catch rate / false alarm rate) — unchanged
+    catch_rate = float(((preds == 1) & (y_true == 1)).sum() / max(n_fake, 1))
+    false_alarm = float(((preds == 1) & (y_true == 0)).sum() / max(n_auth, 1))
+
+    # Confusion matrix with positive = authentic
+    tp = int(((preds == 0) & (y_true == 0)).sum())  # authentic correctly passed
+    fp = int(((preds == 0) & (y_true == 1)).sum())   # fake wrongly passed (missed)
+    fn = int(((preds == 1) & (y_true == 0)).sum())   # authentic wrongly flagged
+    tn = int(((preds == 1) & (y_true == 1)).sum())    # fake correctly caught
+
     return {
-        "tpr": float(tp / max(n_pos, 1)),
-        "fpr": float(fp / max(n_neg, 1)),
-        "tp": int(tp), "fp": int(fp), "fn": int(fn), "tn": int(tn),
+        "tpr": catch_rate,
+        "fpr": false_alarm,
+        "tp": tp, "fp": fp, "fn": fn, "tn": tn,
     }
 
 
@@ -282,8 +298,9 @@ def voting_evaluation(all_sessions, per_region_scores, per_region_thresholds, st
     """Voting across regions.
 
     strategy:
-      "any"      - flag if ANY region flags (all-must-agree-authentic). NaN=authentic.
-      "majority" - flag if majority of available regions flag. NaN excluded from count.
+      "any"       - flag if ANY region flags. NaN=authentic.
+      "majority"  - flag if majority of available regions flag. NaN excluded.
+      "all_agree" - flag only if ALL available regions flag. NaN=authentic.
     """
     uuids = sorted(all_sessions.keys())
     y_true = np.array([all_sessions[u] for u in uuids])
@@ -300,6 +317,10 @@ def voting_evaluation(all_sessions, per_region_scores, per_region_thresholds, st
             threshold = np.ceil(n_available / 2.0)
             preds = (n_flagged >= threshold).astype(int)
             preds[n_available == 0] = 0
+        elif strategy == "all_agree":
+            n_available = (flags >= 0).sum(axis=1)
+            n_flagged = (flags == 1).sum(axis=1)
+            preds = ((n_flagged == n_available) & (n_available > 0)).astype(int)
         else:
             raise ValueError(f"Unknown strategy: {strategy}")
 
@@ -313,6 +334,16 @@ def voting_evaluation(all_sessions, per_region_scores, per_region_thresholds, st
             for i, uuid in enumerate(uuids):
                 if uuid in scores:
                     fused[i] = max(fused[i], scores[uuid])
+    elif strategy == "all_agree":
+        fused = np.full(len(uuids), 1.0)
+        has_score = np.zeros(len(uuids), dtype=bool)
+        for region in REGIONS:
+            scores = per_region_scores.get(region, {})
+            for i, uuid in enumerate(uuids):
+                if uuid in scores:
+                    fused[i] = min(fused[i], scores[uuid])
+                    has_score[i] = True
+        fused[~has_score] = 0.0
     else:
         fused = np.full(len(uuids), 0.0)
         counts = np.zeros(len(uuids))
@@ -388,8 +419,9 @@ def main():
         print(f"  {region:<25} {n}/{len(uuids)} sessions ({100*n/len(uuids):.1f}%)")
 
     strategies = [
-        ("any", "ALL-MUST-AGREE (flag if ANY region flags)"),
+        ("any", "ANY-ONE-AGREE (flag if ANY region flags)"),
         ("majority", "MAJORITY VOTING (flag if >=ceil(n/2) regions flag)"),
+        ("all_agree", "ALL-MUST-AGREE (flag only if ALL available regions flag)"),
     ]
 
     all_voting_results = {}
@@ -402,12 +434,12 @@ def main():
         )
         all_voting_results[strategy] = {"fixed": fixed_results, "roc": roc_metrics}
 
-        print(f"\n  {'FPR Target':<12} {'Test FPR':<10} {'Test TPR':<10} {'TP':<6} {'FP':<6} {'FN':<6} {'TN':<6}")
-        print(f"  {'-' * 56}")
+        print(f"\n  {'FPR Target':<12} {'FalseAlarm':<10} {'CatchRate':<10} {'TP(auth✓)':<10} {'FP(missed)':<11} {'FN(alarm)':<10} {'TN(caught)':<10}")
+        print(f"  {'-' * 73}")
         for fpr_name in TARGET_FPR_NAMES:
             d = fixed_results.get(fpr_name, {})
             print(f"  {fpr_name:<12} {d.get('fpr',0):<10.2%} {d.get('tpr',0):<10.2%} "
-                  f"{d.get('tp',0):<6} {d.get('fp',0):<6} {d.get('fn',0):<6} {d.get('tn',0):<6}")
+                  f"{d.get('tp',0):<10} {d.get('fp',0):<11} {d.get('fn',0):<10} {d.get('tn',0):<10}")
 
         fusion_label = "max-score" if strategy == "any" else "mean-score"
         print(f"\n  {fusion_label} fusion ROC:  AUC-ROC={roc_metrics.get('auc_roc', 0):.4f}  AUC-PR={roc_metrics.get('auc_pr', 0):.4f}")
@@ -431,7 +463,7 @@ def main():
               f"{d2.get('fpr',0):>8.2%} {d2.get('tpr',0):>8.2%} "
               f"{d5.get('fpr',0):>8.2%} {d5.get('tpr',0):>8.2%} "
               f"{d10.get('fpr',0):>9.2%} {d10.get('tpr',0):>8.2%}")
-    for strategy, label_short in [("any", "VOTING: all-must-agree"), ("majority", "VOTING: majority")]:
+    for strategy, label_short in [("any", "VOTING: any-one-agree"), ("majority", "VOTING: majority"), ("all_agree", "VOTING: all-must-agree")]:
         fr = all_voting_results[strategy]["fixed"]
         d2, d5, d10 = fr.get("2%", {}), fr.get("5%", {}), fr.get("10%", {})
         print(f"  {label_short:<45} "
@@ -445,6 +477,7 @@ def main():
                             for r, info in best.items()},
         "voting_any": all_voting_results["any"],
         "voting_majority": all_voting_results["majority"],
+        "voting_all_agree": all_voting_results["all_agree"],
         "n_sessions": len(all_sessions),
         "n_pos": n_pos, "n_neg": n_neg,
     }

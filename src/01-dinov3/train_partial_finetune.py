@@ -53,7 +53,7 @@ STRATEGIES = [
     # Group D: Depth-limited (all components)
     "last1", "last4", "last8", "last12",
     # Group E: Depth x Component
-    "mlp_last4", "mlp_last8", "attn_last4", "qv_last8+norm",
+    "qv_last4", "mlp_last4", "mlp_last8", "attn_last4", "qv_last8+norm",
     # Baseline
     "full",
 ]

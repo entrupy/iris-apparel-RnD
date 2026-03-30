@@ -135,17 +135,17 @@ def train_lgbm(X_train, y_train, X_val, y_val, device, seed=SEED):
 # Main pipeline
 # ---------------------------------------------------------------------------
 
-def run(region, model_key, resolution, selected_classifiers, device, batch_size, num_workers):
+def run(region, model_key, resolution, selected_classifiers, device, batch_size, num_workers,
+        ckpt_tag="finetune"):
     # 1. Load finetuned checkpoint
     cdir = ckpt_dir(region)
-    ckpt_path = cdir / f"{model_key}_{resolution}_finetune_best.pt"
+    ckpt_path = cdir / f"{model_key}_{resolution}_{ckpt_tag}_best.pt"
     if not ckpt_path.exists():
-        print(f"  ERROR: No finetune checkpoint at {ckpt_path}")
-        print(f"  Run train_with_unfreeze_dino.py first.")
+        print(f"  ERROR: No checkpoint at {ckpt_path}")
         return None
 
     model_id = MODEL_VARIANTS[model_key]
-    print(f"  Loading finetuned checkpoint from {ckpt_path} ...")
+    print(f"  Loading checkpoint from {ckpt_path} ...")
     model = DINOv3Classifier(model_id, freeze_backbone=False)
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     model.load_state_dict(ckpt["model_state_dict"])
@@ -153,7 +153,7 @@ def run(region, model_key, resolution, selected_classifiers, device, batch_size,
 
     # 2. Check for cached finetuned features
     ft_cache = cache_dir(region)
-    ft_prefix = f"finetuned_{model_key}_{resolution}"
+    ft_prefix = f"{ckpt_tag}_{model_key}_{resolution}"
     feat_path = ft_cache / f"{ft_prefix}_features.pt"
     label_path = ft_cache / f"{ft_prefix}_labels.pt"
     uuid_path = ft_cache / f"{ft_prefix}_uuids.pt"
@@ -234,10 +234,10 @@ def run(region, model_key, resolution, selected_classifiers, device, batch_size,
             "fit_time_s": fit_time,
         }
 
-        save_prefix = f"finetuned_{model_key}_{resolution}"
+        save_prefix = f"{ckpt_tag}_{model_key}_{resolution}"
         out_path = rdir / f"{save_prefix}_{name}.json"
         save_obj = {"metrics": results_summary[name], "model_key": model_key,
-                     "resolution": resolution, "region": region, "source": "finetuned_backbone"}
+                     "resolution": resolution, "region": region, "source": ckpt_tag}
 
         if name == "svm":
             import joblib
@@ -266,6 +266,8 @@ def main():
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
+    parser.add_argument("--ckpt-tag", type=str, default="finetune",
+                        help="Checkpoint tag, e.g. 'finetune' or 'partial_last4'")
     args = parser.parse_args()
 
     np.random.seed(SEED)
@@ -273,10 +275,10 @@ def main():
     print(f"Device: {device}")
 
     print(f"\n{'=' * 60}")
-    print(f"[{args.region} | {args.model} @ {args.resolution} | finetuned -> ML]")
+    print(f"[{args.region} | {args.model} @ {args.resolution} | {args.ckpt_tag} -> ML]")
     print(f"{'=' * 60}")
     run(args.region, args.model, args.resolution, args.classifiers,
-        device, args.batch_size, args.num_workers)
+        device, args.batch_size, args.num_workers, ckpt_tag=args.ckpt_tag)
 
 
 if __name__ == "__main__":

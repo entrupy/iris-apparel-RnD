@@ -1,0 +1,18 @@
+=== PARTIAL FINETUNE SWEEP: q, qv, qv_last4, norm x 4 regions ===
+Started: Mon Mar 30 04:40:11 UTC 2026
+
+
+========== FINETUNE q: care_label  Mon Mar 30 04:40:11 UTC 2026 ==========
+
+======================================================================
+PARTIAL FINETUNE: q
+Model: vitl16 @ 714 | Region: care_label
+======================================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Val split [care_label]: train=5837, val=1457
+  Train: 5837 (193 pos) | Val: 1457 (47 pos)
+  pos_weight: 29.2
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5203.80it/s]
+  Strategy 'q': will unfreeze 25,190,400 / 303,129,600 backbone params (25.19M / 303.1M)

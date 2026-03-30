@@ -1,0 +1,23 @@
+
+======================================================================
+PARTIAL FINETUNE: mlp
+Model: vitl16 @ 714 | Region: care_label
+======================================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+[care_label/test] 1424 labeled rows, 962 with images
+  Authentic (0): 929  |  Not-authentic (1): 33  |  Ratio: 28.2:1
+  Train: 7294 (240 pos) | Eval (test): 962 (33 pos)
+  pos_weight: 29.4
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5375.64it/s]
+  Strategy 'mlp': will unfreeze 201,449,472 / 303,129,600 backbone params (201.45M / 303.1M)
+
+  Epoch   1/30 (frozen, 210.9s) | loss=2.4944/3.0835 | AUC-ROC=0.7667  AUC-PR=0.1048  TPR@2%=0.0909 << BEST
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0054       0.0303     0.9869    
+  1%           0.0097       0.0303     0.9862    
+  2%           0.0194       0.0909     0.9840    
+  5%           0.0474       0.2424     0.9797    
+  10%          0.0980       0.3939     0.9759    

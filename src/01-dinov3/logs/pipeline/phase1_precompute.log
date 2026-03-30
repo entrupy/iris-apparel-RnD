@@ -1,0 +1,60 @@
+Device: cuda
+GPU: NVIDIA A100-SXM4-80GB
+GPU memory: 85.1 GB
+
+============================================================
+REGION: care_label
+============================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Will cache 2 variant(s)
+
+  [vitl16 @ 518]
+  [SKIP] vitl16_518 already cached
+
+  [vitl16 @ 714]
+  [SKIP] vitl16_714 already cached
+
+
+============================================================
+REGION: front
+============================================================
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Will cache 2 variant(s)
+
+  [vitl16 @ 518]
+  [SKIP] vitl16_518 already cached
+
+  [vitl16 @ 714]
+  [SKIP] vitl16_714 already cached
+
+
+============================================================
+REGION: front_exterior_logo
+============================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Will cache 2 variant(s)
+
+  [vitl16 @ 518]
+  [SKIP] vitl16_518 already cached
+
+  [vitl16 @ 714]
+  [SKIP] vitl16_714 already cached
+
+
+============================================================
+REGION: brand_tag
+============================================================
+[brand_tag/train] 9759 labeled rows, 9169 with images
+  Authentic (0): 8881  |  Not-authentic (1): 288  |  Ratio: 30.8:1
+  Will cache 2 variant(s)
+
+  [vitl16 @ 518]
+  [SKIP] vitl16_518 already cached
+
+  [vitl16 @ 714]
+  [SKIP] vitl16_714 already cached
+
+All done.

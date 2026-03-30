@@ -1,0 +1,110 @@
+================================================================================
+ALL-MUST-AGREE VOTING — TEST SET
+================================================================================
+
+Best model per region (by test TPR@2%):
+  care_label                finetuned_vitl16_714_svm                 TPR@2%=0.6061  AUC=0.9118
+  front                     vitl16_518_svm                           TPR@2%=0.5122  AUC=0.9246
+  front_exterior_logo       finetuned_vitl16_518_svm                 TPR@2%=0.4571  AUC=0.8068
+  brand_tag                 vitl16_518_finetune                      TPR@2%=0.5517  AUC=0.8978
+
+Union of test sessions: 1424 (41 pos, 1383 neg)
+
+Loading per-region test scores...
+  care_label: loading finetuned_vitl16_714_svm ...
+    -> 962 sessions with scores
+  front: loading vitl16_518_svm ...
+    -> 1398 sessions with scores
+  front_exterior_logo: loading finetuned_vitl16_518_svm ...
+    -> 875 sessions with scores
+  brand_tag: loading vitl16_518_finetune ...
+[brand_tag/test] 1424 labeled rows, 1192 with images
+  Authentic (0): 1163  |  Not-authentic (1): 29  |  Ratio: 40.1:1
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5017.49it/s]
+    -> 1192 sessions with scores
+
+Session coverage:
+  care_label                962/1424 sessions (67.6%)
+  front                     1398/1424 sessions (98.2%)
+  front_exterior_logo       875/1424 sessions (61.4%)
+  brand_tag                 1192/1424 sessions (83.7%)
+
+================================================================================
+  ANY-ONE-AGREE (flag if ANY region flags)
+================================================================================
+
+  FPR Target   FalseAlarm CatchRate  TP(auth✓)  FP(missed)  FN(alarm)  TN(caught)
+  -------------------------------------------------------------------------
+  0.5%         1.45%      70.73%     1363       12          20         29        
+  1%           2.75%      75.61%     1345       10          38         31        
+  2%           5.35%      82.93%     1309       7           74         34        
+  5%           13.30%     82.93%     1199       7           184        34        
+  10%          23.79%     87.80%     1054       5           329        36        
+
+  max-score fusion ROC:  AUC-ROC=0.9442  AUC-PR=0.6145
+  FPR Target   TPR       
+  ----------------------
+  0.5%         0.4390    
+  1%           0.5610    
+  2%           0.6341    
+  5%           0.7805    
+  10%          0.8537    
+
+================================================================================
+  MAJORITY VOTING (flag if >=ceil(n/2) regions flag)
+================================================================================
+
+  FPR Target   FalseAlarm CatchRate  TP(auth✓)  FP(missed)  FN(alarm)  TN(caught)
+  -------------------------------------------------------------------------
+  0.5%         0.14%      41.46%     1381       24          2          17        
+  1%           0.36%      46.34%     1378       22          5          19        
+  2%           1.08%      56.10%     1368       18          15         23        
+  5%           4.34%      65.85%     1323       14          60         27        
+  10%          9.26%      80.49%     1255       8           128        33        
+
+  mean-score fusion ROC:  AUC-ROC=0.9487  AUC-PR=0.6270
+  FPR Target   TPR       
+  ----------------------
+  0.5%         0.4634    
+  1%           0.5610    
+  2%           0.6829    
+  5%           0.8049    
+  10%          0.8293    
+
+================================================================================
+  ALL-MUST-AGREE (flag only if ALL available regions flag)
+================================================================================
+
+  FPR Target   FalseAlarm CatchRate  TP(auth✓)  FP(missed)  FN(alarm)  TN(caught)
+  -------------------------------------------------------------------------
+  0.5%         0.00%      9.76%      1383       37          0          4         
+  1%           0.07%      17.07%     1382       34          1          7         
+  2%           0.07%      24.39%     1382       31          1          10        
+  5%           0.43%      39.02%     1377       25          6          16        
+  10%          1.01%      43.90%     1369       23          14         18        
+
+  mean-score fusion ROC:  AUC-ROC=0.8787  AUC-PR=0.4085
+  FPR Target   TPR       
+  ----------------------
+  0.5%         0.3659    
+  1%           0.3902    
+  2%           0.4146    
+  5%           0.4390    
+  10%          0.5610    
+
+================================================================================
+COMPARISON: Individual vs All-must-agree vs Majority (fixed-threshold)
+================================================================================
+
+  Method                                          FPR@2%   TPR@2%   FPR@5%   TPR@5%   FPR@10%  TPR@10%
+  --------------------------------------------------------------------------------------------
+  care_label                                       2.69%   60.61%    5.17%   66.67%    11.41%   81.82%
+  front                                            0.96%   41.46%    3.91%   60.98%     9.51%   75.61%
+  front_exterior_logo                              1.19%   34.29%    4.17%   57.14%     9.29%   62.86%
+  brand_tag                                        2.49%   55.17%    6.10%   62.07%    11.78%   68.97%
+  VOTING: any-one-agree                            5.35%   82.93%   13.30%   82.93%    23.79%   87.80%
+  VOTING: majority                                 1.08%   56.10%    4.34%   65.85%     9.26%   80.49%
+  VOTING: all-must-agree                           0.07%   24.39%    0.43%   39.02%     1.01%   43.90%
+
+Saved to /root/iris/src/01-dinov3/ml_results/voting_results.json

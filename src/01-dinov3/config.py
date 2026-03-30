@@ -93,6 +93,10 @@ def val_split_path(region: str) -> Path:
     return SCRIPT_DIR / "val_splits" / f"{region}_split.json"
 
 
+def _global_val_split_path() -> Path:
+    return SCRIPT_DIR / "val_splits" / "global_session_split.json"
+
+
 # ---------------------------------------------------------------------------
 # Metadata & val-split
 # ---------------------------------------------------------------------------
@@ -137,43 +141,169 @@ def load_metadata(region: str, split: str = "train"):
     return records
 
 
-def get_or_create_val_split(region: str, records=None):
-    """Return (train_idx, val_idx) arrays. Cached to disk for reproducibility.
+def create_global_val_split(force=False):
+    """Build a single session-level train/val split across all regions.
 
-    If a split file already exists it is loaded; otherwise a new 80/20
-    stratified split is created from `records` and saved.
+    Stratifies by (label x region-availability-pattern) so rare region
+    combinations are represented proportionally in both splits.  Falls back
+    to label-only stratification if any compound stratum has < 2 samples.
+
+    The split is cached to disk; pass force=True to regenerate.
     """
-    split_path = val_split_path(region)
+    from collections import Counter
+
+    split_path = _global_val_split_path()
+    if split_path.exists() and not force:
+        with open(split_path) as f:
+            return json.load(f)
+
+    all_sessions = {}
+    region_records = {}
+
+    for region in REGIONS:
+        records = load_metadata(region, split="train")
+        region_records[region] = records
+        for r in records:
+            uuid = r["session_uuid"]
+            if uuid not in all_sessions:
+                all_sessions[uuid] = {"label": r["label"], "regions": []}
+            if region not in all_sessions[uuid]["regions"]:
+                all_sessions[uuid]["regions"].append(region)
+
+    uuids = list(all_sessions.keys())
+    labels = np.array([all_sessions[u]["label"] for u in uuids])
+
+    strat_keys = []
+    for u in uuids:
+        pattern = "+".join(sorted(all_sessions[u]["regions"]))
+        strat_keys.append(f"{all_sessions[u]['label']}_{pattern}")
+
+    pattern_counts = Counter(strat_keys)
+    use_compound = min(pattern_counts.values()) >= 2
+    strat_target = np.array(strat_keys) if use_compound else labels
+    strat_desc = ("label x region-availability" if use_compound
+                  else "label-only (some compound strata too small)")
+
+    splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=SEED)
+    train_idx, val_idx = next(splitter.split(np.zeros(len(uuids)), strat_target))
+
+    train_uuids = [uuids[i] for i in train_idx]
+    val_uuids = [uuids[i] for i in val_idx]
+    val_set = set(val_uuids)
+
+    per_region = {}
+    for region in REGIONS:
+        t_pos = t_neg = v_pos = v_neg = 0
+        for r in region_records[region]:
+            is_val = r["session_uuid"] in val_set
+            is_pos = r["label"] == 1
+            if is_val:
+                if is_pos:
+                    v_pos += 1
+                else:
+                    v_neg += 1
+            else:
+                if is_pos:
+                    t_pos += 1
+                else:
+                    t_neg += 1
+        per_region[region] = {
+            "total": t_pos + t_neg + v_pos + v_neg,
+            "train": t_pos + t_neg, "train_pos": t_pos, "train_neg": t_neg,
+            "val": v_pos + v_neg, "val_pos": v_pos, "val_neg": v_neg,
+        }
+
+    data = {
+        "seed": SEED,
+        "stratification": strat_desc,
+        "n_total_sessions": len(uuids),
+        "n_train_sessions": len(train_uuids),
+        "n_val_sessions": len(val_uuids),
+        "per_region": per_region,
+        "train_uuids": train_uuids,
+        "val_uuids": val_uuids,
+    }
+
+    split_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(split_path, "w") as f:
+        json.dump(data, f, indent=2)
+
+    print(f"\n  Global val split created ({strat_desc})")
+    print(f"  Sessions: {len(uuids)} total | {len(train_uuids)} train | {len(val_uuids)} val")
+    print(f"  Saved to {split_path}")
+    return data
+
+
+def get_or_create_val_split(region: str, records=None):
+    """Return (train_idx, val_idx) arrays using the global session-level split.
+
+    The global split assigns each session UUID to train or val consistently
+    across all regions, stratified by label and region-availability pattern.
+    """
+    split_path = _global_val_split_path()
 
     if split_path.exists():
         with open(split_path) as f:
             data = json.load(f)
-        train_idx = np.array(data["train_idx"])
-        val_idx = np.array(data["val_idx"])
-        print(f"  Loaded val split from {split_path}  (train={len(train_idx)}, val={len(val_idx)})")
-        return train_idx, val_idx
+    else:
+        data = create_global_val_split()
 
     if records is None:
-        raise ValueError(f"No cached split at {split_path} and no records provided to create one")
+        raise ValueError("records are required to compute per-region indices")
 
-    labels = np.array([r["label"] for r in records])
-    splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=SEED)
-    train_idx, val_idx = next(splitter.split(np.zeros(len(labels)), labels))
+    val_set = set(data["val_uuids"])
+    train_idx, val_idx = [], []
+    for i, r in enumerate(records):
+        if r["session_uuid"] in val_set:
+            val_idx.append(i)
+        else:
+            train_idx.append(i)
 
-    split_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(split_path, "w") as f:
-        json.dump({
-            "region": region,
-            "seed": SEED,
-            "n_total": len(records),
-            "n_train": len(train_idx),
-            "n_val": len(val_idx),
-            "train_idx": train_idx.tolist(),
-            "val_idx": val_idx.tolist(),
-        }, f)
-    n_pos_val = int(labels[val_idx].sum())
-    print(f"  Created val split -> {split_path}  (train={len(train_idx)}, val={len(val_idx)}, val_pos={n_pos_val})")
+    train_idx = np.array(train_idx)
+    val_idx = np.array(val_idx)
+    print(f"  Val split [{region}]: train={len(train_idx)}, val={len(val_idx)}")
     return train_idx, val_idx
+
+
+def print_val_split_distributions():
+    """Print per-region train/val distributions from the global split."""
+    split_path = _global_val_split_path()
+    if not split_path.exists():
+        print("  No global split found. Run create_global_val_split() first.")
+        return
+
+    with open(split_path) as f:
+        data = json.load(f)
+
+    strat = data.get("stratification", "unknown")
+    n_total = data["n_total_sessions"]
+    n_train = data["n_train_sessions"]
+    n_val = data["n_val_sessions"]
+    per_region = data.get("per_region", {})
+
+    print(f"\n{'=' * 78}")
+    print(f"  GLOBAL VAL SPLIT  |  stratified by: {strat}  |  seed: {data['seed']}")
+    print(f"  Unique sessions: {n_total} total  |  "
+          f"{n_train} train ({100*n_train/n_total:.0f}%)  |  "
+          f"{n_val} val ({100*n_val/n_total:.0f}%)")
+    print(f"{'=' * 78}")
+
+    fmt = "  {:<25} {:>6} {:>6} {:>6} {:>7}  | {:>6} {:>6} {:>6} {:>7}"
+    print(fmt.format(
+        "Region", "Train", "Pos", "Neg", "Pos%", "Val", "Pos", "Neg", "Pos%"))
+    print(f"  {'-' * 75}")
+
+    for region in REGIONS:
+        s = per_region.get(region)
+        if not s:
+            continue
+        t_pct = f"{100.0 * s['train_pos'] / max(s['train'], 1):.1f}%"
+        v_pct = f"{100.0 * s['val_pos'] / max(s['val'], 1):.1f}%"
+        print(fmt.format(
+            region, s["train"], s["train_pos"], s["train_neg"], t_pct,
+            s["val"], s["val_pos"], s["val_neg"], v_pct))
+
+    print(f"  {'-' * 75}\n")
 
 
 # ---------------------------------------------------------------------------
@@ -307,6 +437,39 @@ def format_tpr_at_fpr_inline(metrics):
         d = tpr_at_fpr.get(name, {})
         parts.append(f"{name}={d.get('tpr', 0):.3f}")
     return " | ".join(parts)
+
+
+def compute_metrics_auth_positive(y_true_orig, y_score_orig):
+    """Compute metrics with positive=authentic convention.
+
+    Input uses original labels (0=authentic, 1=fake) and original scores
+    (higher = more likely fake).  Internally flips both so that
+    TPR = authentic pass rate and FPR = fake miss rate.
+    """
+    y_true = 1 - np.asarray(y_true_orig)
+    y_score = 1.0 - np.asarray(y_score_orig)
+
+    if len(np.unique(y_true)) < 2:
+        return {"auc_roc": 0.0, "auc_pr": 0.0, "tpr_at_fpr": {}}
+
+    auc_roc = float(roc_auc_score(y_true, y_score))
+    auc_pr = float(average_precision_score(y_true, y_score))
+
+    fpr_arr, tpr_arr, thresholds = roc_curve(y_true, y_score)
+    tpr_at_fpr = {}
+    for target_fpr, name in zip(TARGET_FPRS, TARGET_FPR_NAMES):
+        distances = np.abs(fpr_arr - target_fpr)
+        min_dist = distances.min()
+        tied = np.where(distances == min_dist)[0]
+        idx = tied[np.argmax(tpr_arr[tied])]
+        thresh_idx = min(idx, len(thresholds) - 1)
+        tpr_at_fpr[name] = {
+            "tpr": float(tpr_arr[idx]),
+            "actual_fpr": float(fpr_arr[idx]),
+            "threshold": float(thresholds[thresh_idx]),
+        }
+
+    return {"auc_roc": auc_roc, "auc_pr": auc_pr, "tpr_at_fpr": tpr_at_fpr}
 
 
 # ---------------------------------------------------------------------------

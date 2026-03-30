@@ -1,0 +1,234 @@
+========== FINETUNE last4: front  Sun Mar 29 22:50:55 UTC 2026 ==========
+
+======================================================================
+PARTIAL FINETUNE: last4
+Model: vitl16 @ 714 | Region: front
+======================================================================
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  Train: 7698 (244 pos) | Val: 1929 (62 pos)
+  pos_weight: 30.5
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights:  95%|█████████▌| 396/415 [00:00<00:00, 3926.72it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 4017.89it/s]
+  Strategy 'last4': will unfreeze 50,388,992 / 303,129,600 backbone params (50.39M / 303.1M)
+
+  Epoch   1/30 (frozen, 542.0s) | loss=2.1004/2.4860 | AUC-ROC=0.8083  AUC-PR=0.2541  TPR@2%=0.2258 << BEST
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0054       0.1613     0.9935    
+  1%           0.0107       0.2097     0.9926    
+  2%           0.0198       0.2258     0.9916    
+  5%           0.0503       0.4032     0.9888    
+  10%          0.0996       0.5484     0.9844    
+
+  Epoch   2/30 (frozen, 541.3s) | loss=1.5803/2.0490 | AUC-ROC=0.8303  AUC-PR=0.2741  TPR@2%=0.2419 << BEST
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.1129     0.9940    
+  1%           0.0102       0.1935     0.9925    
+  2%           0.0193       0.2419     0.9908    
+  5%           0.0509       0.4839     0.9869    
+  10%          0.0991       0.5968     0.9797    
+
+  Epoch   3/30 (frozen, 364.5s) | loss=1.3987/2.0765 | AUC-ROC=0.8262  AUC-PR=0.2764  TPR@2%=0.3226 << BEST
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0054       0.1129     0.9967    
+  1%           0.0096       0.1935     0.9957    
+  2%           0.0204       0.3226     0.9941    
+  5%           0.0498       0.4839     0.9913    
+  10%          0.1002       0.5968     0.9845    
+
+  Epoch   4/30 (frozen, 409.7s) | loss=1.2745/1.8853 | AUC-ROC=0.8233  AUC-PR=0.2609  TPR@2%=0.3226
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0059       0.0968     0.9961    
+  1%           0.0096       0.1290     0.9951    
+  2%           0.0204       0.3226     0.9930    
+  5%           0.0498       0.4677     0.9888    
+  10%          0.1007       0.6129     0.9809    
+
+  Epoch   5/30 (frozen, 539.8s) | loss=1.1678/1.9487 | AUC-ROC=0.8230  AUC-PR=0.2562  TPR@2%=0.2742
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.0806     0.9980    
+  1%           0.0102       0.1452     0.9970    
+  2%           0.0198       0.2742     0.9955    
+  5%           0.0498       0.4839     0.9921    
+  10%          0.1002       0.6129     0.9858    
+
+  >> Unfreezing 'last4' components at epoch 6
+  >> Actually unfrozen: 50,388,992 params (50.39M)
+
+  Epoch   6/30 (last4, 653.4s) | loss=0.8037/1.5470 | AUC-ROC=0.8360  AUC-PR=0.2653  TPR@2%=0.2581
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.1452     0.9986    
+  1%           0.0096       0.1935     0.9975    
+  2%           0.0209       0.2581     0.9963    
+  5%           0.0503       0.4839     0.9888    
+  10%          0.0996       0.6129     0.9648    
+
+  Epoch   7/30 (last4, 535.7s) | loss=0.4394/1.7655 | AUC-ROC=0.8435  AUC-PR=0.3093  TPR@2%=0.3548 << BEST
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0054       0.1129     0.9985    
+  1%           0.0096       0.2742     0.9954    
+  2%           0.0193       0.3548     0.9890    
+  5%           0.0498       0.5161     0.9346    
+  10%          0.1034       0.7097     0.6623    
+
+  Epoch   8/30 (last4, 532.3s) | loss=0.2441/2.2931 | AUC-ROC=0.8441  AUC-PR=0.3348  TPR@2%=0.4355 << BEST
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.1935     0.9986    
+  1%           0.0107       0.2903     0.9935    
+  2%           0.0198       0.4355     0.9724    
+  5%           0.0503       0.6290     0.7560    
+  10%          0.0996       0.7097     0.1877    
+
+  Epoch   9/30 (last4, 533.7s) | loss=0.1628/2.8726 | AUC-ROC=0.8408  AUC-PR=0.3745  TPR@2%=0.4032
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.2581     0.9951    
+  1%           0.0096       0.3065     0.9838    
+  2%           0.0198       0.4032     0.8876    
+  5%           0.0514       0.6452     0.3386    
+  10%          0.0986       0.7419     0.0536    
+
+  Epoch  10/30 (last4, 534.0s) | loss=0.0870/3.3027 | AUC-ROC=0.8329  AUC-PR=0.3585  TPR@2%=0.3710
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.2742     0.9935    
+  1%           0.0102       0.3065     0.9743    
+  2%           0.0187       0.3710     0.9378    
+  5%           0.0498       0.5968     0.2436    
+  10%          0.1023       0.7258     0.0375    
+
+  Epoch  11/30 (last4, 532.4s) | loss=0.0914/3.8736 | AUC-ROC=0.8355  AUC-PR=0.4099  TPR@2%=0.3710
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.2581     0.9933    
+  1%           0.0091       0.3065     0.9731    
+  2%           0.0177       0.3710     0.8826    
+  5%           0.0498       0.6129     0.0879    
+  10%          0.0996       0.6935     0.0140    
+
+  Epoch  12/30 (last4, 532.9s) | loss=0.1043/3.0178 | AUC-ROC=0.8313  AUC-PR=0.3423  TPR@2%=0.4032
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0059       0.1613     1.0000    
+  1%           0.0086       0.2419     1.0000    
+  2%           0.0187       0.4032     0.9986    
+  5%           0.0568       0.5645     0.8138    
+  10%          0.1002       0.6290     0.3212    
+
+  Epoch  13/30 (last4, 533.7s) | loss=0.0809/3.8976 | AUC-ROC=0.7970  AUC-PR=0.2308  TPR@2%=0.3065
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0059       0.1129     0.9995    
+  1%           0.0096       0.1935     0.9989    
+  2%           0.0198       0.3065     0.9888    
+  5%           0.0461       0.4194     0.8435    
+  10%          0.1002       0.5484     0.1462    
+
+  Epoch  14/30 (last4, 534.0s) | loss=0.0424/4.5651 | AUC-ROC=0.8341  AUC-PR=0.3890  TPR@2%=0.3871
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0043       0.2419     0.9866    
+  1%           0.0123       0.2742     0.8982    
+  2%           0.0198       0.3871     0.6456    
+  5%           0.0455       0.5484     0.0535    
+  10%          0.1002       0.6935     0.0045    
+
+  Epoch  15/30 (last4, 533.0s) | loss=0.0249/4.7216 | AUC-ROC=0.8292  AUC-PR=0.3957  TPR@2%=0.3548
+  FPR target   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0021       0.2419     0.9937    
+  1%           0.0107       0.2742     0.9251    
+  2%           0.0204       0.3548     0.6434    
+  5%           0.0552       0.5806     0.0234    
+  10%          0.0996       0.6774     0.0044    
+
+  Early stopping at epoch 15 (patience=7)
+
+  Best TPR@2%FPR: 0.4355  (AUC-ROC: 0.8441)
+  Checkpoint: /root/iris/src/01-dinov3/checkpoints/front/vitl16_714_partial_last4_best.pt
+
+  --- Best checkpoint metrics ---
+  AUC-ROC: 0.8441522539177913
+  AUC-PR:  0.3345803611050512
+  Target FPR   Actual FPR   TPR        Threshold 
+  --------------------------------------------
+  0.5%         0.0048       0.1935     0.9986    
+  1%           0.0107       0.2903     0.9935    
+  2%           0.0198       0.4355     0.9723    
+  5%           0.0503       0.6290     0.7573    
+  10%          0.0996       0.7097     0.1879    
+  Youden best: threshold=0.2645  TPR=0.7097  FPR=0.0862
+
+========== ML on finetuned: front  Mon Mar 30 01:30:29 UTC 2026 ==========
+Device: cuda
+
+============================================================
+[front | vitl16 @ 714 | partial_last4 -> ML]
+============================================================
+  Loading checkpoint from /root/iris/src/01-dinov3/checkpoints/front/vitl16_714_partial_last4_best.pt ...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 6460.32it/s]
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Extracting finetuned features at 714x714 ...
+    Batch 1/602
+    Batch 20/602
+    Batch 40/602
+    Batch 60/602
+    Batch 80/602
+    Batch 100/602
+    Batch 120/602
+    Batch 140/602
+    Batch 160/602
+    Batch 180/602
+    Batch 200/602
+    Batch 220/602
+    Batch 240/602
+    Batch 260/602
+    Batch 280/602
+    Batch 300/602
+    Batch 320/602
+    Batch 340/602
+    Batch 360/602
+    Batch 380/602
+    Batch 400/602
+    Batch 420/602
+    Batch 440/602
+    Batch 460/602
+    Batch 480/602
+    Batch 500/602
+    Batch 520/602
+    Batch 540/602
+    Batch 560/602
+    Batch 580/602
+    Batch 600/602
+  Done: torch.Size([9627, 1024]) in 2809.2s
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  Train: 7698 (244 pos) | Val: 1929 (62 pos)
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [02:20:41] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  [XGB     ] fit=39.8s | AUC-ROC=0.8573 AUC-PR=0.4522 TPR@2%FPR=0.5000
+  [SVM     ] fit=25.2s | AUC-ROC=0.8259 AUC-PR=0.4271 TPR@2%FPR=0.4516
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=136.3s | AUC-ROC=0.8667 AUC-PR=0.4277 TPR@2%FPR=0.4677
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  [LGBM    ] fit=542.2s | AUC-ROC=0.8477 AUC-PR=0.4517 TPR@2%FPR=0.4677
+REGION front DONE Mon Mar 30 02:32:27 UTC 2026

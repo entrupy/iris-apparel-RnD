@@ -34,15 +34,13 @@ if [ $# -gt 0 ]; then
     REGIONS=("$@")
 fi
 
-# Step 0: pre-create val splits for all regions (avoids race conditions)
-echo ">>> Step 0: Creating val splits for all regions..."
-for region in "${REGIONS[@]}"; do
-    $PYTHON -c "
-from config import load_metadata, get_or_create_val_split
-records = load_metadata('$region', split='train')
-get_or_create_val_split('$region', records)
+# Step 0: create global session-level val split (avoids race conditions)
+echo ">>> Step 0: Creating global val split (stratified by label x region availability)..."
+$PYTHON -c "
+from config import create_global_val_split, print_val_split_distributions
+create_global_val_split()
+print_val_split_distributions()
 "
-done
 echo ""
 
 # Branch A: precompute → linear_head → ml_classifiers

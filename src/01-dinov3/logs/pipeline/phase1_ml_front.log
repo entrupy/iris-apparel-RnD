@@ -1,0 +1,29 @@
+Device: cuda
+
+============================================================
+[front | vitl16 @ 518 | xgb, svm, catboost, lgbm]
+============================================================
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  Train: 7698 (244 pos) | Val: 1929 (62 pos)
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [21:43:09] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  [XGB     ] fit=1.3s | AUC-ROC=0.8422 AUC-PR=0.4059 TPR@2%FPR=0.4677
+  [SVM     ] fit=54.5s | AUC-ROC=0.8451 AUC-PR=0.3394 TPR@2%FPR=0.4355
+Default metric period is 5 because AUC is/are not implemented for GPU
+  [CATBOOST] fit=2.6s | AUC-ROC=0.8312 AUC-PR=0.2418 TPR@2%FPR=0.2903
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  [LGBM    ] fit=5.3s | AUC-ROC=0.8209 AUC-PR=0.3984 TPR@2%FPR=0.4355
+Device: cuda
+
+============================================================
+[front | vitl16 @ 714 | xgb, svm, catboost, lgbm]
+============================================================
