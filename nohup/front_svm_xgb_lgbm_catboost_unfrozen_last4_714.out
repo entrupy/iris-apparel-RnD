@@ -1,0 +1,66 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Device: cuda
+
+============================================================
+[front | vitl16 @ 714 | last4 -> ML]
+============================================================
+  Loading checkpoint from /root/iris/src/01-dinov3/checkpoints/front/vitl16_714_partial_last4_best.pt ...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5278.51it/s]
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Extracting finetuned features at 714x714 ...
+    Batch 1/602
+    Batch 20/602
+    Batch 40/602
+    Batch 60/602
+    Batch 80/602
+    Batch 100/602
+    Batch 120/602
+    Batch 140/602
+    Batch 160/602
+    Batch 180/602
+    Batch 200/602
+    Batch 220/602
+    Batch 240/602
+    Batch 260/602
+    Batch 280/602
+    Batch 300/602
+    Batch 320/602
+    Batch 340/602
+    Batch 360/602
+    Batch 380/602
+    Batch 400/602
+    Batch 420/602
+    Batch 440/602
+    Batch 460/602
+    Batch 480/602
+    Batch 500/602
+    Batch 520/602
+    Batch 540/602
+    Batch 560/602
+    Batch 580/602
+    Batch 600/602
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [06:15:59] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+Default metric period is 5 because AUC is/are not implemented for GPU
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  Done: torch.Size([9627, 1024]) in 3029.8s
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  Train: 7698 (244 pos) | Val: 1929 (62 pos) | Test: 1398 (41 pos)
+  [XGB     ] 1.9s | train AUC=1.0000 TPR@2%=1.0000 | val AUC=0.8194 TPR@2%=0.1987 | test AUC=0.8745 @2%: TPR=0.1688 FPR=0.0000
+  [SVM     ] 70.5s | train AUC=0.9997 TPR@2%=0.9996 | val AUC=0.8332 TPR@2%=0.0696 | test AUC=0.8994 @2%: TPR=0.0766 FPR=0.0000
+  [CATBOOST] 11.0s | train AUC=0.9923 TPR@2%=0.9650 | val AUC=0.8357 TPR@2%=0.2116 | test AUC=0.8333 @2%: TPR=0.2115 FPR=0.0244
+  [LGBM    ] 882.7s | train AUC=1.0000 TPR@2%=1.0000 | val AUC=0.8378 TPR@2%=0.0686 | test AUC=0.8617 @2%: TPR=0.0737 FPR=0.0000

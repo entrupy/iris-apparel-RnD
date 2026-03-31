@@ -1,0 +1,15 @@
+======================================================================
+REGION FUSION  |  embeddings: last4_vitl16_714  |  device: cuda
+======================================================================
+
+Building train dataset...
+  train: 9759 sessions, 308 fake, 9451 auth
+Splitting with global val split...
+  Train: 7807 (246 fake) | Val: 1952 (62 fake)
+
+Building test dataset...
+  test: 0 sessions, 0 fake, 0 auth
+
+==================================================
+  Training: ATTENTION
+==================================================

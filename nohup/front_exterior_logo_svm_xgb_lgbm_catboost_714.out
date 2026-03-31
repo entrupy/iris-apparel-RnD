@@ -1,0 +1,29 @@
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [16:01:47] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+Warning: less than 75% GPU memory available for training. Free: 4112.5625 Total: 81152.75
+Default metric period is 5 because AUC is/are not implemented for GPU
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+Device: cuda
+
+============================================================
+[front_exterior_logo | vitl16 @ 714 | xgb, svm, catboost, lgbm]
+============================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Val split [front_exterior_logo]: train=4046, val=959
+  Train: 4046 (111 pos) | Val: 959 (36 pos) | Test: 875 (35 pos)
+  [XGB     ] 68.1s | train AUC=1.0000 TPR@2%=1.0000 | val AUC=0.8551 TPR@2%=0.2774 | test AUC=0.8172 @2%: TPR=0.2607 FPR=0.0571
+  [SVM     ] 15.1s | train AUC=1.0000 TPR@2%=1.0000 | val AUC=0.8230 TPR@2%=0.2568 | test AUC=0.8368 @2%: TPR=0.2619 FPR=0.0286
+  [CATBOOST] 227.2s | train AUC=0.9983 TPR@2%=0.9939 | val AUC=0.8557 TPR@2%=0.2719 | test AUC=0.8056 @2%: TPR=0.2012 FPR=0.0857
+  [LGBM    ] 1891.6s | train AUC=1.0000 TPR@2%=1.0000 | val AUC=0.8170 TPR@2%=0.0704 | test AUC=0.8020 @2%: TPR=0.0679 FPR=0.0000

@@ -1,0 +1,16 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+======================================================================
+PARTIAL FINETUNE: full
+Model: vitl16 @ 714 | Region: care_label
+======================================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Val split [care_label]: train=5837, val=1457
+  Train: 5837 (193 pos) | Val: 1457 (47 pos)
+  pos_weight: 29.2
+[care_label/test] 1424 labeled rows, 962 with images
+  Authentic (0): 929  |  Not-authentic (1): 33  |  Ratio: 28.2:1
+  Test: 962 (33 pos)
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5693.08it/s]
+  Strategy 'full': will unfreeze 303,129,600 / 303,129,600 backbone params (303.13M / 303.1M)

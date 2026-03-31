@@ -221,6 +221,7 @@ def train_partial(strategy, args):
     use_amp = device.type == "cuda"
     model_id = MODEL_VARIANTS[model_key]
     model = DINOv3Classifier(model_id, freeze_backbone=True).to(device)
+    model = torch.compile(model)
 
     criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight.to(device))
     head_params = list(model.head.parameters())
@@ -327,16 +328,21 @@ def train_partial(strategy, args):
         writer.add_scalar("val/auc_roc", val_auc, epoch)
         writer.add_scalar("val/tpr_at_2pct", val_tpr2, epoch)
 
-        improved = val_tpr2 > best_tpr_2 or (
-            val_tpr2 == best_tpr_2 and val_auc > best_auc
-        )
+        if args.best_metric == "auc":
+            improved = val_auc > best_auc or (
+                val_auc == best_auc and val_tpr2 > best_tpr_2
+            )
+        else:
+            improved = val_tpr2 > best_tpr_2 or (
+                val_tpr2 == best_tpr_2 and val_auc > best_auc
+            )
         if improved:
             best_tpr_2 = val_tpr2
             best_auc = val_auc
             patience_counter = 0
             torch.save({
                 "epoch": epoch,
-                "model_state_dict": model.state_dict(),
+                "model_state_dict": {k.removeprefix("_orig_mod."): v for k, v in model.state_dict().items()},
                 "metrics": val_m,
                 "config": vars(args),
                 "region": region,
@@ -366,7 +372,8 @@ def train_partial(strategy, args):
     # --- Final test evaluation ---
     if best_ckpt_path.exists():
         ckpt = torch.load(best_ckpt_path, map_location=device, weights_only=False)
-        model.load_state_dict(ckpt["model_state_dict"])
+        load_target = getattr(model, "_orig_mod", model)
+        load_target.load_state_dict(ckpt["model_state_dict"])
         model.eval()
         test_labels_all, test_scores_all = _score_loader(test_loader)
         test_m = compute_metrics_auth_positive(test_labels_all, test_scores_all)
@@ -394,6 +401,7 @@ def main():
     parser.add_argument("--weight-decay", type=float, default=0.01)
     parser.add_argument("--warmup-epochs", type=int, default=5)
     parser.add_argument("--patience", type=int, default=7)
+    parser.add_argument("--best-metric", type=str, default="tpr", choices=["tpr", "auc"])
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()

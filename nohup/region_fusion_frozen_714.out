@@ -1,0 +1,112 @@
+======================================================================
+REGION FUSION  |  embeddings: vitl16_714  |  device: cuda
+======================================================================
+
+Building train dataset...
+  train: 9759 sessions, 308 fake, 9451 auth
+Splitting with global val split...
+  Train: 7807 (246 fake) | Val: 1952 (62 fake)
+
+Building test dataset...
+  test: 1424 sessions, 41 fake, 1383 auth
+
+==================================================
+  Training: MLP
+==================================================
+  fit=3.8s | Val AUC=0.8649 TPR@2%=0.4194
+  Test AUC(auth+)=0.8787
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.1381     0.0000      
+  1%           0.1381     0.0000      
+  2%           0.3760     0.0244      
+  5%           0.5242     0.0488      
+  10%          0.6840     0.0976      
+
+==================================================
+  Training: SVM
+==================================================
+  fit=196.3s | Val AUC=0.8544 TPR@2%=0.4677
+  Test AUC(auth+)=0.8890
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.4873     0.0000      
+  1%           0.4873     0.0000      
+  2%           0.5813     0.0244      
+  5%           0.6356     0.0488      
+  10%          0.6464     0.0976      
+
+==================================================
+  Training: XGB
+==================================================
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [16:52:15] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  fit=2.3s | Val AUC=0.8276 TPR@2%=0.4839
+  Test AUC(auth+)=0.8489
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.3268     0.0000      
+  1%           0.3268     0.0000      
+  2%           0.5163     0.0244      
+  5%           0.5235     0.0732      
+  10%          0.5286     0.0976      
+
+==================================================
+  Training: LGBM
+==================================================
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  fit=10.7s | Val AUC=0.8062 TPR@2%=0.3871
+  Test AUC(auth+)=0.8245
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.3463     0.0000      
+  1%           0.3463     0.0000      
+  2%           0.3688     0.0244      
+  5%           0.4215     0.0488      
+  10%          0.5748     0.0976      
+
+==================================================
+  Training: CATBOOST
+==================================================
+Default metric period is 5 because AUC is/are not implemented for GPU
+  fit=3.0s | Val AUC=0.8130 TPR@2%=0.2419
+  Test AUC(auth+)=0.8181
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.1150     0.0000      
+  1%           0.1150     0.0000      
+  2%           0.1265     0.0244      
+  5%           0.2791     0.0488      
+  10%          0.5242     0.0976      
+
+Saved to /root/iris/src/01-dinov3/ml_results/region_fusion_results.json
+
+================================================================================
+REGION FUSION SUMMARY (auth-positive test metrics)
+================================================================================
+  Method                  AUC    @0.5%      @1%      @2%      @5%     @10%
+  --------------------------------------------------------------------------
+  fusion_svm           0.8890   48.73%   48.73%   58.13%   63.56%   64.64%
+  fusion_xgb           0.8489   32.68%   32.68%   51.63%   52.35%   52.86%
+  fusion_mlp           0.8787   13.81%   13.81%   37.60%   52.42%   68.40%
+  fusion_lgbm          0.8245   34.63%   34.63%   36.88%   42.15%   57.48%
+  fusion_catboost      0.8181   11.50%   11.50%   12.65%   27.91%   52.42%

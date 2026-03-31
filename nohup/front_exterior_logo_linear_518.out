@@ -1,0 +1,63 @@
+
+============================================================
+[front_exterior_logo | vitl16 @ 518 | linear_probe]
+============================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Val split [front_exterior_logo]: train=4046, val=959
+  Test features loaded: 875 (35 pos)
+  Train: 4046 (111 pos) | Val: 959 (36 pos)
+  pos_weight: 35.5
+  Epoch   1/50 | train AUC=0.6885 TPR@2%=0.1571 | val AUC=0.7383 TPR@2%=0.0628 *
+  Epoch   2/50 | train AUC=0.7075 TPR@2%=0.1850 | val AUC=0.7545 TPR@2%=0.0802 *
+  Epoch   3/50 | train AUC=0.7246 TPR@2%=0.2277 | val AUC=0.7616 TPR@2%=0.0899 *
+  Epoch   4/50 | train AUC=0.7438 TPR@2%=0.2755 | val AUC=0.7693 TPR@2%=0.1008 *
+  Epoch   5/50 | train AUC=0.7640 TPR@2%=0.3311 | val AUC=0.7785 TPR@2%=0.1116 *
+  Epoch   6/50 | train AUC=0.7848 TPR@2%=0.3886 | val AUC=0.7851 TPR@2%=0.1224 *
+  Epoch   7/50 | train AUC=0.8025 TPR@2%=0.4117 | val AUC=0.7910 TPR@2%=0.1376 *
+  Epoch   8/50 | train AUC=0.8146 TPR@2%=0.4262 | val AUC=0.7957 TPR@2%=0.1484 *
+  Epoch   9/50 | train AUC=0.8273 TPR@2%=0.4605 | val AUC=0.8012 TPR@2%=0.1625 *
+  Epoch  10/50 | train AUC=0.8368 TPR@2%=0.4803 | val AUC=0.8052 TPR@2%=0.1744 *
+  Epoch  11/50 | train AUC=0.8459 TPR@2%=0.5085 | val AUC=0.8088 TPR@2%=0.1928 *
+  Epoch  12/50 | train AUC=0.8529 TPR@2%=0.5240 | val AUC=0.8124 TPR@2%=0.2059 *
+  Epoch  13/50 | train AUC=0.8591 TPR@2%=0.5416 | val AUC=0.8149 TPR@2%=0.2145 *
+  Epoch  14/50 | train AUC=0.8645 TPR@2%=0.5781 | val AUC=0.8173 TPR@2%=0.2286 *
+  Epoch  15/50 | train AUC=0.8684 TPR@2%=0.5949 | val AUC=0.8202 TPR@2%=0.2394 *
+  Epoch  16/50 | train AUC=0.8728 TPR@2%=0.6069 | val AUC=0.8226 TPR@2%=0.2535 *
+  Epoch  17/50 | train AUC=0.8773 TPR@2%=0.6074 | val AUC=0.8248 TPR@2%=0.2633 *
+  Epoch  18/50 | train AUC=0.8785 TPR@2%=0.6155 | val AUC=0.8264 TPR@2%=0.2698 *
+  Epoch  19/50 | train AUC=0.8804 TPR@2%=0.6287 | val AUC=0.8279 TPR@2%=0.2741 *
+  Epoch  20/50 | train AUC=0.8823 TPR@2%=0.6376 | val AUC=0.8297 TPR@2%=0.2784 *
+  Epoch  21/50 | train AUC=0.8848 TPR@2%=0.6534 | val AUC=0.8313 TPR@2%=0.2860 *
+  Epoch  22/50 | train AUC=0.8873 TPR@2%=0.6607 | val AUC=0.8326 TPR@2%=0.2969 *
+  Epoch  23/50 | train AUC=0.8896 TPR@2%=0.6633 | val AUC=0.8335 TPR@2%=0.3012 *
+  Epoch  24/50 | train AUC=0.8919 TPR@2%=0.6625 | val AUC=0.8349 TPR@2%=0.3088 *
+  Epoch  25/50 | train AUC=0.8932 TPR@2%=0.6724 | val AUC=0.8363 TPR@2%=0.3164 *
+  Epoch  26/50 | train AUC=0.8938 TPR@2%=0.6724 | val AUC=0.8374 TPR@2%=0.3207 *
+  Epoch  27/50 | train AUC=0.8951 TPR@2%=0.6788 | val AUC=0.8387 TPR@2%=0.3196
+  Epoch  28/50 | train AUC=0.8962 TPR@2%=0.6823 | val AUC=0.8391 TPR@2%=0.3218 *
+  Epoch  29/50 | train AUC=0.8981 TPR@2%=0.6846 | val AUC=0.8401 TPR@2%=0.3304 *
+  Epoch  30/50 | train AUC=0.8997 TPR@2%=0.6945 | val AUC=0.8404 TPR@2%=0.3348 *
+  Epoch  31/50 | train AUC=0.9003 TPR@2%=0.6943 | val AUC=0.8410 TPR@2%=0.3369 *
+  Epoch  32/50 | train AUC=0.8999 TPR@2%=0.6922 | val AUC=0.8413 TPR@2%=0.3369 *
+  Epoch  33/50 | train AUC=0.9011 TPR@2%=0.7006 | val AUC=0.8417 TPR@2%=0.3359
+  Epoch  34/50 | train AUC=0.9023 TPR@2%=0.7009 | val AUC=0.8421 TPR@2%=0.3369 *
+  Epoch  35/50 | train AUC=0.9027 TPR@2%=0.7017 | val AUC=0.8425 TPR@2%=0.3380 *
+  Epoch  36/50 | train AUC=0.9031 TPR@2%=0.7050 | val AUC=0.8424 TPR@2%=0.3380
+  Epoch  37/50 | train AUC=0.9035 TPR@2%=0.7047 | val AUC=0.8430 TPR@2%=0.3402 *
+  Epoch  38/50 | train AUC=0.9038 TPR@2%=0.7057 | val AUC=0.8432 TPR@2%=0.3434 *
+  Epoch  39/50 | train AUC=0.9041 TPR@2%=0.7047 | val AUC=0.8432 TPR@2%=0.3424
+  Epoch  40/50 | train AUC=0.9042 TPR@2%=0.7047 | val AUC=0.8434 TPR@2%=0.3434 *
+  Epoch  41/50 | train AUC=0.9045 TPR@2%=0.7057 | val AUC=0.8435 TPR@2%=0.3434 *
+  Epoch  42/50 | train AUC=0.9048 TPR@2%=0.7062 | val AUC=0.8437 TPR@2%=0.3467 *
+  Epoch  43/50 | train AUC=0.9050 TPR@2%=0.7065 | val AUC=0.8437 TPR@2%=0.3467 *
+  Epoch  44/50 | train AUC=0.9051 TPR@2%=0.7055 | val AUC=0.8438 TPR@2%=0.3467 *
+  Epoch  45/50 | train AUC=0.9052 TPR@2%=0.7060 | val AUC=0.8438 TPR@2%=0.3467 *
+  Epoch  46/50 | train AUC=0.9053 TPR@2%=0.7060 | val AUC=0.8439 TPR@2%=0.3478 *
+  Epoch  47/50 | train AUC=0.9053 TPR@2%=0.7062 | val AUC=0.8439 TPR@2%=0.3478 *
+  Epoch  48/50 | train AUC=0.9053 TPR@2%=0.7067 | val AUC=0.8439 TPR@2%=0.3478 *
+  Epoch  49/50 | train AUC=0.9054 TPR@2%=0.7067 | val AUC=0.8439 TPR@2%=0.3478 *
+  Epoch  50/50 | train AUC=0.9054 TPR@2%=0.7067 | val AUC=0.8439 TPR@2%=0.3478
+
+  Best val TPR@2%: 0.3478  (AUC: 0.8439) | Checkpoint: /root/iris/src/01-dinov3/checkpoints/front_exterior_logo/vitl16_518_linear_probe_best.pt
+  TEST | AUC=0.8325 | @2% val-thresh: TPR(auth passed)=0.3012  FPR(fakes missed)=0.0571

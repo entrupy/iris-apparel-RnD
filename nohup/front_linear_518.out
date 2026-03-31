@@ -1,0 +1,22 @@
+
+============================================================
+[front | vitl16 @ 518 | linear_probe]
+============================================================
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  Test features loaded: 1398 (41 pos)
+  Train: 7698 (244 pos) | Val: 1929 (62 pos)
+  pos_weight: 30.5
+  Epoch   1/50 | train AUC=0.7160 TPR@2%=0.0766 | val AUC=0.7453 TPR@2%=0.1318 *
+  Epoch   2/50 | train AUC=0.7430 TPR@2%=0.1905 | val AUC=0.7612 TPR@2%=0.0712
+  Epoch   3/50 | train AUC=0.7680 TPR@2%=0.2682 | val AUC=0.7778 TPR@2%=0.0964
+  Epoch   4/50 | train AUC=0.7844 TPR@2%=0.3135 | val AUC=0.7874 TPR@2%=0.0873
+  Epoch   5/50 | train AUC=0.7964 TPR@2%=0.3492 | val AUC=0.7949 TPR@2%=0.0664
+  Epoch   6/50 | train AUC=0.8074 TPR@2%=0.3787 | val AUC=0.8005 TPR@2%=0.0745
+  Epoch   7/50 | train AUC=0.8180 TPR@2%=0.4085 | val AUC=0.8068 TPR@2%=0.0766
+  Epoch   8/50 | train AUC=0.8256 TPR@2%=0.4124 | val AUC=0.8095 TPR@2%=0.0664
+  Early stopping at epoch 8 (patience=7)
+
+  Best val TPR@2%: 0.1318  (AUC: 0.7453) | Checkpoint: /root/iris/src/01-dinov3/checkpoints/front/vitl16_518_linear_probe_best.pt
+  TEST | AUC=0.6849 | @2% val-thresh: TPR(auth passed)=0.1496  FPR(fakes missed)=0.0244

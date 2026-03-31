@@ -140,7 +140,7 @@ def run(region, model_key, resolution, selected_classifiers, device, batch_size,
         ckpt_tag="finetune"):
     # 1. Load finetuned checkpoint
     cdir = ckpt_dir(region)
-    ckpt_path = cdir / f"{model_key}_{resolution}_{ckpt_tag}_best.pt"
+    ckpt_path = cdir / f"{model_key}_{resolution}_partial_{ckpt_tag}_best.pt"
     if not ckpt_path.exists():
         print(f"  ERROR: No checkpoint at {ckpt_path}")
         return None
@@ -149,7 +149,9 @@ def run(region, model_key, resolution, selected_classifiers, device, batch_size,
     print(f"  Loading checkpoint from {ckpt_path} ...")
     model = DINOv3Classifier(model_id, freeze_backbone=False)
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
-    model.load_state_dict(ckpt["model_state_dict"])
+    state_dict = ckpt["model_state_dict"]
+    state_dict = {k.removeprefix("_orig_mod."): v for k, v in state_dict.items()}
+    model.load_state_dict(state_dict)
     model = model.to(device).eval()
 
     # 2. Check for cached finetuned features

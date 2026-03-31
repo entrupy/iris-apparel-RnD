@@ -1,0 +1,44 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+======================================================================
+PARTIAL FINETUNE: last4
+Model: vitl16 @ 714 | Region: brand_tag
+======================================================================
+[brand_tag/train] 9759 labeled rows, 9169 with images
+  Authentic (0): 8881  |  Not-authentic (1): 288  |  Ratio: 30.8:1
+  Val split [brand_tag]: train=7335, val=1834
+  Train: 7335 (230 pos) | Val: 1834 (58 pos)
+  pos_weight: 30.9
+[brand_tag/test] 1424 labeled rows, 1192 with images
+  Authentic (0): 1163  |  Not-authentic (1): 29  |  Ratio: 40.1:1
+  Test: 1192 (29 pos)
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 4264.32it/s]
+  Strategy 'last4': will unfreeze 50,388,992 / 303,129,600 backbone params (50.39M / 303.1M)
+
+  Epoch   1/30 (frozen, 344.4s) | train AUC=0.7309 TPR@2%=0.2405 | val AUC=0.7205 TPR@2%=0.1931 << BEST
+
+  Epoch   2/30 (frozen, 310.3s) | train AUC=0.7658 TPR@2%=0.3250 | val AUC=0.7387 TPR@2%=0.2432 << BEST
+
+  Epoch   3/30 (frozen, 309.6s) | train AUC=0.7883 TPR@2%=0.3965 | val AUC=0.7376 TPR@2%=0.2252
+
+  Epoch   4/30 (frozen, 309.1s) | train AUC=0.8143 TPR@2%=0.3921 | val AUC=0.7690 TPR@2%=0.2269
+
+  Epoch   5/30 (frozen, 309.4s) | train AUC=0.8322 TPR@2%=0.4528 | val AUC=0.7723 TPR@2%=0.2050
+
+  >> Unfreezing 'last4' components at epoch 6
+  >> Actually unfrozen: 50,388,992 params (50.39M)
+
+  Epoch   6/30 (last4, 309.7s) | train AUC=0.8374 TPR@2%=0.4864 | val AUC=0.7767 TPR@2%=0.2162
+
+  Epoch   7/30 (last4, 311.5s) | train AUC=0.8510 TPR@2%=0.5158 | val AUC=0.7660 TPR@2%=0.1903
+
+  Epoch   8/30 (last4, 172.9s) | train AUC=0.8608 TPR@2%=0.5350 | val AUC=0.7767 TPR@2%=0.1931
+
+  Epoch   9/30 (last4, 157.1s) | train AUC=0.8681 TPR@2%=0.5647 | val AUC=0.7842 TPR@2%=0.2078
+
+  Early stopping at epoch 9 (patience=7)
+
+  Best val TPR@2%: 0.2432  (AUC: 0.7387)
+  Checkpoint: /root/iris/src/01-dinov3/checkpoints/brand_tag/vitl16_714_partial_last4_best.pt
+
+  TEST | AUC=0.8352 | @2% val-thresh: TPR(auth passed)=0.2502  FPR(fakes missed)=0.0000

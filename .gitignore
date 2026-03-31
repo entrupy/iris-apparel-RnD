@@ -1,8 +1,8 @@
 *__pycache__*
-*.pt
 resources/
 *catboost_info/
 runs/
 *.json
 ml_results/
 *.png
+*pt

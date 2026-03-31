@@ -1,0 +1,181 @@
+================================================================================
+CROSS-REGION VOTING — TEST SET
+================================================================================
+  [care_label] Scoring vitl16_714_linear...
+  [care_label] Training+scoring vitl16_714_svm...
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Val split [care_label]: train=5837, val=1457
+  [care_label] Scoring vitl16_518_linear...
+  [care_label] Training+scoring vitl16_518_svm...
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Val split [care_label]: train=5837, val=1457
+  [care_label] Scoring vitl16_714_finetune_last4...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5383.27it/s]
+[care_label/test] 1424 labeled rows, 962 with images
+  Authentic (0): 929  |  Not-authentic (1): 33  |  Ratio: 28.2:1
+  [front] Scoring vitl16_714_linear...
+  [front] Training+scoring vitl16_714_svm...
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  [front] Scoring vitl16_518_linear...
+  [front] Training+scoring vitl16_518_svm...
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  [front] Scoring vitl16_714_finetune_last4...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5683.49it/s]
+[front/test] 1424 labeled rows, 1398 with images
+  Authentic (0): 1357  |  Not-authentic (1): 41  |  Ratio: 33.1:1
+  [front_exterior_logo] Scoring vitl16_714_linear...
+  [front_exterior_logo] Training+scoring vitl16_714_svm...
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Val split [front_exterior_logo]: train=4046, val=959
+  [front_exterior_logo] Scoring vitl16_518_linear...
+  [front_exterior_logo] Training+scoring vitl16_518_svm...
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Val split [front_exterior_logo]: train=4046, val=959
+  [front_exterior_logo] Scoring vitl16_714_finetune_last4...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5772.79it/s]
+[front_exterior_logo/test] 1424 labeled rows, 875 with images
+  Authentic (0): 840  |  Not-authentic (1): 35  |  Ratio: 24.0:1
+  [brand_tag] Scoring vitl16_714_linear...
+  [brand_tag] Training+scoring vitl16_714_svm...
+[brand_tag/train] 9759 labeled rows, 9169 with images
+  Authentic (0): 8881  |  Not-authentic (1): 288  |  Ratio: 30.8:1
+  Val split [brand_tag]: train=7335, val=1834
+  [brand_tag] Scoring vitl16_518_linear...
+  [brand_tag] Training+scoring vitl16_518_svm...
+[brand_tag/train] 9759 labeled rows, 9169 with images
+  Authentic (0): 8881  |  Not-authentic (1): 288  |  Ratio: 30.8:1
+  Val split [brand_tag]: train=7335, val=1834
+  [brand_tag] Scoring vitl16_714_finetune_last4...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5852.22it/s]
+[brand_tag/test] 1424 labeled rows, 1192 with images
+  Authentic (0): 1163  |  Not-authentic (1): 29  |  Ratio: 40.1:1
+
+================================================================================
+BEST MODEL PER REGION (by test AUC)
+================================================================================
+  care_label                vitl16_518_svm                      AUC=0.8911  TPR@2%=0.4769
+  front                     vitl16_518_svm                      AUC=0.9246  TPR@2%=0.5431
+  front_exterior_logo       vitl16_518_svm                      AUC=0.8635  TPR@2%=0.5095
+  brand_tag                 vitl16_714_finetune_last4           AUC=0.8351  TPR@2%=0.5383
+
+Test sessions: 1424 (41 fake, 1383 auth)
+
+Session coverage:
+  care_label                962/1424 (67.6%)
+  front                     1398/1424 (98.2%)
+  front_exterior_logo       875/1424 (61.4%)
+  brand_tag                 1192/1424 (83.7%)
+
+================================================================================
+  ANY-ONE-AGREE (flag if ANY region flags)
+================================================================================
+
+  FPR Target   FalseAlarm CatchRate  TP(auth✓)  FP(missed)  FN(alarm)  TN(caught)
+  -------------------------------------------------------------------------
+  0.5%         83.01%     70.73%     235        12          1148       29        
+  1%           83.95%     70.73%     222        12          1161       29        
+  2%           83.95%     70.73%     222        12          1161       29        
+  5%           84.09%     70.73%     220        12          1163       29        
+  10%          84.09%     70.73%     220        12          1163       29        
+
+  max-score fusion ROC:  AUC-ROC=0.6596  AUC-PR=0.1084
+  FPR Target   TPR       
+  ----------------------
+  0.5%         0.0976    
+  1%           0.1220    
+  2%           0.1707    
+  5%           0.2439    
+  10%          0.3659    
+
+================================================================================
+  MAJORITY VOTING (flag if >=ceil(n/2) flag)
+================================================================================
+
+  FPR Target   FalseAlarm CatchRate  TP(auth✓)  FP(missed)  FN(alarm)  TN(caught)
+  -------------------------------------------------------------------------
+  0.5%         11.28%     4.88%      1227       39          156        2         
+  1%           11.28%     4.88%      1227       39          156        2         
+  2%           11.28%     4.88%      1227       39          156        2         
+  5%           11.28%     4.88%      1227       39          156        2         
+  10%          11.28%     4.88%      1227       39          156        2         
+
+  mean-score fusion ROC:  AUC-ROC=0.6767  AUC-PR=0.0874
+  FPR Target   TPR       
+  ----------------------
+  0.5%         0.0732    
+  1%           0.0732    
+  2%           0.0732    
+  5%           0.0976    
+  10%          0.2439    
+
+================================================================================
+  ALL-MUST-AGREE (flag only if ALL available flag)
+================================================================================
+
+  FPR Target   FalseAlarm CatchRate  TP(auth✓)  FP(missed)  FN(alarm)  TN(caught)
+  -------------------------------------------------------------------------
+  0.5%         0.14%      0.00%      1381       41          2          0         
+  1%           0.14%      0.00%      1381       41          2          0         
+  2%           0.14%      0.00%      1381       41          2          0         
+  5%           0.14%      0.00%      1381       41          2          0         
+  10%          0.14%      0.00%      1381       41          2          0         
+
+  min-score fusion ROC:  AUC-ROC=0.9122  AUC-PR=0.3128
+  FPR Target   TPR       
+  ----------------------
+  0.5%         0.2195    
+  1%           0.2927    
+  2%           0.3659    
+  5%           0.5854    
+  10%          0.7561    
+
+====================================================================================================
+ALL MODELS PER REGION (test metrics)
+====================================================================================================
+  Region                    Model                                    AUC   TPR@2%   FPR@2%
+  -----------------------------------------------------------------------------------------------
+  care_label                vitl16_518_svm                        0.8911   0.4769   0.0303
+  care_label                vitl16_714_svm                        0.8712   0.4629   0.0303
+  care_label                vitl16_714_finetune_last4             0.8366   0.4338   0.0303
+  care_label                vitl16_714_linear                     0.8016   0.4069   0.0303
+  care_label                vitl16_518_linear                     0.7969   0.4198   0.0303
+  front                     vitl16_518_svm                        0.9246   0.5431   0.0244
+  front                     vitl16_714_svm                        0.8995   0.4503   0.0244
+  front                     vitl16_714_finetune_last4             0.8885   0.4340   0.0244
+  front                     vitl16_714_linear                     0.8474   0.3795   0.0244
+  front                     vitl16_518_linear                     0.6849   0.1688   0.0244
+  front_exterior_logo       vitl16_518_svm                        0.8635   0.5095   0.0286
+  front_exterior_logo       vitl16_714_svm                        0.8368   0.3619   0.0286
+  front_exterior_logo       vitl16_518_linear                     0.8325   0.0286   0.0286
+  front_exterior_logo       vitl16_714_finetune_last4             0.8229   0.0143   0.0286
+  front_exterior_logo       vitl16_714_linear                     0.8220   0.0107   0.0286
+  brand_tag                 vitl16_714_finetune_last4             0.8351   0.5383   0.0345
+  brand_tag                 vitl16_518_linear                     0.8113   0.4815   0.0345
+  brand_tag                 vitl16_714_svm                        0.7977   0.2623   0.0345
+  brand_tag                 vitl16_714_linear                     0.7962   0.5004   0.0345
+  brand_tag                 vitl16_518_svm                        0.7951   0.3001   0.0345
+
+====================================================================================================
+COMPARISON: Individual best vs Voting (fixed-threshold)
+====================================================================================================
+
+  Method                                          FPR@2%   TPR@2%   FPR@5%   TPR@5%
+  ------------------------------------------------------------------------
+  care_label (vitl16_518_svm)                      3.03%   47.69%    6.06%   61.79%
+  front (vitl16_518_svm)                           2.44%   54.31%    4.88%   60.35%
+  front_exterior_logo (vitl16_518_svm)             2.86%   50.95%    5.71%   60.24%
+  brand_tag (vitl16_714_finetune_last4)            3.45%   53.83%    3.45%   53.83%
+  VOTING: any-one (fused AUC=0.6596)              83.95%   70.73%   84.09%   70.73%
+  VOTING: majority (fused AUC=0.6767)             11.28%    4.88%   11.28%    4.88%
+  VOTING: all-agree (fused AUC=0.9122)             0.14%    0.00%    0.14%    0.00%
+
+Saved to /root/iris/src/01-dinov3/ml_results/voting_results.json

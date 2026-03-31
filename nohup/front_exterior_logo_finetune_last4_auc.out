@@ -1,0 +1,50 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+======================================================================
+PARTIAL FINETUNE: last4
+Model: vitl16 @ 714 | Region: front_exterior_logo
+======================================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Val split [front_exterior_logo]: train=4046, val=959
+  Train: 4046 (111 pos) | Val: 959 (36 pos)
+  pos_weight: 35.5
+[front_exterior_logo/test] 1424 labeled rows, 875 with images
+  Authentic (0): 840  |  Not-authentic (1): 35  |  Ratio: 24.0:1
+  Test: 875 (35 pos)
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5675.33it/s]
+  Strategy 'last4': will unfreeze 50,388,992 / 303,129,600 backbone params (50.39M / 303.1M)
+
+  Epoch   1/30 (frozen, 102.7s) | train AUC=0.8296 TPR@2%=0.4302 | val AUC=0.8083 TPR@2%=0.2059 << BEST
+
+  Epoch   2/30 (frozen, 87.0s) | train AUC=0.8846 TPR@2%=0.6488 | val AUC=0.8312 TPR@2%=0.2600 << BEST
+
+  Epoch   3/30 (frozen, 85.9s) | train AUC=0.9018 TPR@2%=0.7352 | val AUC=0.8445 TPR@2%=0.3369 << BEST
+
+  Epoch   4/30 (frozen, 84.4s) | train AUC=0.9129 TPR@2%=0.7464 | val AUC=0.8431 TPR@2%=0.3640
+
+  Epoch   5/30 (frozen, 86.6s) | train AUC=0.9172 TPR@2%=0.7748 | val AUC=0.8468 TPR@2%=0.3998 << BEST
+
+  >> Unfreezing 'last4' components at epoch 6
+  >> Actually unfrozen: 50,388,992 params (50.39M)
+
+  Epoch   6/30 (last4, 86.7s) | train AUC=0.9311 TPR@2%=0.7525 | val AUC=0.8428 TPR@2%=0.4009
+
+  Epoch   7/30 (last4, 87.5s) | train AUC=0.9388 TPR@2%=0.7901 | val AUC=0.8432 TPR@2%=0.3597
+
+  Epoch   8/30 (last4, 84.7s) | train AUC=0.9429 TPR@2%=0.8221 | val AUC=0.8409 TPR@2%=0.3099
+
+  Epoch   9/30 (last4, 86.9s) | train AUC=0.9403 TPR@2%=0.8351 | val AUC=0.8410 TPR@2%=0.2340
+
+  Epoch  10/30 (last4, 85.6s) | train AUC=0.9501 TPR@2%=0.8468 | val AUC=0.8411 TPR@2%=0.2763
+
+  Epoch  11/30 (last4, 85.6s) | train AUC=0.9536 TPR@2%=0.8475 | val AUC=0.8408 TPR@2%=0.2589
+
+  Epoch  12/30 (last4, 88.1s) | train AUC=0.9567 TPR@2%=0.8689 | val AUC=0.8381 TPR@2%=0.2210
+
+  Early stopping at epoch 12 (patience=7)
+
+  Best val TPR@2%: 0.3998  (AUC: 0.8468)
+  Checkpoint: /root/iris/src/01-dinov3/checkpoints/front_exterior_logo/vitl16_714_partial_last4_best.pt
+
+  TEST | AUC=0.8230 | @2% val-thresh: TPR(auth passed)=0.3571  FPR(fakes missed)=0.0571

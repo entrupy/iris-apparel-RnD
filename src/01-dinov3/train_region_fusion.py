@@ -44,7 +44,7 @@ from config import (
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 EMBED_DIM = 1024
-AVAILABLE_CLASSIFIERS = ["attention", "mlp", "xgb", "svm"]
+AVAILABLE_CLASSIFIERS = ["attention", "mlp", "xgb", "svm", "lgbm", "catboost"]
 
 
 # ---------------------------------------------------------------------------
@@ -270,6 +270,35 @@ def train_svm(X_train, y_train, X_val, y_val):
     return (clf, scaler), 0.0, time.time() - t0
 
 
+def train_lgbm(X_train, y_train, X_val, y_val, device):
+    import lightgbm as lgb
+    spw = float((y_train == 0).sum() / max((y_train == 1).sum(), 1))
+    clf = lgb.LGBMClassifier(
+        objective="binary", metric="auc", random_state=SEED,
+        max_depth=6, learning_rate=0.05, n_estimators=300,
+        subsample=0.8, colsample_bytree=0.8, scale_pos_weight=spw,
+        device="gpu", verbose=-1,
+    )
+    t0 = time.time()
+    clf.fit(X_train, y_train, eval_set=[(X_val, y_val)],
+            callbacks=[lgb.early_stopping(50, verbose=False)])
+    return clf, 0.0, time.time() - t0
+
+
+def train_catboost(X_train, y_train, X_val, y_val, device):
+    from catboost import CatBoostClassifier
+    spw = float((y_train == 0).sum() / max((y_train == 1).sum(), 1))
+    clf = CatBoostClassifier(
+        iterations=300, depth=6, learning_rate=0.05,
+        loss_function="Logloss", eval_metric="AUC",
+        scale_pos_weight=spw, random_seed=SEED,
+        task_type="GPU", verbose=0,
+    )
+    t0 = time.time()
+    clf.fit(X_train, y_train, eval_set=(X_val, y_val), early_stopping_rounds=50)
+    return clf, 0.0, time.time() - t0
+
+
 def score_model(model_or_obj, X, device, name):
     """Return prediction scores for input X."""
     if name == "attention":
@@ -280,7 +309,7 @@ def score_model(model_or_obj, X, device, name):
         X_t = torch.tensor(X, dtype=torch.float32, device=device)
         with torch.no_grad():
             return torch.sigmoid(model_or_obj(X_t)).cpu().numpy()
-    elif name == "xgb":
+    elif name in ("xgb", "lgbm", "catboost"):
         return model_or_obj.predict_proba(X)[:, 1]
     elif name == "svm":
         clf, scaler = model_or_obj
@@ -335,6 +364,10 @@ def main():
             model, val_auc, fit_time = train_xgb(X_train, y_train, X_val, y_val, device)
         elif name == "svm":
             model, val_auc, fit_time = train_svm(X_train, y_train, X_val, y_val)
+        elif name == "lgbm":
+            model, val_auc, fit_time = train_lgbm(X_train, y_train, X_val, y_val, device)
+        elif name == "catboost":
+            model, val_auc, fit_time = train_catboost(X_train, y_train, X_val, y_val, device)
         else:
             continue
 

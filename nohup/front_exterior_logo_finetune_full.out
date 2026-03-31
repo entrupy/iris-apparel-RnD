@@ -1,0 +1,16 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+======================================================================
+PARTIAL FINETUNE: full
+Model: vitl16 @ 714 | Region: front_exterior_logo
+======================================================================
+[front_exterior_logo/train] 9759 labeled rows, 5005 with images
+  Authentic (0): 4858  |  Not-authentic (1): 147  |  Ratio: 33.0:1
+  Val split [front_exterior_logo]: train=4046, val=959
+  Train: 4046 (111 pos) | Val: 959 (36 pos)
+  pos_weight: 35.5
+[front_exterior_logo/test] 1424 labeled rows, 875 with images
+  Authentic (0): 840  |  Not-authentic (1): 35  |  Ratio: 24.0:1
+  Test: 875 (35 pos)
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5128.81it/s]
+  Strategy 'full': will unfreeze 303,129,600 / 303,129,600 backbone params (303.13M / 303.1M)

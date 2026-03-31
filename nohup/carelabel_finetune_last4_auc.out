@@ -1,0 +1,49 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+======================================================================
+PARTIAL FINETUNE: last4
+Model: vitl16 @ 714 | Region: care_label
+======================================================================
+[care_label/train] 9759 labeled rows, 7294 with images
+  Authentic (0): 7054  |  Not-authentic (1): 240  |  Ratio: 29.4:1
+  Val split [care_label]: train=5837, val=1457
+  Train: 5837 (193 pos) | Val: 1457 (47 pos)
+  pos_weight: 29.2
+[care_label/test] 1424 labeled rows, 962 with images
+  Authentic (0): 929  |  Not-authentic (1): 33  |  Ratio: 28.2:1
+  Test: 962 (33 pos)
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5409.63it/s]
+  Strategy 'last4': will unfreeze 50,388,992 / 303,129,600 backbone params (50.39M / 303.1M)
+
+  Epoch   1/30 (frozen, 136.7s) | train AUC=0.7443 TPR@2%=0.2505 | val AUC=0.6662 TPR@2%=0.1433 << BEST
+
+  Epoch   2/30 (frozen, 119.6s) | train AUC=0.7910 TPR@2%=0.3673 | val AUC=0.7075 TPR@2%=0.1816 << BEST
+
+  Epoch   3/30 (frozen, 125.7s) | train AUC=0.8194 TPR@2%=0.4146 | val AUC=0.7350 TPR@2%=0.2610 << BEST
+
+  Epoch   4/30 (frozen, 121.4s) | train AUC=0.8463 TPR@2%=0.4610 | val AUC=0.7270 TPR@2%=0.1809
+
+  Epoch   5/30 (frozen, 124.9s) | train AUC=0.8553 TPR@2%=0.5271 | val AUC=0.7366 TPR@2%=0.2709 << BEST
+
+  >> Unfreezing 'last4' components at epoch 6
+  >> Actually unfrozen: 50,388,992 params (50.39M)
+
+  Epoch   6/30 (last4, 123.2s) | train AUC=0.8710 TPR@2%=0.5333 | val AUC=0.7232 TPR@2%=0.2404
+
+  Epoch   7/30 (last4, 122.3s) | train AUC=0.8721 TPR@2%=0.5895 | val AUC=0.7258 TPR@2%=0.2319
+
+  Epoch   8/30 (last4, 123.1s) | train AUC=0.8887 TPR@2%=0.6168 | val AUC=0.7368 TPR@2%=0.2028 << BEST
+
+  Epoch   9/30 (last4, 91.3s) | train AUC=0.8975 TPR@2%=0.6313 | val AUC=0.7357 TPR@2%=0.2014
+
+  Epoch  10/30 (last4, 69.8s) | train AUC=0.8914 TPR@2%=0.6187 | val AUC=0.7351 TPR@2%=0.2206
+
+  Epoch  11/30 (last4, 67.9s) | train AUC=0.8983 TPR@2%=0.6687 | val AUC=0.7444 TPR@2%=0.2156 << BEST
+
+  Epoch  12/30 (last4, 67.6s) | train AUC=0.8969 TPR@2%=0.6543 | val AUC=0.7476 TPR@2%=0.1993 << BEST
+
+  Epoch  13/30 (last4, 68.7s) | train AUC=0.9082 TPR@2%=0.6905 | val AUC=0.7376 TPR@2%=0.2220
+
+  Epoch  14/30 (last4, 68.7s) | train AUC=0.9111 TPR@2%=0.6999 | val AUC=0.7521 TPR@2%=0.2142 << BEST
+
+  Epoch  15/30 (last4, 69.0s) | train AUC=0.9095 TPR@2%=0.6825 | val AUC=0.7386 TPR@2%=0.2106

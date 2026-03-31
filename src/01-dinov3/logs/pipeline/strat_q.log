@@ -510,3 +510,33 @@ Device: cuda
     Batch 420/602
     Batch 440/602
     Batch 460/602
+    Batch 480/602
+    Batch 500/602
+    Batch 520/602
+    Batch 540/602
+    Batch 560/602
+    Batch 580/602
+    Batch 600/602
+  Done: torch.Size([9627, 1024]) in 3661.3s
+[front/train] 9759 labeled rows, 9627 with images
+  Authentic (0): 9321  |  Not-authentic (1): 306  |  Ratio: 30.5:1
+  Val split [front]: train=7698, val=1929
+  Train: 7698 (244 pos) | Val: 1929 (62 pos)
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [15:53:52] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  [XGB     ] fit=59.8s | AUC=0.8523 TPR@2%=0.0889 (auth pass rate @ 2% fakes missed)
+  [SVM     ] fit=47.0s | AUC=0.8379 TPR@2%=0.1500 (auth pass rate @ 2% fakes missed)
+Default metric period is 5 because AUC is/are not implemented for GPU
+bash: line 5: 852113 Killed                  $P train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py --region $region --model vitl16 --resolution 714 --ckpt-tag partial_q --batch-size 16
+========== FINETUNE q: front_exterior_logo  Mon Mar 30 15:56:33 UTC 2026 ==========
+
+======================================================================
+PARTIAL FINETUNE: q
+Model: vitl16 @ 714 | Region: front_exterior_logo
+======================================================================
