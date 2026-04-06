@@ -8,8 +8,105 @@ Splitting with global val split...
   Train: 7807 (246 fake) | Val: 1952 (62 fake)
 
 Building test dataset...
-  test: 0 sessions, 0 fake, 0 auth
+  test: 1424 sessions, 41 fake, 1383 auth
 
 ==================================================
-  Training: ATTENTION
+  Training: MLP
 ==================================================
+  fit=2.4s | Val AUC=0.8626 TPR@2%=0.4194
+  Test AUC(auth+)=0.8898
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.3651     0.0000      
+  1%           0.3651     0.0000      
+  2%           0.3782     0.0244      
+  5%           0.4577     0.0488      
+  10%          0.7383     0.0976      
+
+==================================================
+  Training: SVM
+==================================================
+  fit=195.4s | Val AUC=0.8544 TPR@2%=0.4677
+  Test AUC(auth+)=0.8888
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.4852     0.0000      
+  1%           0.4852     0.0000      
+  2%           0.5813     0.0244      
+  5%           0.6334     0.0488      
+  10%          0.6464     0.0976      
+
+==================================================
+  Training: XGB
+==================================================
+/root/.venv/lib/python3.12/site-packages/xgboost/core.py:751: UserWarning: [06:16:26] WARNING: /__w/xgboost/xgboost/src/common/error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+
+  return func(**kwargs)
+  fit=2.3s | Val AUC=0.8254 TPR@2%=0.5161
+  Test AUC(auth+)=0.8740
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.3673     0.0000      
+  1%           0.3673     0.0000      
+  2%           0.4064     0.0244      
+  5%           0.4309     0.0488      
+  10%          0.5611     0.0976      
+
+==================================================
+  Training: LGBM
+==================================================
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+/root/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2691: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+  warnings.warn(
+  fit=13.8s | Val AUC=0.8153 TPR@2%=0.3710
+  Test AUC(auth+)=0.8314
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.1345     0.0000      
+  1%           0.1345     0.0000      
+  2%           0.4252     0.0244      
+  5%           0.4259     0.0488      
+  10%          0.4888     0.0976      
+
+==================================================
+  Training: CATBOOST
+==================================================
+Default metric period is 5 because AUC is/are not implemented for GPU
+  fit=3.2s | Val AUC=0.8271 TPR@2%=0.3387
+  Test AUC(auth+)=0.8226
+
+  Auth-positive test metrics:
+  FPR target   TPR        Actual FPR  
+  ----------------------------------
+  0.5%         0.2914     0.0000      
+  1%           0.2914     0.0000      
+  2%           0.3138     0.0244      
+  5%           0.4823     0.0488      
+  10%          0.5922     0.0976      
+
+Saved to /root/iris/src/01-dinov3/ml_results/region_fusion_results.json
+
+================================================================================
+REGION FUSION SUMMARY (auth-positive test metrics)
+================================================================================
+  Method                  AUC    @0.5%      @1%      @2%      @5%     @10%
+  --------------------------------------------------------------------------
+  fusion_svm           0.8888   48.52%   48.52%   58.13%   63.34%   64.64%
+  fusion_lgbm          0.8314   13.45%   13.45%   42.52%   42.59%   48.88%
+  fusion_xgb           0.8740   36.73%   36.73%   40.64%   43.09%   56.11%
+  fusion_mlp           0.8898   36.51%   36.51%   37.82%   45.77%   73.83%
+  fusion_catboost      0.8226   29.14%   29.14%   31.38%   48.23%   59.22%

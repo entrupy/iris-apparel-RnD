@@ -1,0 +1,30 @@
+======================================================================
+EXPORT FUSION SVM | embed: vitl16_714
+======================================================================
+
+Building dataset...
+  train: 9759 sessions, 308 fake, 9451 auth
+  Train: 7807 | Val: 1952
+
+Training SVM...
+  Done in 196.0s
+  test: 1424 sessions, 41 fake, 1383 auth
+
+  Val  AUC: 0.8544
+  Test AUC: 0.8890
+  Test TPR@2%: 0.5813
+
+Exporting backbone to ONNX...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5410.93it/s]
+Traceback (most recent call last):
+  File "/root/iris/src/01-dinov3/export_fusion_svm.py", line 224, in <module>
+  File "/root/iris/src/01-dinov3/export_fusion_svm.py", line 172, in main
+  File "/root/iris/src/01-dinov3/export_fusion_svm.py", line 66, in export_backbone_onnx
+  File "/root/.venv/lib/python3.12/site-packages/torch/onnx/__init__.py", line 282, in export
+    from torch.onnx._internal.exporter import _compat
+  File "/root/.venv/lib/python3.12/site-packages/torch/onnx/_internal/exporter/_compat.py", line 16, in <module>
+    from torch.onnx._internal.exporter import (
+  File "/root/.venv/lib/python3.12/site-packages/torch/onnx/_internal/exporter/_core.py", line 19, in <module>
+    import onnxscript
+ModuleNotFoundError: No module named 'onnxscript'

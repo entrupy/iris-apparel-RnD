@@ -1,0 +1,25 @@
+[0;93m2026-04-02 00:16:00.307357479 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+======================================================================
+ONNX EXPORT | model=vitl16 res=714 embed=vitl16_714
+======================================================================
+
+--- Stage 2: Fusion SVM ---
+
+  Building fusion dataset...
+  Train: 7807 (246 pos) | Val: 1952 (62 pos)
+  Training StandardScaler + SVM pipeline...
+  SVM trained in 195.3s
+  Converting to ONNX...
+  SVM ONNX exported in 3.8s (45.4 MB)
+  ONNX model passed validation check
+
+  Validating SVM ONNX with ONNX Runtime...
+  Max abs diff: 0.000005
+  Mean abs diff: 0.000002
+  PASS: SVM outputs match within tolerance
+
+======================================================================
+ONNX export complete. Files:
+  /root/iris/src/01-dinov3/onnx_models/dinov3_vitl16_714.onnx  (1156.8 MB)
+  /root/iris/src/01-dinov3/onnx_models/fusion_svm.onnx  (45.4 MB)
+======================================================================

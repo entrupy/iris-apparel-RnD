@@ -1,0 +1,30 @@
+[0;93m2026-04-02 00:12:40.444448997 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+======================================================================
+ONNX EXPORT | model=vitl16 res=714 embed=vitl16_714
+======================================================================
+
+--- Stage 1: Backbone ---
+
+  Trying attn_implementation='sdpa'...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5176.11it/s]
+  Exporting to /root/iris/src/01-dinov3/onnx_models/dinov3_vitl16_714.onnx ...
+/root/iris/src/01-dinov3/export_onnx.py:130: DeprecationWarning: You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter has become the default. Learn more about the new export logic: https://docs.pytorch.org/docs/stable/onnx_export.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html
+  torch.onnx.export(
+/root/.venv/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py:77: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  is_causal = query.shape[2] > 1 and attention_mask is None and is_causal
+  Backbone ONNX exported in 14.0s (1157 MB)
+  ONNX model passed validation check
+
+  Validating backbone ONNX with ONNX Runtime...
+[0;93m2026-04-02 00:13:05.887040905 [W:onnxruntime:, transformer_memcpy.cc:111 ApplyImpl] 3 Memcpy nodes are added to the graph main_graph for CUDAExecutionProvider. It might have negative impact on performance (including unable to run CUDA graph). Set session_options.log_severity_level=1 to see the detail logs before this message.[m
+[0;93m2026-04-02 00:13:05.887284714 [W:onnxruntime:, transformer_memcpy.cc:111 ApplyImpl] 1 Memcpy nodes are added to the graph sub_graph for CUDAExecutionProvider. It might have negative impact on performance (including unable to run CUDA graph). Set session_options.log_severity_level=1 to see the detail logs before this message.[m
+[0;93m2026-04-02 00:13:05.887362776 [W:onnxruntime:, transformer_memcpy.cc:111 ApplyImpl] 2 Memcpy nodes are added to the graph sub_graph2 for CUDAExecutionProvider. It might have negative impact on performance (including unable to run CUDA graph). Set session_options.log_severity_level=1 to see the detail logs before this message.[m
+  Active providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+  Max abs diff: 0.001670
+  Mean abs diff: 0.000351
+  WARNING: max diff 0.001670 exceeds 1e-3 (may be acceptable for fp32 ViT)
+
+======================================================================
+ONNX export complete. Files:
+  /root/iris/src/01-dinov3/onnx_models/dinov3_vitl16_714.onnx  (1156.8 MB)
+======================================================================

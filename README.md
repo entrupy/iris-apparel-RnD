@@ -1,9 +1,8 @@
-# DINOv3 Authentication Experiments
+# DINOv3 Apparel Authentication
 
-Binary classification: **authentic** (label 0) vs **not-authentic** (label 1) across four garment regions.
+Binary classification — **authentic** (label 0) vs **fake** (label 1) — across four garment regions, using DINOv3 ViT-L embeddings with linear probes, ML classifiers, partial finetuning, multi-region fusion, and ONNX deployment.
 
 ## Regions
-
 
 | Region                | Description      |
 | --------------------- | ---------------- |
@@ -12,12 +11,21 @@ Binary classification: **authentic** (label 0) vs **not-authentic** (label 1) ac
 | `front_exterior_logo` | Front logo area  |
 | `brand_tag`           | Brand tag        |
 
+## Setup
+
+```bash
+pip install -r requirements.txt
+```
+
+Key dependencies: PyTorch, Transformers (HuggingFace DINOv3), scikit-learn, XGBoost, LightGBM, CatBoost, ONNX Runtime. See `requirements.txt` for full list with minimum versions.
 
 ## Data
 
-- **Train:** `resources/apparel_supreme_until_dec_2025_{region}/` (~7k–10k labeled rows per region, depending on region)
+- **Train:** `resources/apparel_supreme_until_dec_2025_{region}/` (~7k–10k labeled rows per region)
 - **Test:** `resources/apparel_supreme_jan_to_feb_2026_{region}/` (~1k–1.4k labeled rows)
 - **Val split:** 80/20 stratified from train, global across all regions (same session always in the same split). Stored in `val_splits/global_session_split.json`.
+
+The `resources/` directory is gitignored.
 
 ## Metric conventions
 
@@ -35,7 +43,7 @@ Training labels stay 0 = auth, 1 = fake. Scores are flipped only inside metric h
 
 ### Core configuration
 
-`**config.py`** — Shared across all scripts. Contains:
+**`config.py`** — Shared across all scripts. Contains:
 
 - Paths: `train_image_dir()`, `test_image_dir()`, `cache_dir()`, `ckpt_dir()`, `results_dir()`
 - Constants: `REGIONS`, `MODEL_VARIANTS`, `RESOLUTIONS`, `SEED`, `TARGET_FPRS`
@@ -47,7 +55,7 @@ Training labels stay 0 = auth, 1 = fake. Scores are flipped only inside metric h
 
 ### Phase 1 — Frozen backbone
 
-`**precompute_embeddings.py**` — Extract and cache DINOv3 CLS-token features (fp32) per region.
+**`precompute_embeddings.py`** — Extract and cache DINOv3 CLS-token features (fp32) per region.
 
 ```bash
 python precompute_embeddings.py --models vitl16 --resolutions 518 714 --regions care_label front front_exterior_logo brand_tag
@@ -55,7 +63,7 @@ python precompute_embeddings.py --models vitl16 --resolutions 518 714 --regions 
 
 Outputs: `cached_features/{region}/{model}_{resolution}_{features,labels,uuids}.pt`
 
-`**train_linear_head.py**` — Train a BCE linear probe on cached embeddings with early stopping on val AUC.
+**`train_linear_head.py`** — Train a BCE linear probe on cached embeddings with early stopping on val AUC.
 
 ```bash
 python train_linear_head.py --region care_label --model vitl16 --resolution 714
@@ -64,7 +72,7 @@ python train_linear_head.py --region care_label --sweep  # all cached variants
 
 Outputs: `checkpoints/{region}/{model}_{res}_linear_probe_best.pt`
 
-`**train_svm_xgb_lgbm_catboost.py**` — Train SVM, XGBoost, CatBoost, LightGBM on cached embeddings.
+**`train_svm_xgb_lgbm_catboost.py`** — Train SVM, XGBoost, CatBoost, LightGBM on cached embeddings.
 
 ```bash
 python train_svm_xgb_lgbm_catboost.py --region care_label --model vitl16 --resolution 714
@@ -75,12 +83,12 @@ Outputs: `ml_results/{region}/{model}_{res}_{clf}.json` plus model artifacts (`.
 
 ### Phase 2 — Partial finetune
 
-`**train_partial_finetune.py**` — Warm up a frozen backbone, then unfreeze selected ViT blocks per strategy.
+**`train_partial_finetune.py`** — Warm up a frozen backbone, then unfreeze selected ViT blocks per strategy.
 
 ```bash
 python train_partial_finetune.py --strategy q --region care_label       # Q projections, all layers
 python train_partial_finetune.py --strategy qv --region care_label     # Q+V projections
-python train_partial_finetune.py --strategy last4 --region care_label  # all components, last 4 layers
+python train_partial_finetune.py --strategy last4 --region care_label  # all params, last 4 layers
 python train_partial_finetune.py --strategy norm --region care_label   # layer norms only
 ```
 
@@ -88,7 +96,7 @@ Strategies include `norm`, `layer_scale`, `q`, `v`, `qv`, `qkv`, `qkvo`, `mlp`, 
 
 Outputs: `checkpoints/{region}/vitl16_714_partial_{strategy}_best.pt`
 
-`**train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py**` — Extract embeddings from a finetuned checkpoint, then train ML classifiers on those features.
+**`train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py`** — Extract embeddings from a finetuned checkpoint, then train ML classifiers on those features.
 
 ```bash
 python train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py \
@@ -101,7 +109,7 @@ Outputs: `ml_results/{region}/{ckpt_tag}_{model}_{res}_{clf}.*`
 
 ### Phase 3 — Multi-region fusion
 
-`**train_region_fusion.py**` — Concatenate per-region embeddings (4 × 1024-d + 4 mask bits = 4100-d) and train fusion classifiers. Uses the global val split and reports auth-positive test metrics.
+**`train_region_fusion.py`** — Concatenate per-region embeddings (4 x 1024-d + 4 mask bits = 4100-d) and train fusion classifiers. Uses the global val split and reports auth-positive test metrics.
 
 ```bash
 python train_region_fusion.py --embed-key vitl16_714 --classifiers mlp svm xgb lgbm catboost
@@ -113,7 +121,7 @@ Outputs: `ml_results/region_fusion_results.json`
 
 ### Phase 4 — Test evaluation
 
-`**evaluate_test.py**` — Full test pipeline for one region: extract test features, score models, apply val thresholds.
+**`evaluate_test.py`** — Full test pipeline for one region: extract test features, score models, apply val thresholds.
 
 ```bash
 python evaluate_test.py --region care_label --models vitl16 --resolutions 518 714
@@ -121,7 +129,7 @@ python evaluate_test.py --region care_label --models vitl16 --resolutions 518 71
 
 Outputs: `ml_results/{region}/test_results.json`
 
-`**evaluate_voting.py**` — Multi-region voting using the best model per region. Strategies: any-one-agree (OR), majority, all-must-agree (AND).
+**`evaluate_voting.py`** — Multi-region voting using the best model per region. Strategies: any-one-agree (OR), majority, all-must-agree (AND).
 
 ```bash
 python evaluate_voting.py
@@ -129,21 +137,58 @@ python evaluate_voting.py
 
 Outputs: `ml_results/voting_results.json`
 
+### Phase 5 — ONNX export & inference
+
+**`export_onnx.py`** — Export the full region-fusion pipeline to ONNX in two stages: (1) DINOv3 ViT-L backbone and (2) StandardScaler + SVM fusion pipeline (fitted from cached per-region features).
+
+```bash
+python export_onnx.py                              # export both backbone + SVM
+python export_onnx.py --skip-backbone               # SVM only
+python export_onnx.py --skip-svm                    # backbone only
+python export_onnx.py --embed-key vitl16_714        # explicit feature key
+```
+
+Outputs to `onnx_models/`:
+- `dinov3_vitl16_714.onnx` — backbone (dynamic batch)
+- `fusion_svm.onnx` — StandardScaler + RBF SVC pipeline
+
+**`inference_onnx.py`** — End-to-end ONNX inference: raw region crop images to fake probability + threshold decision.
+
+```bash
+# Single session (provide one image per region, missing regions are zero-filled)
+python inference_onnx.py \
+    --care-label /path/to/care_label.jpg \
+    --front /path/to/front.jpg \
+    --front-exterior-logo /path/to/logo.jpg \
+    --brand-tag /path/to/brand_tag.jpg
+
+# Missing regions are handled automatically
+python inference_onnx.py --front /path/to/front.jpg --brand-tag /path/to/tag.jpg
+
+# Batch inference from CSV
+python inference_onnx.py --csv sessions.csv
+
+# JSON output / force CPU
+python inference_onnx.py --json --device cpu --front /path/to/front.jpg
+```
+
+Reads `onnx_models/dinov3_vitl16_714.onnx`, `onnx_models/fusion_svm.onnx`, and optionally `onnx_models/thresholds.json` for per-FPR decision thresholds.
+
 ### Visualization
 
-`**visualize_attention.py**` — Gradient-weighted attention rollout (Chefer et al.).
+**`visualize_attention.py`** — Gradient-weighted attention rollout (Chefer et al.).
 
 ```bash
 python visualize_attention.py --n-confident 5 --n-near 5
 ```
 
-`**visualize_reciprocam.py**` — ViT-ReciproCAM saliency via norm1 token masking.
+**`visualize_reciprocam.py`** — ViT-ReciproCAM saliency via norm1 token masking.
 
 ```bash
 python visualize_reciprocam.py --target-layer 23 --n-confident 5
 ```
 
-`**visualize_token_gradcam.py**` — Token-level Grad-CAM with configurable layer/module targets.
+**`visualize_token_gradcam.py`** — Token-level Grad-CAM with configurable layer/module targets.
 
 ```bash
 python visualize_token_gradcam.py --targets "layer.23.mlp" --n-confident 5
@@ -151,18 +196,18 @@ python visualize_token_gradcam.py --targets "layer.23.mlp" --n-confident 5
 
 ### Orchestration
 
-`**run_pipeline.sh**` — Sequential pipeline.
+**`run_pipeline.sh`** — Sequential pipeline (phases 0-4).
 
 ```bash
 bash run_pipeline.sh              # full pipeline
 bash run_pipeline.sh --phase 2    # start from phase 2
 ```
 
-`**run_all.sh**` — Multi-GPU parallel runs (frozen vs finetune branches). Expects four GPUs.
+**`run_all.sh`** — Multi-GPU parallel runs (one region per GPU, frozen + finetune branches in parallel). Expects four GPUs.
 
 ```bash
 bash run_all.sh
-bash run_all.sh care_label front  # limit regions
+bash run_all.sh care_label front  # limit to specific regions
 ```
 
 ---
@@ -171,40 +216,49 @@ bash run_all.sh care_label front  # limit regions
 
 ```
 src/01-dinov3/
-├── config.py
-├── precompute_embeddings.py
-├── train_linear_head.py
-├── train_svm_xgb_lgbm_catboost.py
-├── train_partial_finetune.py
+├── config.py                       # shared config, data, models, metrics
+├── precompute_embeddings.py        # phase 1: cache DINOv3 features
+├── train_linear_head.py            # phase 1: linear probe
+├── train_svm_xgb_lgbm_catboost.py # phase 1: ML classifiers
+├── train_partial_finetune.py       # phase 2: partial backbone finetune
 ├── train_with_svm_xgb_lgbm_catboost_with_unfrozen_trained_dino.py
-├── train_region_fusion.py
-├── evaluate_test.py
-├── evaluate_voting.py
-├── visualize_attention.py
-├── visualize_reciprocam.py
-├── visualize_token_gradcam.py
-├── run_pipeline.sh
-├── run_all.sh
-├── experiment_results.md          # optional older / alternate summary
-├── val_splits/global_session_split.json
-├── cached_features/{region}/
-├── checkpoints/{region}/
-├── ml_results/{region}/
-├── ml_results/region_fusion_results.json
-├── ml_results/voting_results.json
-├── attention_maps/
-├── reciprocam_maps/
-└── logs/pipeline/
+│                                   # phase 2: ML on finetuned features
+├── train_region_fusion.py          # phase 3: multi-region fusion
+├── evaluate_test.py                # phase 4: test evaluation
+├── evaluate_voting.py              # phase 4: multi-region voting
+├── export_onnx.py                  # phase 5: ONNX export
+├── inference_onnx.py               # phase 5: ONNX inference
+├── visualize_attention.py          # attention rollout heatmaps
+├── visualize_reciprocam.py         # ReciproCAM heatmaps
+├── visualize_token_gradcam.py      # token Grad-CAM heatmaps
+├── run_pipeline.sh                 # sequential orchestration
+├── run_all.sh                      # multi-GPU parallel orchestration
+├── requirements.txt
+├── README.md
+└── logs/                           # pipeline execution logs (tracked)
+    ├── *.log
+    └── pipeline/*.log
+```
+
+Generated artifacts (gitignored):
+
+```
+├── cached_features/{region}/       # precomputed embeddings (.pt)
+├── checkpoints/{region}/           # model checkpoints (.pt)
+├── ml_results/{region}/            # classifier results (.json, .joblib, .cbm)
+├── val_splits/                     # global_session_split.json
+├── onnx_models/                    # exported ONNX models
+├── attention_maps/                 # visualization outputs (.png)
+└── runs/                           # TensorBoard logs
 ```
 
 ---
 
-## Results (from `nohup/` logs)
+## Results
 
-All metrics use the **auth-positive** convention above. **Test TPR@2%** and **FPR@2%** use the **val-calibrated threshold** applied to the test set (not test-optimal). Train TPR@2% is often ~100% (memorization) and is omitted.
+All metrics use the **auth-positive** convention. **Test TPR@2%** and **FPR@2%** use the **val-calibrated threshold** applied to the test set (not test-optimal).
 
 ### Linear probe on frozen `vitl16` embeddings
-
 
 | Region              | Res | Test AUC   | Test TPR@2% | Test FPR@2% | Best val TPR@2% |
 | ------------------- | --- | ---------- | ----------- | ----------- | --------------- |
@@ -217,11 +271,9 @@ All metrics use the **auth-positive** convention above. **Test TPR@2%** and **FP
 | brand_tag           | 518 | **0.8113** | 24.9%       | 0.0%        | 24.8%           |
 | brand_tag           | 714 | 0.7962     | 20.6%       | 0.0%        | 21.1%           |
 
-
-### Frozen embeddings + classifiers (`train_svm_xgb_lgbm_catboost.py`)
+### Frozen embeddings + classifiers
 
 **care_label**
-
 
 | Clf      | 518 AUC    | 518 TPR@2% | 518 FPR | 714 AUC | 714 TPR@2% | 714 FPR |
 | -------- | ---------- | ---------- | ------- | ------- | ---------- | ------- |
@@ -230,9 +282,7 @@ All metrics use the **auth-positive** convention above. **Test TPR@2%** and **FP
 | CatBoost | 0.7989     | 13.2%      | 0.0%    | 0.7477  | 0.9%       | 0.0%    |
 | LGBM     | 0.8128     | 14.2%      | 3.0%    | 0.7643  | 15.6%      | 3.0%    |
 
-
 **front**
-
 
 | Clf      | 518 AUC    | 518 TPR@2% | 518 FPR | 714 AUC | 714 TPR@2% | 714 FPR |
 | -------- | ---------- | ---------- | ------- | ------- | ---------- | ------- |
@@ -241,9 +291,7 @@ All metrics use the **auth-positive** convention above. **Test TPR@2%** and **FP
 | CatBoost | 0.8357     | 17.3%      | 2.4%    | 0.8261  | 18.8%      | 2.4%    |
 | LGBM     | 0.9000     | 2.7%       | 0.0%    | 0.8699  | 19.1%      | 0.0%    |
 
-
 **front_exterior_logo**
-
 
 | Clf      | 518 AUC    | 518 TPR@2% | 518 FPR | 714 AUC | 714 TPR@2% | 714 FPR |
 | -------- | ---------- | ---------- | ------- | ------- | ---------- | ------- |
@@ -252,9 +300,7 @@ All metrics use the **auth-positive** convention above. **Test TPR@2%** and **FP
 | CatBoost | 0.7308     | 36.4%      | 14.3%   | 0.8056  | 20.1%      | 8.6%    |
 | LGBM     | 0.8172     | 24.5%      | 2.9%    | 0.8020  | 6.8%       | 0.0%    |
 
-
 **brand_tag**
-
 
 | Clf      | 518 AUC | 518 TPR@2% | 518 FPR | 714 AUC    | 714 TPR@2% | 714 FPR |
 | -------- | ------- | ---------- | ------- | ---------- | ---------- | ------- |
@@ -263,11 +309,9 @@ All metrics use the **auth-positive** convention above. **Test TPR@2%** and **FP
 | CatBoost | 0.7868  | 9.9%       | 0.0%    | 0.7726     | 20.2%      | 0.0%    |
 | LGBM     | 0.7874  | 17.8%      | 0.0%    | 0.8196     | 16.7%      | 0.0%    |
 
-
 ### Partial finetune `last4` + linear head (`vitl16` @ 714)
 
 Checkpoint chosen by best **val TPR@2%**; test uses that threshold.
-
 
 | Region              | Test AUC   | Test TPR@2% | Test FPR@2% | Best val TPR@2% |
 | ------------------- | ---------- | ----------- | ----------- | --------------- |
@@ -275,7 +319,6 @@ Checkpoint chosen by best **val TPR@2%**; test uses that threshold.
 | front               | **0.8886** | 14.5%       | 0.0%        | 13.9%           |
 | front_exterior_logo | 0.8155     | 36.6%       | 5.7%        | 40.1%           |
 | brand_tag           | **0.8352** | 25.0%       | 0.0%        | 24.3%           |
-
 
 A separate AUC-selected run for `front_exterior_logo` gave test AUC **0.8230**, TPR@2% **35.7%**, FPR **5.7%**.
 
@@ -285,7 +328,6 @@ Features extracted from the `last4` finetuned backbone, then SVM/XGB/CatBoost/LG
 
 **care_label**
 
-
 | Clf      | Test AUC   | TPR@2%    | FPR@2% |
 | -------- | ---------- | --------- | ------ |
 | XGB      | 0.7947     | 19.7%     | 3.0%   |
@@ -293,9 +335,7 @@ Features extracted from the `last4` finetuned backbone, then SVM/XGB/CatBoost/LG
 | CatBoost | 0.7300     | 14.4%     | 0.0%   |
 | LGBM     | 0.7504     | 9.7%      | 6.1%   |
 
-
 **front**
-
 
 | Clf      | Test AUC   | TPR@2% | FPR@2% |
 | -------- | ---------- | ------ | ------ |
@@ -304,9 +344,7 @@ Features extracted from the `last4` finetuned backbone, then SVM/XGB/CatBoost/LG
 | CatBoost | 0.8333     | 21.2%  | 2.4%   |
 | LGBM     | 0.8617     | 7.4%   | 0.0%   |
 
-
 **front_exterior_logo**
-
 
 | Clf      | Test AUC   | TPR@2%    | FPR@2% |
 | -------- | ---------- | --------- | ------ |
@@ -315,9 +353,7 @@ Features extracted from the `last4` finetuned backbone, then SVM/XGB/CatBoost/LG
 | CatBoost | 0.8274     | 21.9%     | 8.6%   |
 | LGBM     | 0.8070     | 11.6%     | 0.0%   |
 
-
 **brand_tag**
-
 
 | Clf      | Test AUC   | TPR@2%    | FPR@2% |
 | -------- | ---------- | --------- | ------ |
@@ -326,11 +362,9 @@ Features extracted from the `last4` finetuned backbone, then SVM/XGB/CatBoost/LG
 | CatBoost | 0.7708     | 12.8%     | 3.4%   |
 | LGBM     | 0.8155     | 14.6%     | 0.0%   |
 
-
 ### Region fusion (`train_region_fusion.py`, `vitl16_714` frozen embeddings)
 
-Concatenated 4-region embeddings (4 × 1024-d + 4 mask bits). **Auth-positive:** each cell is **TPR** (authentics passed) and **actual test FPR** in parentheses — fake miss rate on test at the val threshold chosen for that FPR target (discrete fake count often prevents hitting the target exactly).
-
+Concatenated 4-region embeddings (4 x 1024-d + 4 mask bits). **Auth-positive:** each cell is **TPR** (authentics passed) and **actual test FPR** in parentheses at the val-calibrated threshold.
 
 | Method   | Test AUC   | @0.5% target      | @1% target        | @2% target        | @5% target        | @10% target       |
 | -------- | ---------- | ----------------- | ----------------- | ----------------- | ----------------- | ----------------- |
@@ -340,21 +374,18 @@ Concatenated 4-region embeddings (4 × 1024-d + 4 mask bits). **Auth-positive:**
 | LGBM     | 0.8245     | 34.6% (0.0%)      | 34.6% (0.0%)      | 36.9% (2.4%)      | 42.2% (4.9%)      | 57.5% (9.8%)      |
 | CatBoost | 0.8181     | 11.5% (0.0%)      | 11.5% (0.0%)      | 12.7% (2.4%)      | 27.9% (4.9%)      | 52.4% (9.8%)      |
 
-
-**Fusion SVM at the 2% target** gives the highest single TPR (**58.1%** authentics passed). The `region_fusion_last4_714` run had zero test sessions (finetuned test features not cached); treat as incomplete.
+**Fusion SVM at the 2% target** gives the highest single TPR (**58.1%** authentics passed).
 
 ### Best model per region (by test TPR@2%)
 
-| Region | Best Model | Test AUC | Test TPR@2% | FPR@2% |
-|--------|------------|----------|-------------|--------|
-| front_exterior_logo | Frozen XGB 518 | 0.8248 | **38.2%** | 2.9% |
-| care_label | Frozen SVM 518 | 0.8911 | **28.5%** | 0.0% |
-| brand_tag | Finetune last4 | 0.8352 | **25.0%** | 0.0% |
-| front | Unfrozen last4 CatBoost | 0.8333 | **21.2%** | 2.4% |
-
+| Region              | Best Model              | Test AUC | Test TPR@2% | FPR@2% |
+| ------------------- | ----------------------- | -------- | ----------- | ------ |
+| front_exterior_logo | Frozen XGB 518          | 0.8248   | **38.2%**   | 2.9%   |
+| care_label          | Frozen SVM 518          | 0.8911   | **28.5%**   | 0.0%   |
+| brand_tag           | Finetune last4          | 0.8352   | **25.0%**   | 0.0%   |
+| front               | Unfrozen last4 CatBoost | 0.8333   | **21.2%**   | 2.4%   |
 
 ### Notes
 
 - Multi-region **voting** (`evaluate_voting.py`) is implemented with any/majority/all-agree strategies but threshold calibration across regions needs refinement. Score-level fusion (e.g. fusion SVM) currently outperforms fixed-threshold voting.
 - Region coverage varies: `front` covers 98.2% of test sessions, `front_exterior_logo` only 61.4%. Missing regions get zero embeddings + mask bit = 0 in fusion.
-

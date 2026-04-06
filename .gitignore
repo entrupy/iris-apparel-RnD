@@ -6,3 +6,4 @@ runs/
 ml_results/
 *.png
 *pt
+*onnx

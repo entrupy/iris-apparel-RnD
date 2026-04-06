@@ -1,0 +1,32 @@
+[0;93m2026-04-02 05:37:03.365538356 [W:onnxruntime:Default, device_discovery.cc:325 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:92 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+======================================================================
+ONNX EXPORT | model=vitl16 res=714 embed=vitl16_714
+======================================================================
+
+--- Stage 3: Combined Pipeline ---
+
+  Building fusion dataset & training SVM...
+  SVM: 2321 support vectors, gamma=0.000244
+  Building combined PyTorch model...
+Loading weights:   0%|          | 0/415 [00:00<?, ?it/s]Loading weights: 100%|██████████| 415/415 [00:00<00:00, 5618.82it/s]
+  PyTorch ref output: 0.903181
+  Exporting combined ONNX (attn=sdpa)...
+/root/iris/src/01-dinov3/export_onnx.py:357: DeprecationWarning: You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter has become the default. Learn more about the new export logic: https://docs.pytorch.org/docs/stable/onnx_export.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html
+  torch.onnx.export(
+/root/.venv/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py:77: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  is_causal = query.shape[2] > 1 and attention_mask is None and is_causal
+  Combined ONNX exported in 8.0s (1193 MB)
+  ONNX validation passed
+  Validating with ONNX Runtime...
+  Active providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+  PyTorch: 0.903181  ONNX: 0.903181  diff: 0.000000
+  PASS: combined model outputs match
+
+  Thresholds saved to /root/iris/src/01-dinov3/onnx_models/thresholds.json
+
+======================================================================
+ONNX export complete. Files:
+  /root/iris/src/01-dinov3/onnx_models/dinov3_vitl16_714.onnx  (1156.8 MB)
+  /root/iris/src/01-dinov3/onnx_models/fusion_pipeline_vitl16_714.onnx  (1193.1 MB)
+  /root/iris/src/01-dinov3/onnx_models/fusion_svm.onnx  (45.4 MB)
+======================================================================
